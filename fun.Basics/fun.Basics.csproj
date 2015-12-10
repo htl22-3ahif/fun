@@ -33,8 +33,8 @@
     <Reference Include="CjClutter.ObjLoader.Loader">
       <HintPath>..\Libs\CjClutter.ObjLoader.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>..\Libs\MonoGame.Framework.dll</HintPath>
+    <Reference Include="OpenTK">
+      <HintPath>..\Libs\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -46,6 +46,11 @@
     <Compile Include="InputElement.cs" />
     <Compile Include="PerceivedElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shapes\Box.cs" />
+    <Compile Include="Shapes\Plane.cs" />
+    <Compile Include="Shapes\Ray.cs" />
+    <Compile Include="Shapes\Sphere.cs" />
+    <Compile Include="Shapes\Triangle.cs" />
     <Compile Include="Skripts\MoveActorOnInputScriptElement.cs" />
     <Compile Include="Skripts\RotateActorOnInputScriptElement.cs" />
     <Compile Include="TransformElement.cs" />

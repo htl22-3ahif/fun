@@ -1,23 +1,16 @@
 ﻿using fun.Client.Components;
 using fun.Core;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using ObjLoader.Loader.Loaders;
+using OpenTK;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using Environment = fun.Core.Environment;
 
 namespace fun.Client
 {
-    internal sealed class FunGame : Game
+    internal sealed class FunGame : GameWindow
     {
-        private GraphicsDeviceManager graphicsDeviceManager;
+        private List<GameComponent> components;
 
         private InputComponent input;
         private SceneComponent scene;
@@ -25,30 +18,47 @@ namespace fun.Client
         private SimulationComponent simulation;
 
         public FunGame()
-            : base()
+            : base(1280, 720)
         {
-            graphicsDeviceManager = new GraphicsDeviceManager(this);
-            graphicsDeviceManager.PreferredBackBufferHeight = 720;
-            graphicsDeviceManager.PreferredBackBufferWidth = 1280;
-            this.IsMouseVisible = true;
-            this.TargetElapsedTime = new TimeSpan(0, 0, 0, 0, 10);
+            components = new List<GameComponent>();
 
             input = new InputComponent(this);
-            input.UpdateOrder = 1;
-            Components.Add(input);
+            components.Add(input);
 
             simulation = new SimulationComponent(this, input);
-            simulation.UpdateOrder = 2;
-            Components.Add(simulation);
+            components.Add(simulation);
 
             camera = new CameraComponent(this, input, simulation);
-            camera.UpdateOrder = 3;
-            Components.Add(camera);
+            components.Add(camera);
 
             scene = new SceneComponent(this, simulation, camera);
-            scene.DrawOrder = 1;
-            scene.UpdateOrder = 4;
-            Components.Add(scene);
+            components.Add(scene);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            foreach (var component in components)
+                component.Initialize();
+        }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+            base.OnUpdateFrame(e);
+
+            foreach (var component in components)
+                component.Update(e);
+        }
+
+        protected override void OnRenderFrame(FrameEventArgs e)
+        {
+            base.OnRenderFrame(e);
+
+            foreach (var component in components)
+                component.Draw(e);
+
+            SwapBuffers();
         }
     }
 }

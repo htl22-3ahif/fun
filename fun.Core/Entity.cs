@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace fun.Core
 {
@@ -173,10 +170,10 @@ namespace fun.Core
             foreach (var element in elements)
                 element.Initialize();
         }
-        public void Update(GameTime gameTime)
+        public void Update(double time)
         {
             foreach (var element in elements)
-                element.Update(gameTime);
+                element.Update(time);
         }
     }
 }

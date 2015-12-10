@@ -1,6 +1,7 @@
-﻿using fun.Communication;
+﻿using fun.Basics.Shapes;
+using fun.Communication;
 using fun.Core;
-using Microsoft.Xna.Framework;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace fun.Basics
         private readonly TransformElement transform;
 
         public IEnumerable<Entity> Seen { get; private set; }
-        public BoundingSphere BoundingSphere { get; set; }
+        public Sphere Sphere{ get; set; }
 
         /// <summary>
         /// Creates a camera-Object.
@@ -32,14 +33,21 @@ namespace fun.Basics
 
             transform = entity.GetElement<TransformElement>() as TransformElement;
 
-            BoundingSphere = new BoundingSphere(Vector3.Zero, 100f);
+            Sphere = new Sphere(Vector3.Zero, 100f);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Initialize()
         {
+
+        }
+
+        public override void Update(double time)
+        {
+            // TODO: effizienter gestalten
+
             Seen = environment.Entities
                 .Where(e => 
-                    ContainmentType.Contains == BoundingSphere.Contains((e.GetElement<TransformElement>() as TransformElement).Position - transform.Position) && 
+                    Sphere.Contains((e.GetElement<TransformElement>() as TransformElement).Position - transform.Position) && 
                     e.ContainsElement<PerceivedElement>());
         }
     }

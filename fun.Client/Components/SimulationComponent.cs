@@ -1,15 +1,11 @@
-﻿using fun.Basics;
-using fun.Basics.Skripts;
-using fun.Communication;
+﻿using fun.Communication;
 using fun.Core;
 using fun.IO;
-using Microsoft.Xna.Framework;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Environment = fun.Core.Environment;
 
 namespace fun.Client.Components
@@ -22,7 +18,7 @@ namespace fun.Client.Components
         public Entity Player { get; private set; }
         public IEnumerable<IPerceived> Perceiveder { get; set; }
 
-        public SimulationComponent(Game game, InputComponent input)
+        public SimulationComponent(GameWindow game, InputComponent input)
             : base(game)
         {
             this.input = input;
@@ -38,19 +34,17 @@ namespace fun.Client.Components
             environment.Initialize();
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(FrameEventArgs e)
         {
             foreach (var input in environment.Entities
-                .Where(e => e.ContainsElement<IInput>())
-                .Select(e => e.GetElement<IInput>() as IInput))
+                .Where(en => en.ContainsElement<IInput>())
+                .Select(en => en.GetElement<IInput>() as IInput))
             {
                 input.Keys = this.input.Keyboard.DownKeys;
                 //input.MouseDelta = this.input.Mouse.Delta;
             }
 
-            environment.Update(gameTime);
-
-
+            environment.Update(e.Time);
         }
     }
 }

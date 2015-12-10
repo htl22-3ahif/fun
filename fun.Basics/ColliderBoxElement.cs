@@ -1,18 +1,15 @@
 ﻿using fun.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
 using Environment = fun.Core.Environment;
+using OpenTK;
+using fun.Basics.Shapes;
 
 namespace fun.Basics
 {
     public sealed class ColliderBoxElement : Element, ICollider
     {
         private TransformElement transform;
-        private BoundingBox box;
+        private Box box;
 
         public Vector3 Min
         {
@@ -35,7 +32,7 @@ namespace fun.Basics
 
         public float? Intersects(Ray ray)
         {
-            var tempbox = new BoundingBox(
+            var tempbox = new Box(
                 box.Min + transform.Position,
                 box.Max + transform.Position);
 

@@ -1,53 +1,49 @@
 ﻿using fun.Communication;
-using fun.Core;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ObjLoader.Loader.Loaders;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Environment = fun.Core.Environment;
 
 namespace fun.Client.Components
 {
-    internal sealed class SceneComponent : DrawableGameComponent
+    internal sealed class SceneComponent : GameComponent
     {
-        private Dictionary<string, ModelMeshPart> meshes;
-        private BasicEffect effect;
-
         private SimulationComponent simulation;
         private CameraComponent camera;
 
-        public SceneComponent(Game game, SimulationComponent simulaiton, CameraComponent camera)
+        private Dictionary<string, Mesh> meshes;
+
+        public SceneComponent(GameWindow game, SimulationComponent simulaiton, CameraComponent camera)
             : base(game)
         {
-            this.meshes = new Dictionary<string, ModelMeshPart>();
             this.simulation = simulaiton;
             this.camera = camera;
+
+            meshes = new Dictionary<string, Mesh>();
         }
 
         public override void Initialize()
         {
-            effect = new BasicEffect(GraphicsDevice);
-
             foreach (var perceived in simulation.Perceiveder)
             {
                 Directory.SetCurrentDirectory("assets\\models");
                 if (!File.Exists(perceived.Name))
                     continue;
 
-                if (meshes.Keys.Any(p => p == perceived.Name))
+                if (meshes.Keys.Contains(perceived.Name))
                     continue;
 
                 var objFactory = new ObjLoaderFactory();
                 var objloader = objFactory.Create();
                 var result = objloader.Load(new FileStream(perceived.Name, FileMode.Open, FileAccess.Read));
-                Directory.SetCurrentDirectory("..\\..\\");
+                Directory.SetCurrentDirectory("..\\..");
 
-                var vertices = result.Vertices.Select(v => new VertexPositionColor(new Vector3(v.X, v.Y, v.Z), Color.Black)).ToArray();
+                var vertices = result.Vertices.Select(v => new Vector3(new Vector3(v.X, v.Y, v.Z))).ToArray();
                 var indiceslist = new List<int>();
 
                 foreach (var group in result.Groups)
@@ -57,58 +53,108 @@ namespace fun.Client.Components
 
                 var indices = indiceslist.Select(i => i - 1).ToArray();
 
-                var part = new ModelMeshPart();
-
-                part.VertexBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertices.Length, BufferUsage.None);
-                part.IndexBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.None);
-                part.VertexBuffer.SetData(vertices);
-                part.IndexBuffer.SetData(indices);
-
-                meshes.Add(perceived.Name, part);
+                meshes.Add(perceived.Name, new Mesh(vertices, indices));
             }
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(FrameEventArgs e)
         {
-            GraphicsDevice.Clear(Color.Honeydew);
-
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            GraphicsDevice.BlendState = BlendState.Opaque;
-
-            GraphicsDevice.RasterizerState = new RasterizerState()
-            {
-                CullMode = CullMode.None,
-                FillMode = FillMode.WireFrame
-            };
-
-            effect.View = camera.View;
-            effect.Projection = camera.Projection;
-            effect.VertexColorEnabled = true;
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.ClearColor(Color.Honeydew);
 
             foreach (var entity in camera.Seen)
             {
-                var mesh = entity.GetElement<IPerceived>() as IPerceived;
+                var mesh = meshes[(entity.GetElement<IPerceived>() as IPerceived).Name];
+                var transform = entity.GetElement<ITransform>() as ITransform;
 
-                if (!meshes.Keys.Contains(mesh.Name))
-                    continue;
+                var world = Matrix4.CreateScale(transform.Scale) *
+                    Matrix4.CreateRotationX(transform.Rotation.X) *
+                    Matrix4.CreateRotationY(transform.Rotation.Y) *
+                    Matrix4.CreateRotationZ(transform.Rotation.Z) *
+                    Matrix4.CreateTranslation(transform.Position);
 
-                var _transform = entity.GetElement<ITransform>() as ITransform;
-                var part = meshes[mesh.Name];
+                mesh.Draw(world, camera.View, camera.Projection);
+            }
 
-                effect.World =
-                    Matrix.CreateScale(_transform.Scale) *
-                    Matrix.CreateRotationX(_transform.Rotation.X) * Matrix.CreateRotationY(_transform.Rotation.Y) * Matrix.CreateRotationZ(_transform.Rotation.Z) *
-                    Matrix.CreateTranslation(_transform.Position);
+            GL.Flush();
+        }
 
-                GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-                GraphicsDevice.Indices = part.IndexBuffer;
+        private class Mesh
+        {
+            public int VBO;
+            public int IBO;
 
-                foreach (var pass in effect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.VertexBuffer.VertexCount, 0, part.IndexBuffer.IndexCount / 3);
-                }
+            public int Lenght { get; private set; }
+
+            public Mesh(Vector3[] vertices, int[] indices)
+            {
+                //defining vbo
+                VBO = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
+                GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * vertices.Length), vertices, BufferUsageHint.StaticDraw);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+
+                IBO = 0;
+
+                Lenght = vertices.Length;
+            }
+
+            public void Draw(Matrix4 world, Matrix4 view, Matrix4 projection)
+            {
+                var mat = world * view * projection;
+                GL.LoadMatrix(ref mat);
+
+                GL.EnableClientState(ArrayCap.VertexArray);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
+                GL.VertexPointer(2, VertexPointerType.Float, Vector3.SizeInBytes, 0);
+
+                GL.Color3(Color.Black);
+                GL.DrawArrays(PrimitiveType.Triangles, 0, Lenght);
+
+                GL.LoadIdentity();
             }
         }
+
+        #region old
+        //        GraphicsDevice.Clear(Color.Honeydew);
+
+        //            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+        //            GraphicsDevice.BlendState = BlendState.Opaque;
+
+        //            GraphicsDevice.RasterizerState = new RasterizerState()
+        //        {
+        //            CullMode = CullMode.None,
+        //                FillMode = FillMode.WireFrame
+        //            };
+
+        //        effect.View = camera.View;
+        //            effect.Projection = camera.Projection;
+        //            effect.VertexColorEnabled = true;
+
+        //            foreach (var entity in camera.Seen)
+        //            {
+        //                var mesh = entity.GetElement<IPerceived>() as IPerceived;
+
+        //                if (!meshes.Keys.Contains(mesh.Name))
+        //                    continue;
+
+        //                var _transform = entity.GetElement<ITransform>() as ITransform;
+        //        var part = meshes[mesh.Name];
+
+        //        effect.World =
+        //                    Matrix.CreateScale(_transform.Scale) *
+        //                    Matrix.CreateRotationX(_transform.Rotation.X) * Matrix.CreateRotationY(_transform.Rotation.Y) * Matrix.CreateRotationZ(_transform.Rotation.Z) *
+        //                    Matrix.CreateTranslation(_transform.Position);
+
+        //                GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
+        //                GraphicsDevice.Indices = part.IndexBuffer;
+
+        //                foreach (var pass in effect.CurrentTechnique.Passes)
+        //                {
+        //                    pass.Apply();
+        //                    GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.VertexBuffer.VertexCount, 0, part.IndexBuffer.IndexCount / 3);
+        //                }
+        //}
+        #endregion
     }
 }

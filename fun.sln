@@ -15,33 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fun.Test", "fun.Test\fun.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fun.Communication", "fun.Communication\fun.Communication.csproj", "{EE80DF96-AC24-4204-842B-5E11E10AAFE2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{1484C8FF-B7FA-4755-B1C9-C4712657B300}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B31C8C4A-7877-4D10-A051-A118C5199578}"
 	ProjectSection(SolutionItems) = preProject
 		Libs\CjClutter.ObjLoader.Loader.dll = Libs\CjClutter.ObjLoader.Loader.dll
-		Libs\Lidgren.Network.dll = Libs\Lidgren.Network.dll
-		Libs\Lidgren.Network.xml = Libs\Lidgren.Network.xml
-		Libs\MonoGame.Framework.dll = Libs\MonoGame.Framework.dll
-		Libs\MonoGame.Framework.Net.dll = Libs\MonoGame.Framework.Net.dll
-		Libs\MonoGame.Framework.Net.xml = Libs\MonoGame.Framework.Net.xml
-		Libs\MonoGame.Framework.xml = Libs\MonoGame.Framework.xml
-		Libs\SharpDX.Direct2D1.dll = Libs\SharpDX.Direct2D1.dll
-		Libs\SharpDX.Direct2D1.xml = Libs\SharpDX.Direct2D1.xml
-		Libs\SharpDX.Direct3D11.dll = Libs\SharpDX.Direct3D11.dll
-		Libs\SharpDX.Direct3D11.xml = Libs\SharpDX.Direct3D11.xml
-		Libs\SharpDX.Direct3D9.dll = Libs\SharpDX.Direct3D9.dll
-		Libs\SharpDX.Direct3D9.xml = Libs\SharpDX.Direct3D9.xml
-		Libs\SharpDX.dll = Libs\SharpDX.dll
-		Libs\SharpDX.DXGI.dll = Libs\SharpDX.DXGI.dll
-		Libs\SharpDX.DXGI.xml = Libs\SharpDX.DXGI.xml
-		Libs\SharpDX.MediaFoundation.dll = Libs\SharpDX.MediaFoundation.dll
-		Libs\SharpDX.MediaFoundation.xml = Libs\SharpDX.MediaFoundation.xml
-		Libs\SharpDX.RawInput.dll = Libs\SharpDX.RawInput.dll
-		Libs\SharpDX.RawInput.xml = Libs\SharpDX.RawInput.xml
-		Libs\SharpDX.XAudio2.dll = Libs\SharpDX.XAudio2.dll
-		Libs\SharpDX.XAudio2.xml = Libs\SharpDX.XAudio2.xml
-		Libs\SharpDX.XInput.dll = Libs\SharpDX.XInput.dll
-		Libs\SharpDX.XInput.xml = Libs\SharpDX.XInput.xml
-		Libs\SharpDX.xml = Libs\SharpDX.xml
+		Libs\OpenTK.dll = Libs\OpenTK.dll
+		Libs\OpenTK.xml = Libs\OpenTK.xml
 	EndProjectSection
 EndProject
 Global
