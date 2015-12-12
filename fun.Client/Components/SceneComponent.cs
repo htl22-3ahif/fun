@@ -63,9 +63,15 @@ namespace fun.Client.Components
             GL.ClearColor(Color.Honeydew);
 
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+
             foreach (var entity in camera.Seen)
             {
-                var mesh = meshes[(entity.GetElement<IPerceived>() as IPerceived).Name];
+                var name = (entity.GetElement<IPerceived>() as IPerceived).Name;
+
+                if (!meshes.Keys.Contains(name))
+                    continue;
+
+                var mesh = meshes[name];
                 var transform = entity.GetElement<ITransform>() as ITransform;
 
                 var world = Matrix4.CreateScale(transform.Scale) *
@@ -108,13 +114,12 @@ namespace fun.Client.Components
 
             public void Draw(Matrix4 world, Matrix4 view, Matrix4 projection)
             {
-                GL.MatrixMode(MatrixMode.Modelview);
-                GL.LoadMatrix(ref world);
-                GL.LoadMatrix(ref view);
                 GL.MatrixMode(MatrixMode.Projection);
-                GL.LoadMatrix(ref projection);
+                var mat = world * view * projection;
+                GL.LoadMatrix(ref mat);
 
                 GL.EnableClientState(ArrayCap.VertexArray);
+                GL.EnableClientState(ArrayCap.IndexArray);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
                 GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
 
@@ -123,50 +128,9 @@ namespace fun.Client.Components
                 GL.Color3(Color.Black);
                 GL.DrawElements(PrimitiveType.Triangles, IndicesLength, DrawElementsType.UnsignedInt, 0);
 
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
                 GL.LoadIdentity();
             }
         }
-
-        #region old
-        //        GraphicsDevice.Clear(Color.Honeydew);
-
-        //            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-        //            GraphicsDevice.BlendState = BlendState.Opaque;
-
-        //            GraphicsDevice.RasterizerState = new RasterizerState()
-        //        {
-        //            CullMode = CullMode.None,
-        //                FillMode = FillMode.WireFrame
-        //            };
-
-        //        effect.View = camera.View;
-        //            effect.Projection = camera.Projection;
-        //            effect.VertexColorEnabled = true;
-
-        //            foreach (var entity in camera.Seen)
-        //            {
-        //                var mesh = entity.GetElement<IPerceived>() as IPerceived;
-
-        //                if (!meshes.Keys.Contains(mesh.Name))
-        //                    continue;
-
-        //                var _transform = entity.GetElement<ITransform>() as ITransform;
-        //        var part = meshes[mesh.Name];
-
-        //        effect.World =
-        //                    Matrix.CreateScale(_transform.Scale) *
-        //                    Matrix.CreateRotationX(_transform.Rotation.X) * Matrix.CreateRotationY(_transform.Rotation.Y) * Matrix.CreateRotationZ(_transform.Rotation.Z) *
-        //                    Matrix.CreateTranslation(_transform.Position);
-
-        //                GraphicsDevice.SetVertexBuffer(part.VertexBuffer);
-        //                GraphicsDevice.Indices = part.IndexBuffer;
-
-        //                foreach (var pass in effect.CurrentTechnique.Passes)
-        //                {
-        //                    pass.Apply();
-        //                    GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.VertexBuffer.VertexCount, 0, part.IndexBuffer.IndexCount / 3);
-        //                }
-        //}
-        #endregion
     }
 }

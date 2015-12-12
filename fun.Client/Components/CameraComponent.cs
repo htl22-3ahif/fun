@@ -56,10 +56,10 @@ namespace fun.Client.Components
                 input.Keyboard.GetKeyDown(Key.D))
                 (player.GetElement<IInput>() as IInput).Content = new Vector3(0, 0, rotation.Z);
 
-            //View = Matrix4.LookAt(
-            //    transform.Position - (forward * Distance), forward + (transform.Position - (forward * Distance)), up);
             View = Matrix4.LookAt(
-                transform.Position, forward + transform.Position, up);
+                transform.Position - (forward * Distance), forward + (transform.Position - (forward * Distance)), up);
+            //View = Matrix4.LookAt(
+            //    transform.Position, forward + transform.Position, up);
 
             Projection = Matrix4.CreatePerspectiveFieldOfView(
                 FieldOfView, (Game.Width / (float)Game.Height), NearPlaneDistance, FarPlaneDistance);
