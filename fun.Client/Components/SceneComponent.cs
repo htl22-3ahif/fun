@@ -44,12 +44,12 @@ namespace fun.Client.Components
                 Directory.SetCurrentDirectory("..\\..");
 
                 var vertices = result.Vertices.Select(v => new Vector3(new Vector3(v.X, v.Y, v.Z))).ToArray();
-                var indiceslist = new List<int>();
+                var indiceslist = new List<uint>();
 
                 foreach (var group in result.Groups)
                     foreach (var face in group.Faces)
                         for (int i = 0; i < face.Count; i++)
-                            indiceslist.Add(face[i].VertexIndex);
+                            indiceslist.Add((uint)face[i].VertexIndex);
 
                 var indices = indiceslist.Select(i => i - 1).ToArray();
 
@@ -62,6 +62,7 @@ namespace fun.Client.Components
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.ClearColor(Color.Honeydew);
 
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
             foreach (var entity in camera.Seen)
             {
                 var mesh = meshes[(entity.GetElement<IPerceived>() as IPerceived).Name];
@@ -84,32 +85,43 @@ namespace fun.Client.Components
             public int VBO;
             public int IBO;
 
-            public int Lenght { get; private set; }
+            public int IndicesLength { get; private set; }
+            public int VerticesLength { get; private set; }
 
-            public Mesh(Vector3[] vertices, int[] indices)
+            public Mesh(Vector3[] vertices, uint[] indices)
             {
-                //defining vbo
+                //defining VertexBufferObject
                 VBO = GL.GenBuffer();
                 GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
                 GL.BufferData<Vector3>(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * vertices.Length), vertices, BufferUsageHint.StaticDraw);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
-                IBO = 0;
+                //defining IndexBufferObject
+                IBO = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
+                GL.BufferData<uint>(BufferTarget.ElementArrayBuffer, (sizeof(uint) * indices.Length), indices, BufferUsageHint.StaticDraw);
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
-                Lenght = vertices.Length;
+                IndicesLength = indices.Length;
+                VerticesLength = vertices.Length;
             }
 
             public void Draw(Matrix4 world, Matrix4 view, Matrix4 projection)
             {
-                var mat = world * view * projection;
-                GL.LoadMatrix(ref mat);
+                GL.MatrixMode(MatrixMode.Modelview);
+                GL.LoadMatrix(ref world);
+                GL.LoadMatrix(ref view);
+                GL.MatrixMode(MatrixMode.Projection);
+                GL.LoadMatrix(ref projection);
 
                 GL.EnableClientState(ArrayCap.VertexArray);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-                GL.VertexPointer(2, VertexPointerType.Float, Vector3.SizeInBytes, 0);
+                GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
+
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, IBO);
 
                 GL.Color3(Color.Black);
-                GL.DrawArrays(PrimitiveType.Triangles, 0, Lenght);
+                GL.DrawElements(PrimitiveType.Triangles, IndicesLength, DrawElementsType.UnsignedInt, 0);
 
                 GL.LoadIdentity();
             }
