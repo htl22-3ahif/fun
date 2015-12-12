@@ -44,7 +44,7 @@ namespace fun.Client.Components
         private MouseState curr;
         private MouseState prev;
 
-        public Vector2 Delta { get; private set; }
+        public Vector3 Delta { get; private set; }
         public float MouseSensitivity { get; set; }
         public bool ShouldCenter { get; set; }
 
@@ -111,15 +111,14 @@ namespace fun.Client.Components
         public void Update()
         {
             curr = Mouse.GetState();
-            if (new Vector2(curr.X, curr.Y) != new Vector2(prev.X, prev.Y))
-            {
-                // Mouse state has changed
-                int xdelta = curr.X - prev.X;
-                int ydelta = curr.Y - prev.Y;
-                int zdelta = curr.Wheel - prev.Wheel;
+            if (curr != prev)
+                Delta = new Vector3(
+                    (prev.X - curr.X) * MouseSensitivity,
+                    (prev.Y - curr.Y) * MouseSensitivity,
+                    prev.Wheel - curr.Wheel);
+            else
+                Delta = Vector3.Zero;
 
-                Delta = new Vector2(xdelta * MouseSensitivity, ydelta * MouseSensitivity);
-            }
             prev = curr;
         }
     }
