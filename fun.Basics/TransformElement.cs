@@ -1,6 +1,6 @@
 ﻿using fun.Communication;
 using fun.Core;
-using Microsoft.Xna.Framework;
+using OpenTK;
 using Environment = fun.Core.Environment;
 
 namespace fun.Basics
@@ -10,10 +10,6 @@ namespace fun.Basics
     /// </summary>
     public sealed class TransformElement : Element, ITransform
     {
-        public Vector3 Forward { get; set; }
-        public Vector3 Up { get; set; }
-        public Vector3 Right { get; set; }
-
         /// <summary>
         /// Describes the position of an entity.
         /// </summary>
@@ -38,10 +34,6 @@ namespace fun.Basics
             this.Position = Vector3.Zero;
             this.Rotation = Vector3.Zero;
             this.Scale = Vector3.One;
-
-            this.Forward = Vector3.UnitY;
-            this.Up = Vector3.UnitZ;
-            this.Right = Vector3.UnitX;
         }
     }
 }

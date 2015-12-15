@@ -1,11 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace fun.Core
+﻿namespace fun.Core
 {
     /// <summary>
     /// This class exists to ensure entitys uniqueness.
@@ -28,6 +21,6 @@ namespace fun.Core
 
         // Basic methods
         public virtual void Initialize() { }
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update(double time) { }
     }
 }

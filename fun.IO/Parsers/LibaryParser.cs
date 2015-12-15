@@ -1,12 +1,7 @@
-﻿using fun.Core;
-using fun.IO.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using fun.IO.Data;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
+using System.Linq;
 using Environment = fun.Core.Environment;
 
 namespace fun.IO.Parsers

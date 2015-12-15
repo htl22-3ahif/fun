@@ -1,10 +1,5 @@
 ﻿using fun.Core;
-using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Environment = fun.Core.Environment;
 
 namespace fun.Basics.Skripts
@@ -27,7 +22,7 @@ namespace fun.Basics.Skripts
             transform = entity.GetElement<TransformElement>() as TransformElement;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(double time)
         {
             transform.Rotation = input.Content;//new Vector3(input.MouseDelta.Y / 100f, 0f, input.MouseDelta.X / 100f);
         }

@@ -1,7 +1,7 @@
 ﻿using fun.Communication;
 using fun.Core;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+using OpenTK;
+using OpenTK.Input;
 using System.Collections.Generic;
 using System.Linq;
 using Environment = fun.Core.Environment;
@@ -10,36 +10,36 @@ namespace fun.Basics
 {
     public sealed class InputElement : Element, IInput
     {
-        private Keys[] lastKeys;
-        private Keys[] currKeys;
+        private Key[] lastKeys;
+        private Key[] currKeys;
 
-        public IEnumerable<Keys> Keys { get; set; }
+        public IEnumerable<Key> Keys { get; set; }
         public Vector2 MouseDelta { get; set; }
         public Vector3 Content { get; set; }
 
         public InputElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
-            currKeys = new Keys[0];
-            lastKeys = new Keys[0];
+            currKeys = new Key[0];
+            lastKeys = new Key[0];
         }
 
-        public bool GetKeyPressed(Keys key)
+        public bool GetKeyPressed(Key key)
         {
             return !lastKeys.Contains(key) && currKeys.Contains(key);
         }
 
-        public bool GetKeyDown(Keys key)
+        public bool GetKeyDown(Key key)
         {
             return currKeys.Contains(key);
         }
         
-        public bool GetKeyRelease(Keys key)
+        public bool GetKeyRelease(Key key)
         {
             return lastKeys.Contains(key) && !currKeys.Contains(key);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(double time)
         {
             if (Keys == null)
                 return;

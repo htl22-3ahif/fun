@@ -1,13 +1,8 @@
 ﻿using fun.IO.Data;
 using fun.IO.Parsers;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
+using System.Linq;
 using Environment = fun.Core.Environment;
 
 namespace fun.IO

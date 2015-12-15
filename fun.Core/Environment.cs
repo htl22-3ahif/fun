@@ -1,13 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace fun.Core
 {
@@ -69,10 +61,10 @@ namespace fun.Core
                 entity.Initialize();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(double time)
         {
             foreach (var entity in entities)
-                entity.Update(gameTime);
+                entity.Update(time);
         }
     }
 }

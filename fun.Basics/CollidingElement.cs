@@ -1,10 +1,9 @@
-﻿using fun.Core;
-using Microsoft.Xna.Framework;
+﻿using fun.Basics.Shapes;
+using fun.Core;
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Environment = fun.Core.Environment;
 
 namespace fun.Basics
@@ -34,7 +33,7 @@ namespace fun.Basics
                 .Select(e => e.GetElement<ICollider>() as ICollider));
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(double time)
         {
             ICollider colliding = null;
 
@@ -49,7 +48,7 @@ namespace fun.Basics
                 colliding = colliders.FirstOrDefault(c =>
                 {
                     var distance = c.Intersects(ray);
-                    return distance.HasValue && move.LengthSquared() > (distance.Value * distance.Value);
+                    return distance.HasValue && move.LengthSquared > (distance.Value * distance.Value);
                 });
 
                 if (colliding != null)
