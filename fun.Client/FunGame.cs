@@ -16,6 +16,7 @@ namespace fun.Client
         private SceneComponent scene;
         private CameraComponent camera;
         private SimulationComponent simulation;
+        private HUDComponend UI;
 
         public FunGame()
             : base(1280, 720)
@@ -33,6 +34,9 @@ namespace fun.Client
 
             scene = new SceneComponent(this, simulation, camera);
             components.Add(scene);
+
+            UI = new HUDComponend(this);
+            components.Add(UI);
         }
 
         protected override void OnLoad(EventArgs e)
