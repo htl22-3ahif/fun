@@ -93,11 +93,11 @@ namespace fun.Client
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
 
-            GL.Begin(BeginMode.Quads);
-            GL.MultiTexCoord1(0f, 1f); GL.Vertex2(0f, 0f);
-            GL.MultiTexCoord1(1f, 1f); GL.Vertex2(1f, 0f);
-            GL.MultiTexCoord1(1f, 0f); GL.Vertex2(1f, 1f);
-            GL.MultiTexCoord1(0f, 0f); GL.Vertex2(0f, 1f);
+            GL.Begin(PrimitiveType.Quads);
+            //GL.MultiTexCoord1(0f, 1f); GL.Vertex2(0f, 0f);
+            //GL.MultiTexCoord1(1f, 1f); GL.Vertex2(1f, 0f);
+            //GL.MultiTexCoord1(1f, 0f); GL.Vertex2(1f, 1f);
+            //GL.MultiTexCoord1(0f, 0f); GL.Vertex2(0f, 1f);
             GL.End();
         }
     }
