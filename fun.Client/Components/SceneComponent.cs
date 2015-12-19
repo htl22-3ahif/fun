@@ -16,7 +16,7 @@ namespace fun.Client.Components
         private SimulationComponent simulation;
         private CameraComponent camera;
 
-        private static float[] light_pos = new float[] { 0.0f, 6.0f, 0.0f, 1.0f };
+        private static float[] light_pos = new float[] { 0.0f, 0.0f, 10.0f, 1.0f };
         private Dictionary<string, Mesh> meshes;
 
         public SceneComponent(GameWindow game, SimulationComponent simulaiton, CameraComponent camera)
@@ -30,22 +30,17 @@ namespace fun.Client.Components
 
         public override void Initialize()
         {
-            GL.ClearColor(Color.Honeydew);
+            GL.ClearColor(Color.CornflowerBlue);
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Lighting);
+            GL.Enable(EnableCap.Light0);
             GL.DepthFunc(DepthFunction.Lequal);
 
             // Enable Light 0 and set its parameters.
             GL.Light(LightName.Light0, LightParameter.Position, light_pos);
-            //GL.Light(LightName.Light0, LightParameter.Ambient, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
-            //GL.Light(LightName.Light0, LightParameter.Diffuse, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            //GL.Light(LightName.Light0, LightParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.Enable(EnableCap.Lighting);
-            GL.Enable(EnableCap.Light0);
-            
-            //GL.Material(MaterialFace.Front, MaterialParameter.Ambient, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
-            //GL.Material(MaterialFace.Front, MaterialParameter.Diffuse, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            //GL.Material(MaterialFace.Front, MaterialParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            //GL.Material(MaterialFace.Front, MaterialParameter.Emission, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+            GL.Light(LightName.Light0, LightParameter.Ambient, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
+            GL.Light(LightName.Light0, LightParameter.Diffuse, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.Light(LightName.Light0, LightParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             foreach (var perceived in simulation.Perceiveder)
             {
                 Directory.SetCurrentDirectory("assets\\models");
@@ -78,12 +73,19 @@ namespace fun.Client.Components
                 meshes.Add(perceived.Name, new Mesh(vertices.ToArray()));
             }
         }
-
+        
         public override void Draw(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            LoadMatrix(camera.Projection);
+            GL.MatrixMode(MatrixMode.Modelview);
+            LoadMatrix(camera.View);
+
+            GL.Light(LightName.Light0, LightParameter.Position, light_pos);
 
             foreach (var entity in camera.Seen)
             {
@@ -94,18 +96,20 @@ namespace fun.Client.Components
 
                 var mesh = meshes[name];
                 var transform = entity.GetElement<ITransform>() as ITransform;
-
-                var world = Matrix4.CreateScale(transform.Scale) *
+                
+                var model = Matrix4.CreateScale(transform.Scale) *
                     Matrix4.CreateRotationX(transform.Rotation.X) *
                     Matrix4.CreateRotationY(transform.Rotation.Y) *
                     Matrix4.CreateRotationZ(transform.Rotation.Z) *
                     Matrix4.CreateTranslation(transform.Position);
 
-                mesh.Draw(world, camera.View, camera.Projection);
+                mesh.Draw(model * camera.View);
             }
 
             GL.Flush();
         }
+
+        private void LoadMatrix(Matrix4 mat) { GL.LoadMatrix(ref mat); }
 
         private class Mesh
         {
@@ -124,12 +128,10 @@ namespace fun.Client.Components
                 VerticesLength = vertices.Length;
             }
 
-            public void Draw(Matrix4 world, Matrix4 view, Matrix4 projection)
+            public void Draw(Matrix4 modelview)
             {
                 GL.MatrixMode(MatrixMode.Modelview);
-                var mat = world * view * projection;
-                GL.LoadMatrix(ref mat);
-                GL.Light(LightName.Light0, LightParameter.Position, light_pos);
+                GL.LoadMatrix(ref modelview);
 
                 GL.EnableClientState(ArrayCap.VertexArray);
                 GL.EnableClientState(ArrayCap.ColorArray);
