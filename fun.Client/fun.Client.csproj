@@ -47,6 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\GameComponent.cs" />
+    <Compile Include="Constructs\Attrib.cs" />
+    <Compile Include="Constructs\Shader.cs" />
+    <Compile Include="Constructs\ShaderProgram.cs" />
+    <Compile Include="Constructs\Uniform.cs" />
     <Compile Include="FunGame.cs" />
     <Compile Include="Components\CameraComponent.cs" />
     <Compile Include="Components\InputComponent.cs" />
