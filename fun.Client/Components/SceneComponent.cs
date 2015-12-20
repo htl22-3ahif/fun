@@ -19,6 +19,18 @@ namespace fun.Client.Components
         private static float[] light_pos = new float[] { 0.0f, 0.0f, 10.0f, 1.0f };
         private Dictionary<string, Mesh> meshes;
 
+        static private int pgmID;
+        static private int vsID;
+        static private int fsID;
+
+        static private int att_vcol;
+        static private int att_vpos;
+        static private int att_vnor;
+        static private int uni_world;
+        static private int uni_view;
+        static private int uni_projection;
+        static private int uni_light_direction;
+
         public SceneComponent(GameWindow game, SimulationComponent simulaiton, CameraComponent camera)
             : base(game)
         {
@@ -32,15 +44,29 @@ namespace fun.Client.Components
         {
             GL.ClearColor(Color.CornflowerBlue);
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.Lighting);
-            GL.Enable(EnableCap.Light0);
-            GL.DepthFunc(DepthFunction.Lequal);
+            GL.DepthFunc(DepthFunction.Less);
 
-            // Enable Light 0 and set its parameters.
-            GL.Light(LightName.Light0, LightParameter.Position, light_pos);
-            GL.Light(LightName.Light0, LightParameter.Ambient, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
-            GL.Light(LightName.Light0, LightParameter.Diffuse, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.Light(LightName.Light0, LightParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            pgmID = GL.CreateProgram();
+
+            vsID = LoadShader(@"assets\shaders\vs.glsl", ShaderType.VertexShader, pgmID);
+            fsID = LoadShader(@"assets\shaders\fs.glsl", ShaderType.FragmentShader, pgmID);
+
+            GL.LinkProgram(pgmID);
+            Console.WriteLine(GL.GetProgramInfoLog(pgmID));
+
+            att_vpos = GL.GetAttribLocation(pgmID, "vPosition");
+            att_vcol = GL.GetAttribLocation(pgmID, "vColor");
+            att_vnor = GL.GetAttribLocation(pgmID, "vNormal");
+            uni_world = GL.GetUniformLocation(pgmID, "world");
+            uni_view = GL.GetUniformLocation(pgmID, "view");
+            uni_projection = GL.GetUniformLocation(pgmID, "projection");
+            uni_light_direction = GL.GetUniformLocation(pgmID, "light_direction");
+
+            if (att_vpos == -1 || att_vcol == -1 || att_vnor == -1 ||
+                uni_world == -1 || uni_view == -1 || uni_projection == -1 ||
+                uni_light_direction == -1)
+                Console.WriteLine("Error binding attributes");
+
             foreach (var perceived in simulation.Perceiveder)
             {
                 Directory.SetCurrentDirectory("assets\\models");
@@ -67,11 +93,13 @@ namespace fun.Client.Components
                             var indexPos = face[i].VertexIndex - 1;
                             var indexNor = face[i].NormalIndex - 1;
 
-                            vertices.Add(new VertexPositionColorNormal(positions[indexPos], new Vector4(0, 0, 0, 1.0f), normals[indexNor]));
+                            vertices.Add(new VertexPositionColorNormal(positions[indexPos], new Vector4(0.5f, 0.5f, 0.5f, 1.0f), normals[indexNor]));
                         }
 
                 meshes.Add(perceived.Name, new Mesh(vertices.ToArray()));
             }
+
+            GL.UseProgram(pgmID);
         }
         
         public override void Draw(FrameEventArgs e)
@@ -80,12 +108,13 @@ namespace fun.Client.Components
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
-            GL.MatrixMode(MatrixMode.Projection);
-            LoadMatrix(camera.Projection);
-            GL.MatrixMode(MatrixMode.Modelview);
-            LoadMatrix(camera.View);
+            var projection = camera.Projection;
+            var view = camera.View;
 
-            GL.Light(LightName.Light0, LightParameter.Position, light_pos);
+            GL.UniformMatrix4(uni_projection, false, ref projection);
+            GL.UniformMatrix4(uni_view, false, ref view);
+
+            GL.Uniform3(uni_light_direction, Vector3.One.Normalized());
 
             foreach (var entity in camera.Seen)
             {
@@ -97,16 +126,27 @@ namespace fun.Client.Components
                 var mesh = meshes[name];
                 var transform = entity.GetElement<ITransform>() as ITransform;
                 
-                var model = Matrix4.CreateScale(transform.Scale) *
+                var world = Matrix4.CreateScale(transform.Scale) *
                     Matrix4.CreateRotationX(transform.Rotation.X) *
                     Matrix4.CreateRotationY(transform.Rotation.Y) *
                     Matrix4.CreateRotationZ(transform.Rotation.Z) *
                     Matrix4.CreateTranslation(transform.Position);
 
-                mesh.Draw(model * camera.View);
+                mesh.Draw(world);
             }
 
             GL.Flush();
+        }
+
+        private int LoadShader(string file, ShaderType shaderType, int program)
+        {
+            int id = GL.CreateShader(shaderType);
+            using (var sr = new StreamReader(file))
+                GL.ShaderSource(id, sr.ReadToEnd());
+            GL.CompileShader(id);
+            GL.AttachShader(program, id);
+            Console.WriteLine(GL.GetShaderInfoLog(id));
+            return id;
         }
 
         private void LoadMatrix(Matrix4 mat) { GL.LoadMatrix(ref mat); }
@@ -123,26 +163,38 @@ namespace fun.Client.Components
                 VBO = GL.GenBuffer();
                 GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
                 GL.BufferData(BufferTarget.ArrayBuffer, (VertexPositionColorNormal.SizeInBytes * vertices.Length), vertices, BufferUsageHint.StaticDraw);
+
+                GL.VertexPointer(3, VertexPointerType.Float, VertexPositionColorNormal.SizeInBytes, 0);
+                GL.VertexAttribPointer(att_vpos, 3, VertexAttribPointerType.Float, false, VertexPositionColorNormal.SizeInBytes, 0);
+
+                GL.ColorPointer(4, ColorPointerType.Float, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes);
+                GL.VertexAttribPointer(att_vcol, 4, VertexAttribPointerType.Float, true, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes);
+
+                GL.NormalPointer(NormalPointerType.Float, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes + Vector4.SizeInBytes);
+                GL.VertexAttribPointer(att_vnor, 3, VertexAttribPointerType.Float, true, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes + Vector4.SizeInBytes);
+
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
                 VerticesLength = vertices.Length;
             }
 
-            public void Draw(Matrix4 modelview)
+            public void Draw(Matrix4 world)
             {
-                GL.MatrixMode(MatrixMode.Modelview);
-                GL.LoadMatrix(ref modelview);
+                GL.UniformMatrix4(uni_world, false, ref world);
 
                 GL.EnableClientState(ArrayCap.VertexArray);
                 GL.EnableClientState(ArrayCap.ColorArray);
                 GL.EnableClientState(ArrayCap.NormalArray);
-                GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
 
-                GL.VertexPointer(3, VertexPointerType.Float, VertexPositionColorNormal.SizeInBytes, 0);
-                GL.ColorPointer(4, ColorPointerType.Float, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes);
-                GL.NormalPointer(NormalPointerType.Float, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes + Vector4.SizeInBytes);
+                GL.EnableVertexAttribArray(att_vpos);
+                GL.EnableVertexAttribArray(att_vnor);
+                GL.EnableVertexAttribArray(att_vcol);
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, VerticesLength);
+
+                GL.DisableVertexAttribArray(att_vpos);
+                GL.DisableVertexAttribArray(att_vnor);
+                GL.DisableVertexAttribArray(att_vcol);
 
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 GL.LoadIdentity();
