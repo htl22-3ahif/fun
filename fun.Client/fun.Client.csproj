@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{63C0E4AC-8032-4690-936C-CE11A10F27EC}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>fun.Client</RootNamespace>
     <AssemblyName>fun.Client</AssemblyName>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CjClutter.ObjLoader.Loader">
       <HintPath>..\Libs\CjClutter.ObjLoader.Loader.dll</HintPath>
@@ -44,6 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\GameComponent.cs" />
+    <Compile Include="Constructs\Attrib.cs" />
+    <Compile Include="Constructs\Shader.cs" />
+    <Compile Include="Constructs\ShaderProgram.cs" />
+    <Compile Include="Constructs\Uniform.cs" />
     <Compile Include="FunGame.cs" />
     <Compile Include="Components\CameraComponent.cs" />
     <Compile Include="Components\InputComponent.cs" />
@@ -65,6 +72,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="assets\models\block.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\shaders\fs.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\shaders\vs.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
