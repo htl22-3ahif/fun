@@ -55,20 +55,28 @@ namespace fun.Client.Components
 
                 
                 var positions = result.Vertices.Select(v => new Vector3(v.X, v.Y, v.Z)).ToArray();
+                //var textures = result.Textures.Select(t => new Vector2(t.X, t.Y)).ToArray();
                 var normals = result.Normals.Select(n => new Vector3(n.X, n.Y, n.Z)).ToArray();
-                var vertices = new List<VertexPositionColorNormal>();
+
+                var _positions = new List<Vector3>();
+                //var _textures = new List<Vector2>();
+                var _normals = new List<Vector3>();
 
                 foreach (var group in result.Groups)
                     foreach (var face in group.Faces)
                         for (int i = 0; i < face.Count; i++)
                         {
                             var indexPos = face[i].VertexIndex - 1;
+                            var indexTex = face[i].TextureIndex - 1;
                             var indexNor = face[i].NormalIndex - 1;
 
-                            vertices.Add(new VertexPositionColorNormal(positions[indexPos], new Vector4(1f, 1f, 1f, 1.0f), normals[indexNor]));
+                            _positions.Add(positions[indexPos]);
+                            //_textures.Add(textures[indexTex]);
+                            _normals.Add(normals[indexNor]);
                         }
 
-                meshes.Add(perceived.Name, new Mesh(program, vertices.ToArray()));
+                meshes.Add(perceived.Name, 
+                    new Mesh(program, _positions.ToArray(), Enumerable.Repeat(Vector4.One, _positions.Count).ToArray(), _normals.ToArray()));
             }
         }
 
@@ -106,48 +114,38 @@ namespace fun.Client.Components
             GL.Flush();
         }
 
-        private int LoadShader(string file, ShaderType shaderType, int program)
-        {
-            int id = GL.CreateShader(shaderType);
-            using (var sr = new StreamReader(file))
-                GL.ShaderSource(id, sr.ReadToEnd());
-            GL.CompileShader(id);
-            GL.AttachShader(program, id);
-            Console.WriteLine(GL.GetShaderInfoLog(id));
-            return id;
-        }
-
-        private void LoadMatrix(Matrix4 mat) { GL.LoadMatrix(ref mat); }
-
         private class Mesh
         {
-            public readonly int VBO;
+            public readonly int POSITION_VBO;
+            public readonly int COLOR_VBO;
+            public readonly int NORMAL_VBO;
 
             private ShaderProgram program;
 
             public int VerticesLength { get; private set; }
 
-            public Mesh(ShaderProgram program, VertexPositionColorNormal[] vertices)
+            public Mesh(ShaderProgram program, Vector3[] positions, Vector4[] colors, Vector3[] normals)
             {
                 this.program = program;
 
-                //defining VertexBufferObject
-                VBO = GL.GenBuffer();
-                GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
-                GL.BufferData(BufferTarget.ArrayBuffer, (VertexPositionColorNormal.SizeInBytes * vertices.Length), vertices, BufferUsageHint.StaticDraw);
+                POSITION_VBO = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, POSITION_VBO);
+                GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * positions.Length), positions, BufferUsageHint.StaticDraw);
+                GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
+                GL.VertexAttribPointer(program.GetAttrib("vPosition").ID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
 
-                GL.VertexPointer(3, VertexPointerType.Float, VertexPositionColorNormal.SizeInBytes, 0);
-                GL.VertexAttribPointer(program.GetAttrib("vPosition").ID, 3, VertexAttribPointerType.Float, false, VertexPositionColorNormal.SizeInBytes, 0);
+                COLOR_VBO = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, COLOR_VBO);
+                GL.BufferData(BufferTarget.ArrayBuffer, (Vector4.SizeInBytes * colors.Length), colors, BufferUsageHint.StaticDraw);
+                GL.ColorPointer(4, ColorPointerType.Float, Vector4.SizeInBytes, 0);
+                GL.VertexAttribPointer(program.GetAttrib("vColor").ID, 4, VertexAttribPointerType.Float, false, Vector4.SizeInBytes, 0);
 
-                GL.ColorPointer(4, ColorPointerType.Float, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes);
-                GL.VertexAttribPointer(program.GetAttrib("vColor").ID, 4, VertexAttribPointerType.Float, true, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes);
+                NORMAL_VBO = GL.GenBuffer();
+                GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * normals.Length), normals, BufferUsageHint.StaticDraw);
+                GL.NormalPointer(NormalPointerType.Float, Vector3.SizeInBytes, 0);
+                GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
 
-                GL.NormalPointer(NormalPointerType.Float, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes + Vector4.SizeInBytes);
-                GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, VertexPositionColorNormal.SizeInBytes, Vector3.SizeInBytes + Vector4.SizeInBytes);
-
-                GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-
-                VerticesLength = vertices.Length;
+                VerticesLength = positions.Length;
             }
 
             public void Draw(Matrix4 world)
@@ -166,22 +164,6 @@ namespace fun.Client.Components
 
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 GL.LoadIdentity();
-            }
-        }
-
-        private struct VertexPositionColorNormal
-        {
-            public static readonly int SizeInBytes = (Vector3.SizeInBytes * 2) + Vector4.SizeInBytes;
-
-            public Vector3 Position;
-            public Vector4 Color;
-            public Vector3 Normal;
-
-            public VertexPositionColorNormal(Vector3 position, Vector4 color, Vector3 normal)
-            {
-                Position = position;
-                Color = color;
-                Normal = normal;
             }
         }
     }
