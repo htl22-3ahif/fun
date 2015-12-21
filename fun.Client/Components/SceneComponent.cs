@@ -65,22 +65,24 @@ namespace fun.Client.Components
                             var indexPos = face[i].VertexIndex - 1;
                             var indexNor = face[i].NormalIndex - 1;
 
-                            vertices.Add(new VertexPositionColorNormal(positions[indexPos], new Vector4(0.5f, 0.5f, 0.5f, 1.0f), normals[indexNor]));
+                            vertices.Add(new VertexPositionColorNormal(positions[indexPos], new Vector4(1f, 1f, 1f, 1.0f), normals[indexNor]));
                         }
 
                 meshes.Add(perceived.Name, new Mesh(program, vertices.ToArray()));
             }
         }
-        
+
+        float rot = 0;
         public override void Draw(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
+            rot += (float)e.Time / 4;
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
-            program.GetUniform("light_direction").SetValue(Vector3.One.Normalized());
+            program.GetUniform("light_direction").SetValue(Vector3.Transform(Vector3.One.Normalized(), Matrix4.CreateRotationZ(rot)));
 
             foreach (var entity in camera.Seen)
             {
