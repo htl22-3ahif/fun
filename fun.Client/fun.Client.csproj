@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="Components\GameComponent.cs" />
     <Compile Include="Constructs\Attrib.cs" />
+    <Compile Include="Constructs\Mesh.cs" />
     <Compile Include="Constructs\Shader.cs" />
     <Compile Include="Constructs\ShaderProgram.cs" />
+    <Compile Include="Constructs\Texture2D.cs" />
     <Compile Include="Constructs\Uniform.cs" />
     <Compile Include="FunGame.cs" />
     <Compile Include="Components\CameraComponent.cs" />
@@ -108,14 +110,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\textures\lel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="environment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="assets\textures\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

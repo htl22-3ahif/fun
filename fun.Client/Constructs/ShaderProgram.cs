@@ -25,6 +25,10 @@ namespace fun.Client.Constructs
 
             Shaders = shaders.ToArray();
 
+            var log = GL.GetProgramInfoLog(ID);
+            if (!string.IsNullOrEmpty(log))
+                throw new ArgumentException(log);
+
             InitAttribs();
             InitUnifroms();
 

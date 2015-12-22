@@ -19,6 +19,7 @@ namespace fun.Client.Components
 
         private Dictionary<string, Mesh> meshes;
         private ShaderProgram program;
+        private Texture2D texture;
 
         public SceneComponent(GameWindow game, SimulationComponent simulaiton, CameraComponent camera)
             : base(game)
@@ -35,9 +36,15 @@ namespace fun.Client.Components
             GL.Enable(EnableCap.DepthTest);
             GL.DepthFunc(DepthFunction.Less);
 
+            texture = new Texture2D(@"assets\textures\lel.png");
+
             program = new ShaderProgram(
                 new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader),
                 new Shader(new StreamReader(@"assets\shaders\fs.glsl").ReadToEnd(), ShaderType.FragmentShader));
+
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, texture.ID);
+            GL.Uniform1(program.GetUniform("texture").ID, 0);
 
             foreach (var perceived in simulation.Perceiveder)
             {
@@ -55,11 +62,11 @@ namespace fun.Client.Components
 
                 
                 var positions = result.Vertices.Select(v => new Vector3(v.X, v.Y, v.Z)).ToArray();
-                //var textures = result.Textures.Select(t => new Vector2(t.X, t.Y)).ToArray();
+                var uvs = result.Textures.Select(t => new Vector2(t.X, t.Y)).ToArray();
                 var normals = result.Normals.Select(n => new Vector3(n.X, n.Y, n.Z)).ToArray();
 
                 var _positions = new List<Vector3>();
-                //var _textures = new List<Vector2>();
+                var _uvs = new List<Vector2>();
                 var _normals = new List<Vector3>();
 
                 foreach (var group in result.Groups)
@@ -71,12 +78,12 @@ namespace fun.Client.Components
                             var indexNor = face[i].NormalIndex - 1;
 
                             _positions.Add(positions[indexPos]);
-                            //_textures.Add(textures[indexTex]);
+                            _uvs.Add(uvs[indexTex]);
                             _normals.Add(normals[indexNor]);
                         }
 
-                meshes.Add(perceived.Name, 
-                    new Mesh(program, _positions.ToArray(), Enumerable.Repeat(Vector4.One, _positions.Count).ToArray(), _normals.ToArray()));
+                meshes.Add(perceived.Name,
+                    new Mesh(program, _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
             }
         }
 
@@ -112,60 +119,6 @@ namespace fun.Client.Components
             }
 
             GL.Flush();
-        }
-
-        private class Mesh
-        {
-            public readonly int POSITION_VBO;
-            public readonly int COLOR_VBO;
-            public readonly int NORMAL_VBO;
-
-            private ShaderProgram program;
-
-            public int VerticesLength { get; private set; }
-
-            public Mesh(ShaderProgram program, Vector3[] positions, Vector4[] colors, Vector3[] normals)
-            {
-                this.program = program;
-
-                POSITION_VBO = GL.GenBuffer();
-                GL.BindBuffer(BufferTarget.ArrayBuffer, POSITION_VBO);
-                GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * positions.Length), positions, BufferUsageHint.StaticDraw);
-                GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
-                GL.VertexAttribPointer(program.GetAttrib("vPosition").ID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
-
-                COLOR_VBO = GL.GenBuffer();
-                GL.BindBuffer(BufferTarget.ArrayBuffer, COLOR_VBO);
-                GL.BufferData(BufferTarget.ArrayBuffer, (Vector4.SizeInBytes * colors.Length), colors, BufferUsageHint.StaticDraw);
-                GL.ColorPointer(4, ColorPointerType.Float, Vector4.SizeInBytes, 0);
-                GL.VertexAttribPointer(program.GetAttrib("vColor").ID, 4, VertexAttribPointerType.Float, true, Vector4.SizeInBytes, 0);
-
-                NORMAL_VBO = GL.GenBuffer();
-                GL.BindBuffer(BufferTarget.ArrayBuffer, NORMAL_VBO);
-                GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * normals.Length), normals, BufferUsageHint.StaticDraw);
-                GL.NormalPointer(NormalPointerType.Float, Vector3.SizeInBytes, 0);
-                GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
-
-                VerticesLength = positions.Length;
-            }
-
-            public void Draw(Matrix4 world)
-            {
-                program.GetUniform("world").SetValue(world);
-
-                GL.EnableClientState(ArrayCap.VertexArray);
-                GL.EnableClientState(ArrayCap.ColorArray);
-                GL.EnableClientState(ArrayCap.NormalArray);
-
-                program.Enable();
-
-                GL.DrawArrays(PrimitiveType.Triangles, 0, VerticesLength);
-
-                program.Disable();
-
-                GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-                GL.LoadIdentity();
-            }
         }
     }
 }
