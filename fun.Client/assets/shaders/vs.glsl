@@ -8,13 +8,16 @@ uniform mat4 world;
 uniform mat4 view;
 uniform mat4 projection;
 
+out vec3 position;
 out vec2 uv;
 out vec3 normal;
 
 void
 main(){
-	gl_Position = projection * view * world * vec4(vPosition, 1.0);
+	vec4 realPosition = world * vec4(vPosition, 1.0);
+	gl_Position = projection * view * realPosition;
 
+	position = realPosition.xyz;
 	uv = vUV;
 	normal = normalize((world * vec4(vNormal, 0)).xyz);
 }
