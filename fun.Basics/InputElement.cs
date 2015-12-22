@@ -1,5 +1,4 @@
-﻿using fun.Communication;
-using fun.Core;
+﻿using fun.Core;
 using OpenTK;
 using OpenTK.Input;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Basics
 {
-    public sealed class InputElement : Element, IInput
+    public sealed class InputElement : Element
     {
         private Key[] lastKeys;
         private Key[] currKeys;

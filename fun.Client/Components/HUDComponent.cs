@@ -19,7 +19,7 @@ namespace fun.Client
         private Font sans = new Font(FontFamily.GenericSansSerif, 24);
         private Font mono = new Font(FontFamily.GenericMonospace, 24);
 
-        private bool textRender = true;
+        //private bool textRender = true;
 
         public HUDComponend(GameWindow game)
             : base(game)

@@ -1,5 +1,4 @@
 ﻿using fun.Basics.Shapes;
-using fun.Communication;
 using fun.Core;
 using OpenTK;
 using System;
@@ -12,7 +11,7 @@ namespace fun.Basics
     /// <summary>
     /// Defines the element of an entity, which is able to draw other seen entities on the monitor.
     /// </summary>
-    public sealed class PerceiverElement : Element, IPerceiver
+    public sealed class PerceiverElement : Element
     {
         private readonly TransformElement transform;
 
@@ -31,7 +30,7 @@ namespace fun.Basics
                 // TODO: write message
                 throw new NotImplementedException();
 
-            transform = entity.GetElement<TransformElement>() as TransformElement;
+            transform = entity.GetElement<TransformElement>();
 
             Sphere = new Sphere(Vector3.Zero, 100f);
         }
@@ -47,7 +46,7 @@ namespace fun.Basics
 
             Seen = environment.Entities
                 .Where(e => 
-                    Sphere.Contains((e.GetElement<TransformElement>() as TransformElement).Position - transform.Position) && 
+                    Sphere.Contains(e.GetElement<TransformElement>().Position - transform.Position) && 
                     e.ContainsElement<PerceivedElement>());
         }
     }

@@ -1,5 +1,5 @@
-﻿using fun.Client.Constructs;
-using fun.Communication;
+﻿using fun.Basics;
+using fun.Client.Constructs;
 using ObjLoader.Loader.Loaders;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -102,13 +102,13 @@ namespace fun.Client.Components
 
             foreach (var entity in camera.Seen)
             {
-                var name = (entity.GetElement<IPerceived>() as IPerceived).Name;
+                var name = entity.GetElement<PerceivedElement>().Name;
 
                 if (!meshes.Keys.Contains(name))
                     continue;
 
                 var mesh = meshes[name];
-                var transform = entity.GetElement<ITransform>() as ITransform;
+                var transform = entity.GetElement<TransformElement>();
                 
                 var world = Matrix4.CreateScale(transform.Scale) *
                     Matrix4.CreateRotationX(transform.Rotation.X) *

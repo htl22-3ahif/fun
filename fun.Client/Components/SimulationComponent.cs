@@ -1,4 +1,4 @@
-﻿using fun.Communication;
+﻿using fun.Basics;
 using fun.Core;
 using fun.IO;
 using OpenTK;
@@ -16,7 +16,7 @@ namespace fun.Client.Components
         private Environment environment;
 
         public Entity Player { get; private set; }
-        public IEnumerable<IPerceived> Perceiveder { get; set; }
+        public IEnumerable<PerceivedElement> Perceiveder { get; set; }
 
         public SimulationComponent(GameWindow game, InputComponent input)
             : base(game)
@@ -26,7 +26,7 @@ namespace fun.Client.Components
             var loader = new EnvironmentLoader();
             environment = loader.Load(new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))[0];
             Player = environment.GetEntity("player");
-            Perceiveder = environment.Entities.Where(e => e.ContainsElement<IPerceived>()).Select(e => e.GetElement<IPerceived>() as IPerceived);
+            Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
         }
 
         public override void Initialize()
@@ -37,8 +37,8 @@ namespace fun.Client.Components
         public override void Update(FrameEventArgs e)
         {
             foreach (var input in environment.Entities
-                .Where(en => en.ContainsElement<IInput>())
-                .Select(en => en.GetElement<IInput>() as IInput))
+                .Where(en => en.ContainsElement<InputElement>())
+                .Select(en => en.GetElement<InputElement>()))
             {
                 input.Keys = this.input.Keyboard.DownKeys;
                 //input.MouseDelta = this.input.Mouse.Delta;

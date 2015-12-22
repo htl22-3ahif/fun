@@ -86,7 +86,7 @@ namespace fun.Core
         {
             // Search
             foreach (var element in elements)
-                if (element.GetType() == elementType || element.GetType().GetInterfaces().Any(i => i == elementType))
+                if (element.GetType() == elementType)
                     return element;
 
             // 404 not found
@@ -98,9 +98,9 @@ namespace fun.Core
         /// </summary>
         /// <typeparam name="T">the wanted element type is needed to distinguish between our elements</typeparam>
         /// <returns>returns the searched element, if successful</returns>
-        public Element GetElement<T>()
+        public T GetElement<T>() where T : Element
         {
-            return GetElement(typeof(T));
+            return (T)GetElement(typeof(T));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace fun.Core
         public bool ContainsElement(Type elementType)
         {
             foreach (var element in elements)
-                if (element.GetType() == elementType || element.GetType().GetInterfaces().Any(i => i == elementType))
+                if (element.GetType() == elementType)
                     return true;
 
             return false;
@@ -123,6 +123,7 @@ namespace fun.Core
         /// <param name="elementType">type of element</param>
         /// <returns></returns>
         public bool ContainsElement<T>()
+            where T : Element
         {
             return ContainsElement(typeof(T));
         }

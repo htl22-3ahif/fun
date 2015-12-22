@@ -27,7 +27,7 @@ namespace fun.Basics
         public ColliderBoxElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
-            transform = entity.GetElement<TransformElement>() as TransformElement;
+            transform = entity.GetElement<TransformElement>();
         }
 
         public float? Intersects(Ray ray)

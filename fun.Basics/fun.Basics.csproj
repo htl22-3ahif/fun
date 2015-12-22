@@ -56,10 +56,6 @@
     <Compile Include="TransformElement.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\fun.Communication\fun.Communication.csproj">
-      <Project>{ee80df96-ac24-4204-842b-5e11e10aafe2}</Project>
-      <Name>fun.Communication</Name>
-    </ProjectReference>
     <ProjectReference Include="..\fun.Core\fun.Core.csproj">
       <Project>{80175f3b-2c0d-4a9e-9944-b69abf3e8006}</Project>
       <Name>fun.Core</Name>

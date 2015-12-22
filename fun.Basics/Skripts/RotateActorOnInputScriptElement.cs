@@ -18,8 +18,8 @@ namespace fun.Basics.Skripts
             if (!entity.ContainsElement<TransformElement>())
                 throw new NotSupportedException();
 
-            input = entity.GetElement<InputElement>() as InputElement;
-            transform = entity.GetElement<TransformElement>() as TransformElement;
+            input = entity.GetElement<InputElement>();
+            transform = entity.GetElement<TransformElement>();
         }
 
         public override void Update(double time)

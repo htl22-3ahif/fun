@@ -1,5 +1,4 @@
-﻿using fun.Communication;
-using fun.Core;
+﻿using fun.Core;
 using OpenTK;
 using Environment = fun.Core.Environment;
 
@@ -8,7 +7,7 @@ namespace fun.Basics
     /// <summary>
     /// Describes basic informations of an entity.
     /// </summary>
-    public sealed class TransformElement : Element, ITransform
+    public sealed class TransformElement : Element
     {
         /// <summary>
         /// Describes the position of an entity.

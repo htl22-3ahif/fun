@@ -20,7 +20,7 @@ namespace fun.Basics
         public CollidingElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
-            transform = entity.GetElement<TransformElement>() as TransformElement;
+            transform = entity.GetElement<TransformElement>();
 
             currPos = transform.Position;
             lastPos = transform.Position;
@@ -28,9 +28,12 @@ namespace fun.Basics
 
         public override void Initialize()
         {
-            colliders = new List<ICollider>(environment.Entities
-                .Where(e => e.ContainsElement<ICollider>())
-                .Select(e => e.GetElement<ICollider>() as ICollider));
+            var elements = new List<Element>();
+            foreach (var entity in environment.Entities)
+                elements.AddRange(entity.Elements);
+            colliders = new List<ICollider>(elements
+                .Where(e => e is ICollider)
+                .Select(e => e as ICollider));
         }
 
         public override void Update(double time)

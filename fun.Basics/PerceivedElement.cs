@@ -1,10 +1,9 @@
-﻿using fun.Communication;
-using fun.Core;
+﻿using fun.Core;
 using Environment = fun.Core.Environment;
 
 namespace fun.Basics
 {
-    public sealed class PerceivedElement : Element, IPerceived
+    public sealed class PerceivedElement : Element
     {
         public string Name { get; set; }
 

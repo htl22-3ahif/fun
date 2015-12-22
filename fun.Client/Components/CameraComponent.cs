@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using Environment = fun.Core.Environment;
-using fun.Communication;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using fun.Basics;
 
 namespace fun.Client.Components
 {
@@ -15,7 +15,7 @@ namespace fun.Client.Components
         private InputComponent input;
         private Vector3 rotation;
 
-        public IEnumerable<Entity> Seen { get { return (player.GetElement<IPerceiver>() as IPerceiver).Seen; } }
+        public IEnumerable<Entity> Seen { get { return player.GetElement<PerceiverElement>().Seen; } }
         public float FieldOfView { get; set; }
         public float NearPlaneDistance { get; set; }
         public float FarPlaneDistance { get; set; }
@@ -39,7 +39,7 @@ namespace fun.Client.Components
 
         public override void Update(FrameEventArgs e)
         {
-            var transform = player.GetElement<ITransform>() as ITransform;
+            var transform = player.GetElement<TransformElement>();
 
             rotation += new Vector3(input.Mouse.Delta.Y / 100f, 0f, input.Mouse.Delta.X / 100f);
 
@@ -54,7 +54,7 @@ namespace fun.Client.Components
                 input.Keyboard.GetKeyDown(Key.A) ||
                 input.Keyboard.GetKeyDown(Key.S) ||
                 input.Keyboard.GetKeyDown(Key.D))
-                (player.GetElement<IInput>() as IInput).Content = new Vector3(0, 0, rotation.Z);
+                player.GetElement<InputElement>().Content = new Vector3(0, 0, rotation.Z);
 
             View = Matrix4.LookAt(
                 transform.Position - (forward * Distance), forward + (transform.Position - (forward * Distance)), up);
