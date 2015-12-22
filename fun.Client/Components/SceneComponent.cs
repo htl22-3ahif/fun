@@ -97,8 +97,8 @@ namespace fun.Client.Components
             rot += (float)e.Time / 4;
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
-            program.GetUniform("light_position").SetValue(new Vector3(0, 0, 7));
-            program.GetUniform("range").SetValue(10f);
+            program.GetUniform("light_position").SetValue(new Vector3(0, 0, 10));
+            program.GetUniform("range").SetValue(100f);
 
             foreach (var entity in camera.Seen)
             {
