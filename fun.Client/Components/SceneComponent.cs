@@ -138,9 +138,10 @@ namespace fun.Client.Components
                 GL.BindBuffer(BufferTarget.ArrayBuffer, COLOR_VBO);
                 GL.BufferData(BufferTarget.ArrayBuffer, (Vector4.SizeInBytes * colors.Length), colors, BufferUsageHint.StaticDraw);
                 GL.ColorPointer(4, ColorPointerType.Float, Vector4.SizeInBytes, 0);
-                GL.VertexAttribPointer(program.GetAttrib("vColor").ID, 4, VertexAttribPointerType.Float, false, Vector4.SizeInBytes, 0);
+                GL.VertexAttribPointer(program.GetAttrib("vColor").ID, 4, VertexAttribPointerType.Float, true, Vector4.SizeInBytes, 0);
 
                 NORMAL_VBO = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, NORMAL_VBO);
                 GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * normals.Length), normals, BufferUsageHint.StaticDraw);
                 GL.NormalPointer(NormalPointerType.Float, Vector3.SizeInBytes, 0);
                 GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
