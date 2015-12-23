@@ -13,6 +13,8 @@ namespace fun.Core
         private readonly List<Element> elements;
         private readonly List<Entity> children;
 
+        private bool inizialized;
+
         /// <summary>
         /// This is the entitys name.
         /// </summary>
@@ -43,6 +45,7 @@ namespace fun.Core
             this.environment = environment;
             this.elements = new List<Element>();
             this.children = new List<Entity>();
+            inizialized = false;
         }
 
         /// <summary>
@@ -66,6 +69,13 @@ namespace fun.Core
             else
                 // throw exception if it turns out to be invalid
                 throw new ArgumentException(element.GetType().Name + " does not inherit from Element");
+
+            if (!inizialized)
+                return;
+
+            foreach (var _element in elements)
+                if (_element != element)
+                    _element.OnElementJoinedEntity((Element)element);
         }
 
         /// <summary>
@@ -165,11 +175,19 @@ namespace fun.Core
                 child.Parent = this;
         }
 
+        public void Close()
+        {
+            foreach (var element in elements)
+                element.OnClose();
+        }
+
         // Basic methods
         public void Initialize()
         {
             foreach (var element in elements)
                 element.Initialize();
+
+            inizialized = true;
         }
         public void Update(double time)
         {

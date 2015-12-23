@@ -10,6 +10,8 @@ namespace fun.Core
     {
         private readonly List<Entity> entities;
 
+        private bool inizialized;
+
         /// <summary>
         /// entities available for communication.
         /// </summary>
@@ -21,6 +23,7 @@ namespace fun.Core
         public Environment()
         {
             entities = new List<Entity>();
+            inizialized = false;
         }
 
         /// <summary>
@@ -37,6 +40,16 @@ namespace fun.Core
 
             // Add entity to entity-List
             entities.Add(entity);
+
+            if (!inizialized)
+                return;
+
+            entity.Initialize();
+
+            foreach (var _entity in entities)
+                if (_entity != entity)
+                    foreach (var element in _entity.Elements)
+                        element.OnEntityJoinedEnvironment(entity);
         }
 
         /// <summary>
@@ -55,10 +68,18 @@ namespace fun.Core
             throw new ArgumentException("Entity not found");
         }
 
+        public void Close()
+        {
+            foreach (var entity in entities)
+                entity.Close();
+        }
+
         public void Initialize()
         {
             foreach (var entity in entities)
                 entity.Initialize();
+
+            inizialized = true;
         }
 
         public void Update(double time)
