@@ -49,6 +49,7 @@
     <Compile Include="Parsers\EnvironmentParser.cs" />
     <Compile Include="Parsers\LibaryParser.cs" />
     <Compile Include="Parsers\Parser.cs" />
+    <Compile Include="Parsers\PropertyParser.cs" />
     <Compile Include="Parsers\StringParser.cs" />
     <Compile Include="Parsers\Vector3Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
