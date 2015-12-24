@@ -5,8 +5,8 @@
     /// </summary>
     public class Element
     {
-        protected readonly Environment environment;
-        protected readonly Entity entity;
+        public Environment Environment { get; private set; }
+        public Entity Entity { get; private set; }
 
         /// <summary>
         /// Creates an element-Object.
@@ -15,8 +15,8 @@
         /// <param name="entity">element of our element</param>
         public Element(Environment environment, Entity entity)
         {
-            this.environment = environment;
-            this.entity = entity;
+            this.Environment = environment;
+            this.Entity = entity;
         }
 
         // Event Methods

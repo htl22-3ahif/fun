@@ -44,7 +44,7 @@ namespace fun.Basics
         {
             // TODO: effizienter gestalten
 
-            Seen = environment.Entities
+            Seen = Environment.Entities
                 .Where(e => 
                     Sphere.Contains(e.GetElement<TransformElement>().Position - transform.Position) && 
                     e.ContainsElement<PerceivedElement>());

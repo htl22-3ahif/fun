@@ -29,7 +29,7 @@ namespace fun.Basics
         public override void Initialize()
         {
             var elements = new List<Element>();
-            foreach (var entity in environment.Entities)
+            foreach (var entity in Environment.Entities)
                 elements.AddRange(entity.Elements);
             colliders = new List<ICollider>(elements
                 .Where(e => e is ICollider)

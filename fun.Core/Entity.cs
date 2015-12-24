@@ -9,7 +9,6 @@ namespace fun.Core
     /// </summary>
     public sealed class Entity
     {
-        private readonly Environment environment;
         private readonly List<Element> elements;
         private readonly List<Entity> children;
 
@@ -19,6 +18,8 @@ namespace fun.Core
         /// This is the entitys name.
         /// </summary>
         public string Name { get; private set; }
+
+        public Environment Environment { get; private set; }
 
         public Element[] Elements { get { return elements.ToArray(); } }
 
@@ -42,7 +43,7 @@ namespace fun.Core
         public Entity(string name, Environment environment)
         {
             this.Name = name;
-            this.environment = environment;
+            this.Environment = environment;
             this.elements = new List<Element>();
             this.children = new List<Entity>();
             inizialized = false;
@@ -60,7 +61,7 @@ namespace fun.Core
                     throw new ArgumentException("");
 
             // Create an instance of the given type with its params
-            var element = Activator.CreateInstance(elementType, environment, this);
+            var element = Activator.CreateInstance(elementType, Environment, this);
 
             // check for validity (if element actually inherits from the Element-Class)
             if (element is Element)
