@@ -12,8 +12,6 @@ namespace fun.Core
         private readonly List<Element> elements;
         private readonly List<Entity> children;
 
-        private bool inizialized;
-
         /// <summary>
         /// This is the entitys name.
         /// </summary>
@@ -42,11 +40,16 @@ namespace fun.Core
         /// <param name="environment">environment of our entity</param>
         public Entity(string name, Environment environment)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if (environment == null)
+                throw new ArgumentNullException("environment");
+
             this.Name = name;
             this.Environment = environment;
             this.elements = new List<Element>();
             this.children = new List<Entity>();
-            inizialized = false;
         }
 
         /// <summary>
@@ -55,6 +58,9 @@ namespace fun.Core
         /// <param name="elementType">type of element</param>
         public void AddElement(Type elementType)
         {
+            if (!elementType.IsSubclassOf(typeof(Element)))
+                throw new ArgumentException(string.Format("You can not add an element of type \"{0}\"", elementType.Name));
+
             // check if the given type is declared
             foreach (var individualElement in elements)
                 if (individualElement.GetType() == elementType)
@@ -71,12 +77,8 @@ namespace fun.Core
                 // throw exception if it turns out to be invalid
                 throw new ArgumentException(element.GetType().Name + " does not inherit from Element");
 
-            if (!inizialized)
-                return;
-
             foreach (var _element in elements)
-                if (_element != element)
-                    _element.OnElementJoinedEntity((Element)element);
+                _element.OnElementAdded(element as Element);
         }
 
         /// <summary>
@@ -187,8 +189,6 @@ namespace fun.Core
         {
             foreach (var element in elements)
                 element.Initialize();
-
-            inizialized = true;
         }
         public void Update(double time)
         {

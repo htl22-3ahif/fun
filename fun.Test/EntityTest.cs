@@ -45,7 +45,7 @@ namespace fun.Test
         }
 
         [TestMethod]
-        public void AddEntityTest()
+        public void AddElementTest()
         {
             var env = new Environment();
             var entity = new Entity("test", env);
@@ -81,6 +81,18 @@ namespace fun.Test
                 Assert.Fail();
             }
             catch (ArgumentException) { }
+
+            entity = new Entity("test", env);
+
+            try
+            {
+                entity.AddElement(typeof(int));
+                Assert.Fail();
+            }
+            catch (ArgumentException) { }
+
+            entity = new Entity("test", env);
+            entity.AddElement(typeof(TestElement2));
         }
     }
     #region Test Classes and Structs
@@ -88,6 +100,13 @@ namespace fun.Test
     class TestElement1 : Element
     {
         public TestElement1(Environment environment, Entity entity) : base(environment, entity)
+        {
+        }
+    }
+
+    class TestElement2 : TestElement1
+    {
+        public TestElement2(Environment environment, Entity entity) : base(environment, entity)
         {
         }
     }

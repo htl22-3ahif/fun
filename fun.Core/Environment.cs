@@ -49,7 +49,7 @@ namespace fun.Core
             foreach (var _entity in entities)
                 if (_entity != entity)
                     foreach (var element in _entity.Elements)
-                        element.OnEntityJoinedEnvironment(entity);
+                        element.OnEntityAdded(entity);
         }
 
         /// <summary>
