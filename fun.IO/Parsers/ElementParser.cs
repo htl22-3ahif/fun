@@ -15,8 +15,7 @@ namespace fun.IO.Parsers
             this.data = data;
             this.parsers = new Parser[]
             {
-                new Vector3Parser(data),
-                new StringParser(data)
+                new PropertyParser(data)
             };
         }
 
@@ -39,11 +38,10 @@ namespace fun.IO.Parsers
             if (data.Element == null)
                 throw new XmlException(typename + " does not exist.");
 
-            foreach (var att in node.Attributes.OfType<XmlAttribute>())
-                if (att.Name != typeof(Type).Name)
-                    foreach (var parser in parsers)
-                        if (parser.TryParse(att))
-                            parser.Parse(att);
+            foreach (var _node in node.ChildNodes.OfType<XmlNode>())
+                foreach (var parser in parsers)
+                    if (parser.TryParse(_node))
+                        parser.Parse(_node);
 
             data.DepushElement();
         }

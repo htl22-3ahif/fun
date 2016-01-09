@@ -39,7 +39,8 @@
   <ItemGroup>
     <Compile Include="Data\DataStore.cs" />
     <Compile Include="Data\IElementDataStore.cs" />
-    <Compile Include="Data\IElementPropertyDataStore.cs" />
+    <Compile Include="Data\IParamDataStore.cs" />
+    <Compile Include="Data\IPropertyDataStore.cs" />
     <Compile Include="Data\IEntityDataStore.cs" />
     <Compile Include="Data\IEnvironmentDataStore.cs" />
     <Compile Include="Data\ILibaryDataStore.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Parsers\EntityParser.cs" />
     <Compile Include="Parsers\EnvironmentParser.cs" />
     <Compile Include="Parsers\LibaryParser.cs" />
+    <Compile Include="Parsers\ParamParser.cs" />
     <Compile Include="Parsers\Parser.cs" />
     <Compile Include="Parsers\PropertyParser.cs" />
     <Compile Include="Parsers\StringParser.cs" />

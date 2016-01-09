@@ -10,6 +10,7 @@ namespace fun.IO.Data
     {
         private List<Assembly> assemblys;
         private List<Environment> environments;
+        private List<object> parameters;
         private Environment currEnvironment;
         private Entity currEntity;
         private Element currElement;
@@ -18,10 +19,13 @@ namespace fun.IO.Data
         public Assembly[] Assemblys { get { return assemblys.ToArray(); } }
         public Element Element { get { return currElement; } }
 
+        public object[] Params { get { return parameters.ToArray(); } }
+
         public DataStore()
         {
             assemblys = new List<Assembly>();
             environments = new List<Environment>();
+            parameters = new List<object>();
         }
 
         public void PushEnvironment()
@@ -74,6 +78,16 @@ namespace fun.IO.Data
         public void AddLibary(Assembly assembly)
         {
             assemblys.Add(assembly);
+        }
+
+        public void FlushParams()
+        {
+            parameters.Clear();
+        }
+
+        public void PushParam(object param)
+        {
+            parameters.Add(param);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace fun.IO.Data
 {
-    interface IElementDataStore : IElementPropertyDataStore
+    interface IElementDataStore : IPropertyDataStore
     {
         void PushElement(Type type);
         void DepushElement();

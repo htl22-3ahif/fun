@@ -11,11 +11,15 @@ namespace fun.IO.Parsers
 {
     internal sealed class PropertyParser : Parser
     {
-        IElementPropertyDataStore data;
+        IPropertyDataStore data;
 
-        public PropertyParser(IElementPropertyDataStore data)
+        public PropertyParser(IPropertyDataStore data)
         {
             this.data = data;
+            this.parsers = new Parser[]
+            {
+                new ParamParser(data)
+            };
         }
 
         public override bool TryParse(XmlNode node)
@@ -25,28 +29,18 @@ namespace fun.IO.Parsers
 
         public override void Parse(XmlNode node)
         {
-            var name = node.Attributes["name"].Value;
+            var name = node.Attributes["Name"].Value;
             var property = data.Element.GetType().GetProperty(name);
-            var values = node.Attributes["value"].Value.Split('/');
 
-            if (values.Length == 1 && property.PropertyType.IsSubclassOf(typeof(ValueType)))
-            {
-                property.SetValue(data.Element, Convert.ChangeType(values[0], property.PropertyType));
-                return;
-            }
+            //alle params durchgehen (in params object array stored)
+            foreach (var _node in node.OfType<XmlNode>())
+                foreach (var parser in parsers)
+                    if (parser.TryParse(_node))
+                        parser.Parse(_node);
 
-            var constructors = property.PropertyType.GetConstructors()
-                .Where(c => c.GetParameters().Length == values.Length);
-
-            foreach (var constructor in constructors)
-            {
-                var convertedValues = new object[values.Length];
-                for (int i = 0; i < values.Length; i++)
-                    convertedValues[i] = Convert.ChangeType(values[i], constructor.GetParameters()[i].ParameterType);
-
-                var result = Activator.CreateInstance(property.PropertyType, convertedValues);
-                property.SetValue(data.Element, result);
-            }
+            var propertyObject = Activator.CreateInstance(property.PropertyType, data.Params);
+            property.SetValue(data.Element, propertyObject);
+            data.FlushParams();
         }
     }
 }

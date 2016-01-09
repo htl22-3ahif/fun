@@ -7,9 +7,9 @@ namespace fun.IO.Parsers
 {
     internal sealed class Vector3Parser : Parser
     {
-        private IElementPropertyDataStore data;
+        private IPropertyDataStore data;
 
-        public Vector3Parser(IElementPropertyDataStore data)
+        public Vector3Parser(IPropertyDataStore data)
         {
             this.data = data;
             this.parsers = null;

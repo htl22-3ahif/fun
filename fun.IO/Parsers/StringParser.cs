@@ -5,9 +5,9 @@ namespace fun.IO.Parsers
 {
     internal sealed class StringParser : Parser
     {
-        private IElementPropertyDataStore data;
+        private IPropertyDataStore data;
 
-        public StringParser(IElementPropertyDataStore data)
+        public StringParser(IPropertyDataStore data)
         {
             this.data = data;
             parsers = null;

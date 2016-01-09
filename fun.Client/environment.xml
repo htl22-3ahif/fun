@@ -1,21 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Environment>
+  
   <Lib Path="fun.Basics.dll"/>
   
   <Entity Name="player">
-    <Element Type="TransformElement" Position="0/-20/0" Scale="0,1/0,1/0,1"/>
+    
+    <Element Type="TransformElement">
+      
+      <Property Name="Position">
+        <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single" Value="-20"/>
+        <Param Type="System.Single" Value="0"/>
+      </Property>
+      
+      <Property Name="Scale">
+        <Param Type="System.Single" Value="0,1"/>
+        <Param Type="System.Single" Value="0,1"/>
+        <Param Type="System.Single" Value="0,1"/>
+      </Property>
+      
+    </Element>
+    
     <Element Type="PerceiverElement"/>
+    
     <Element Type="InputElement"/>
+    
     <Element Type="MoveActorOnInputScriptElement"/>
+    
     <Element Type="RotateActorOnInputScriptElement"/>
+    
     <Element Type="CollidingElement"/>
-    <Element Type="PerceivedElement" Name="block.obj"/>
+
+    <Element Type="PerceivedElement">
+      
+      <Property Name="Name">
+        <Param Type="System.String" Value="block.obj"/>
+      </Property>
+      
+    </Element>
+    
   </Entity>
 
   <Entity Name="block">
-    <Element Type="TransformElement" Position="0/0/0" Scale="1/1/1"/>
-    <Element Type="PerceivedElement" Name="block.obj"/>
+
+    <Element Type="TransformElement">
+
+      <Property Name="Position">
+        <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single" Value="0"/>
+      </Property>
+
+      <Property Name="Scale">
+        <Param Type="System.Single" Value="1"/>
+        <Param Type="System.Single" Value="1"/>
+        <Param Type="System.Single" Value="1"/>
+      </Property>
+
+    </Element>
+
+    <Element Type="PerceivedElement">
+
+      <Property Name="Name">
+        <Param Type="System.String" Value="block.obj"/>
+      </Property>
+
+    </Element>
+
     <Element Type="InputElement"/>
-    <Element Type="ColliderBoxElement" Min="-5/-5/-5" Max="5/5/5"/>
+
+    <Element Type="ColliderBoxElement">
+      
+      <Property Name="Min">
+        <Param Type="System.Single" Value="-5"/>
+        <Param Type="System.Single" Value="-5"/>
+        <Param Type="System.Single" Value="-5"/>
+      </Property>
+
+      <Property Name="Max">
+        <Param Type="System.Single" Value="5"/>
+        <Param Type="System.Single" Value="5"/>
+        <Param Type="System.Single" Value="5"/>
+        
+      </Property>
+      
+    </Element>
+    
   </Entity>
+  
 </Environment>
