@@ -38,8 +38,14 @@ namespace fun.IO.Parsers
                     if (parser.TryParse(_node))
                         parser.Parse(_node);
 
-            var propertyObject = Activator.CreateInstance(property.PropertyType, data.Params);
-            property.SetValue(data.Element, propertyObject);
+            if (property.PropertyType.IsPrimitive)
+                property.SetValue(data.Element, data.Params.First());
+            else
+            {
+                var propertyObject = Activator.CreateInstance(property.PropertyType, data.Params);
+                property.SetValue(data.Element, propertyObject);
+            }
+
             data.FlushParams();
         }
     }

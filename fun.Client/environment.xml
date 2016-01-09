@@ -9,8 +9,8 @@
       
       <Property Name="Position">
         <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="-20"/>
         <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single" Value="5"/>
       </Property>
       
       <Property Name="Scale">
@@ -38,6 +38,8 @@
       </Property>
       
     </Element>
+
+    <Element Type="GravitationElement"/>
     
   </Entity>
 
@@ -52,9 +54,9 @@
       </Property>
 
       <Property Name="Scale">
-        <Param Type="System.Single" Value="1"/>
-        <Param Type="System.Single" Value="1"/>
-        <Param Type="System.Single" Value="1"/>
+        <Param Type="System.Single" Value="10"/>
+        <Param Type="System.Single" Value="10"/>
+        <Param Type="System.Single" Value="0,5"/>
       </Property>
 
     </Element>
@@ -72,15 +74,15 @@
     <Element Type="ColliderBoxElement">
       
       <Property Name="Min">
-        <Param Type="System.Single" Value="-5"/>
-        <Param Type="System.Single" Value="-5"/>
-        <Param Type="System.Single" Value="-5"/>
+        <Param Type="System.Single" Value="-6"/>
+        <Param Type="System.Single" Value="-6"/>
+        <Param Type="System.Single" Value="-6"/>
       </Property>
 
       <Property Name="Max">
-        <Param Type="System.Single" Value="5"/>
-        <Param Type="System.Single" Value="5"/>
-        <Param Type="System.Single" Value="5"/>
+        <Param Type="System.Single" Value="6"/>
+        <Param Type="System.Single" Value="6"/>
+        <Param Type="System.Single" Value="6"/>
         
       </Property>
       

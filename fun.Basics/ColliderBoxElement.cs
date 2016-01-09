@@ -33,8 +33,8 @@ namespace fun.Basics
         public float? Intersects(Ray ray)
         {
             var tempbox = new Box(
-                box.Min + transform.Position,
-                box.Max + transform.Position);
+                (box.Min * transform.Scale + transform.Position),
+                (box.Max * transform.Scale + transform.Position));
 
             return ray.Intersects(tempbox);
         }

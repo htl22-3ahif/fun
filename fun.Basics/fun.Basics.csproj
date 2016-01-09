@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ColliderBoxElement.cs" />
     <Compile Include="CollidingElement.cs" />
+    <Compile Include="GravitationElement.cs" />
     <Compile Include="ICollider.cs" />
     <Compile Include="PerceiverElement.cs" />
     <Compile Include="InputElement.cs" />
