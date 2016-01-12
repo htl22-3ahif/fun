@@ -16,7 +16,7 @@ namespace fun.Client.Constructs
 
         public ActiveUniformType Type { get; private set; }
 
-        public Uniform(ShaderProgram program, string name, ActiveUniformType type)
+        public Uniform(ShaderProgram program, string name, ActiveUniformType type):this()
         {
             Name = name;
             Type = type;

@@ -15,7 +15,7 @@ namespace fun.Client.Constructs
 
         public ActiveAttribType Type { get; private set; }
 
-        public Attrib(ShaderProgram program, string name, ActiveAttribType type)
+        public Attrib(ShaderProgram program, string name, ActiveAttribType type):this()
         {
             ID = GL.GetAttribLocation(program.ID, name);
 
