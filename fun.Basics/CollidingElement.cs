@@ -10,7 +10,7 @@ namespace fun.Basics
 {
     public sealed class CollidingElement : Element
     {
-        private static float GAP = 0.1f;
+        private static float GAP = 0.0001f;
 
         private Vector3 lastPos;
         private Vector3 currPos;
@@ -46,7 +46,23 @@ namespace fun.Basics
                 currPos = transform.Position;
 
                 var move = currPos - lastPos;
+                var othermove = move;
                 var ray = new Ray(lastPos, Vector3.Normalize(move));
+
+                //if (move.X < GAP && move.X > 0)
+                //    move.X = GAP;
+                //if (move.X > -GAP && move.X < 0)
+                //    move.X = -GAP;
+
+                //if (move.Y < GAP && move.Y > 0)
+                //    move.Y = GAP;
+                //if (move.Y > -GAP && move.Y < 0)
+                //    move.Y = -GAP;
+
+                //if (move.Z < GAP && move.Z > 0)
+                //    move.Z = GAP;
+                //if (move.Z > -GAP && move.Z < 0)
+                //    move.Z = -GAP;
 
                 colliding = colliders.FirstOrDefault(c =>
                 {
@@ -89,17 +105,27 @@ namespace fun.Basics
                     if (isColliding.X)
                     {
                         reduction = distance.X.Value / Math.Abs(move.X);
-                        move.X *= reduction - GAP;
+                        move.X *= reduction;
+
+                        if (move.X < GAP && move.X > 0)
+                            move.X -= GAP;
+                        else if (move.X > -GAP && move.X < 0)
+                            move.X += GAP;
                     }
                     else if (isColliding.Y)
                     {
                         reduction = distance.Y.Value / Math.Abs(move.Y);
-                        move.Y *= reduction - GAP;
+                        move.Y *= reduction;
+
+                        if (move.Y < GAP && move.Y > 0)
+                            move.Y -= GAP;
+                        else if (move.Y > -GAP && move.Y < 0)
+                            move.Y += GAP;
                     }
                     else if (isColliding.Z)
                     {
                         reduction = distance.Z.Value / Math.Abs(move.Z);
-                        move.Z *= reduction - GAP;
+                        move.Z *= reduction;
                     }
 
                     transform.Position = currPos = lastPos + move;

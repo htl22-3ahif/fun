@@ -74,16 +74,15 @@
     <Element Type="ColliderBoxElement">
       
       <Property Name="Min">
-        <Param Type="System.Single" Value="-6"/>
-        <Param Type="System.Single" Value="-6"/>
-        <Param Type="System.Single" Value="-6"/>
+        <Param Type="System.Single" Value="-50,6"/>
+        <Param Type="System.Single" Value="-50,6"/>
+        <Param Type="System.Single" Value="-3,1"/>
       </Property>
 
       <Property Name="Max">
-        <Param Type="System.Single" Value="6"/>
-        <Param Type="System.Single" Value="6"/>
-        <Param Type="System.Single" Value="6"/>
-        
+        <Param Type="System.Single" Value="50,6"/>
+        <Param Type="System.Single" Value="50,6"/>
+        <Param Type="System.Single" Value="3,1"/>
       </Property>
       
     </Element>

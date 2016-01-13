@@ -23,7 +23,6 @@ namespace fun.Basics
             set { box.Max = value; }
         }
 
-
         public ColliderBoxElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
@@ -33,8 +32,8 @@ namespace fun.Basics
         public float? Intersects(Ray ray)
         {
             var tempbox = new Box(
-                (box.Min * transform.Scale + transform.Position),
-                (box.Max * transform.Scale + transform.Position));
+                (box.Min + transform.Position),
+                (box.Max + transform.Position));
 
             return ray.Intersects(tempbox);
         }
