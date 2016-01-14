@@ -89,4 +89,25 @@
     
   </Entity>
   
+  <Entity Name="tree">
+        <Element Type="TransformElement">
+
+      <Property Name="Position">
+        <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single" Value="0"/>
+      </Property>
+
+    </Element>
+
+    <Element Type="PerceivedElement">
+
+      <Property Name="Name">
+        <Param Type="System.String" Value="tree.obj"/>
+      </Property>
+
+    </Element>
+
+  </Entity>
+  
 </Environment>

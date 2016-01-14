@@ -105,27 +105,27 @@ namespace fun.Basics
                     if (isColliding.X)
                     {
                         reduction = distance.X.Value / Math.Abs(move.X);
-                        move.X *= reduction;
+                        move.X *= reduction - GAP;
 
-                        if (move.X < GAP && move.X > 0)
-                            move.X -= GAP;
-                        else if (move.X > -GAP && move.X < 0)
-                            move.X += GAP;
+                        //if (move.X < GAP && move.X > 0)
+                        //    move.X -= GAP;
+                        //else if (move.X > -GAP && move.X < 0)
+                        //    move.X += GAP;
                     }
                     else if (isColliding.Y)
                     {
                         reduction = distance.Y.Value / Math.Abs(move.Y);
-                        move.Y *= reduction;
+                        move.Y *= reduction - GAP;
 
-                        if (move.Y < GAP && move.Y > 0)
-                            move.Y -= GAP;
-                        else if (move.Y > -GAP && move.Y < 0)
-                            move.Y += GAP;
+                        //if (move.Y < GAP && move.Y > 0)
+                        //    move.Y -= GAP;
+                        //else if (move.Y > -GAP && move.Y < 0)
+                        //    move.Y += GAP;
                     }
                     else if (isColliding.Z)
                     {
                         reduction = distance.Z.Value / Math.Abs(move.Z);
-                        move.Z *= reduction;
+                        move.Z *= reduction - GAP;
                     }
 
                     transform.Position = currPos = lastPos + move;

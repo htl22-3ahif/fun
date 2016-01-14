@@ -48,13 +48,13 @@ namespace fun.Client.Components
 
             foreach (var perceived in simulation.Perceiveder)
             {
-                Directory.SetCurrentDirectory("assets\\models");
-                if (!File.Exists(perceived.Name))
+                if (!File.Exists("assets\\models\\" + perceived.Name))
                     continue;
 
                 if (meshes.Keys.Contains(perceived.Name))
                     continue;
 
+                Directory.SetCurrentDirectory("assets\\models");
                 var objFactory = new ObjLoaderFactory();
                 var objloader = objFactory.Create();
                 var result = objloader.Load(new FileStream(perceived.Name, FileMode.Open, FileAccess.Read));
