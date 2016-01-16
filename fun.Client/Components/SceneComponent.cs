@@ -42,9 +42,9 @@ namespace fun.Client.Components
                 new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader),
                 new Shader(new StreamReader(@"assets\shaders\fs.glsl").ReadToEnd(), ShaderType.FragmentShader));
 
-            GL.ActiveTexture(TextureUnit.Texture0);
+            //GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
-            GL.Uniform1(program.GetUniform("texture").ID, 0);
+            //GL.Uniform1(program.GetUniform("texture").ID, 0);
 
             foreach (var perceived in simulation.Perceiveder)
             {
@@ -60,7 +60,7 @@ namespace fun.Client.Components
                 var result = objloader.Load(new FileStream(perceived.Name, FileMode.Open, FileAccess.Read));
                 Directory.SetCurrentDirectory("..\\..");
 
-                
+
                 var positions = result.Vertices.Select(v => new Vector3(v.X, v.Y, v.Z)).ToArray();
                 var uvs = result.Textures.Select(t => new Vector2(t.X, t.Y)).ToArray();
                 var normals = result.Normals.Select(n => new Vector3(n.X, n.Y, n.Z)).ToArray();
@@ -86,15 +86,13 @@ namespace fun.Client.Components
                     new Mesh(program, _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
             }
         }
-
-        float rot = 0;
+        
         public override void Draw(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
-
-            rot += (float)e.Time / 4;
+            
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
             program.GetUniform("light_position").SetValue(new Vector3(0, 0, 10));
