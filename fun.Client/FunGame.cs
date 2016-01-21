@@ -36,7 +36,7 @@ namespace fun.Client
             components.Add(scene);
 
             UI = new HUDComponend(this);
-            components.Add(UI);
+            //components.Add(UI);
         }
 
         protected override void OnLoad(EventArgs e)

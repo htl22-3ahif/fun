@@ -9,6 +9,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using fun.Client.Constructs;
+using System.IO;
 
 namespace fun.Client
 {
@@ -33,16 +34,16 @@ namespace fun.Client
 
         public override void Initialize()
         {
-            bitmap = new Bitmap(Game.Width/4, Game.Height/4);
+            bitmap = new Bitmap(Game.Width / 4, Game.Height / 4);
         }
 
         public override void Update(FrameEventArgs e)
         {
-            
+
         }
 
         public override void Draw(FrameEventArgs e)
-        {
+        { 
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
                 graphics.Clear(Color.Transparent);

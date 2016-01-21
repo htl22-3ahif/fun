@@ -76,16 +76,16 @@
     <None Include="assets\models\block.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\models\House_RICHTIG.mtl">
+    <None Include="assets\models\house.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="assets\models\house.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\models\tree.obj">
+    <None Include="assets\models\tree.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\models\Tree_RICHTIG.mtl">
+    <None Include="assets\models\tree.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="assets\shaders\fs.glsl">
