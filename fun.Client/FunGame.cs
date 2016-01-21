@@ -19,8 +19,13 @@ namespace fun.Client
         private HUDComponend UI;
 
         public FunGame()
-            : base(1280, 720)
+            : base(1980, 1080)
         {
+            Title = "fun";
+            WindowBorder = WindowBorder.Hidden;
+            WindowState = WindowState.Fullscreen;
+            CursorVisible = false;
+
             components = new List<GameComponent>();
 
             input = new InputComponent(this);

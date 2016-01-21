@@ -46,7 +46,7 @@ namespace fun.Client
         { 
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
-                graphics.Clear(Color.Transparent);
+                graphics.Clear(Color.Azure);
                 graphics.DrawString("FPS: " + Game.RenderFrequency, mono, Brushes.Tomato, new PointF(0, 0));
             }
             fpsTexture = new Texture2D(bitmap);

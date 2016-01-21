@@ -89,6 +89,7 @@ namespace fun.Client.Components
         
         public override void Draw(FrameEventArgs e)
         {
+            GL.Viewport(0, 0, Game.Width, Game.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
@@ -96,7 +97,7 @@ namespace fun.Client.Components
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
             program.GetUniform("light_position").SetValue(new Vector3(0, 0, 10));
-            program.GetUniform("range").SetValue(100f);
+            program.GetUniform("range").SetValue(1000f);
 
             foreach (var entity in camera.Seen)
             {

@@ -39,6 +39,9 @@ namespace fun.Client.Components
 
         public override void Update(FrameEventArgs e)
         {
+            if (Distance + input.Mouse.Delta.Z >= 2)
+                Distance += input.Mouse.Delta.Z/2;
+
             var transform = player.GetElement<TransformElement>();
 
             rotation += new Vector3(input.Mouse.Delta.Y / 100f, 0f, input.Mouse.Delta.X / 100f);
