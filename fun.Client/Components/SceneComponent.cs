@@ -12,7 +12,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Client.Components
 {
-    internal sealed class SceneComponent : GameComponent
+	internal sealed class SceneComponent : GameComponent, IDisposable
     {
         private SimulationComponent simulation;
         private CameraComponent camera;
@@ -120,5 +120,14 @@ namespace fun.Client.Components
 
             GL.Flush();
         }
+
+		public void Dispose(){
+			foreach (var mesh in meshes.Values) {
+				mesh.Dispose ();
+			}
+
+			program.Dispose ();
+			texture.Dispose ();
+		}
     }
 }

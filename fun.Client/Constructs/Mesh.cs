@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace fun.Client.Constructs
 {
-    internal sealed class Mesh
+	internal sealed class Mesh : IDisposable
     {
         public readonly int VAO;
         public readonly int POSITION_VBO;
@@ -71,5 +71,12 @@ namespace fun.Client.Constructs
 
             program.Disable();
         }
+
+		public void Dispose() {
+			GL.DeleteVertexArray (VAO);
+			GL.DeleteBuffer (POSITION_VBO);
+			GL.DeleteBuffer (UV_VBO);
+			GL.DeleteBuffer (NORMAL_VBO);
+		}
     }
 }

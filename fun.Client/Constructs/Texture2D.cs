@@ -69,5 +69,9 @@ namespace fun.Client.Constructs
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
+
+		public void Dispose() {
+			GL.DeleteTexture (ID);
+		}
     }
 }

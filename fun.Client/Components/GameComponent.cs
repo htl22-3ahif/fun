@@ -1,8 +1,9 @@
 ﻿using OpenTK;
+using System;
 
 namespace fun.Client.Components
 {
-    internal abstract class GameComponent
+	internal abstract class GameComponent
     {
         public GameWindow Game { get; private set; }
 

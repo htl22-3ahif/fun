@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace fun.Client.Constructs
 {
-    internal sealed class Shader
+	internal sealed class Shader : IDisposable
     {
         public readonly int ID;
 
@@ -22,5 +22,9 @@ namespace fun.Client.Constructs
             GL.ShaderSource(ID, source);
             GL.CompileShader(ID);
         }
+
+		public void Dispose(){
+			GL.DeleteShader (ID);
+		}
     }
 }

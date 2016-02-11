@@ -75,7 +75,11 @@ namespace fun.Client.Constructs
 
         public void Dispose()
         {
-            throw new NotImplementedException();
-        }
+			foreach (var shader in Shaders) {
+				shader.Dispose ();
+			}
+
+			GL.DeleteProgram (ID);
+		}
     }
 }

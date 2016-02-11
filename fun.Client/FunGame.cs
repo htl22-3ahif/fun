@@ -21,7 +21,7 @@ namespace fun.Client
         public FunGame()
             : base(1980, 1080)
         {
-            Title = "fun";
+			Title = "fun";
             WindowBorder = WindowBorder.Hidden;
             WindowState = WindowState.Fullscreen;
             CursorVisible = false;
@@ -66,8 +66,19 @@ namespace fun.Client
 
             foreach (var component in components)
                 component.Draw(e);
-
+			
             SwapBuffers();
         }
+
+		protected override void OnClosing (System.ComponentModel.CancelEventArgs e)
+		{
+			base.OnClosing (e);
+
+			foreach (var component in components) {
+				if (component is IDisposable) {
+					(component as IDisposable).Dispose ();
+				}
+			}
+		}
     }
 }
