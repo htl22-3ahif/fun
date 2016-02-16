@@ -1,5 +1,5 @@
 ﻿using fun.IO.Data;
-using fun.IO.Parsers;
+using fun.IO.XmlParsers;
 using System.IO;
 using System.Xml;
 using System.Linq;
@@ -7,17 +7,17 @@ using Environment = fun.Core.Environment;
 
 namespace fun.IO
 {
-    public sealed class EnvironmentLoader
+    public sealed class EnvironmentXmlLoader
     {
         private DataStore data;
-        private Parser[] parsers;
+        private XmlParser[] parsers;
 
-        public EnvironmentLoader()
+        public EnvironmentXmlLoader()
         {
             data = new DataStore();
-            parsers = new Parser[]
+            parsers = new XmlParser[]
             {
-                new EnvironmentParser(data)
+                new EnvironmentXmlParser(data)
             };
         }
 

@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace fun.IO.Parsers
+namespace fun.IO.XmlParsers
 {
-    internal sealed class ParamParser : Parser
+    internal sealed class ParamXmlParser : XmlParser
     {
         IParamDataStore data;
 
-        public ParamParser(IParamDataStore data)
+        public ParamXmlParser(IParamDataStore data)
         {
             this.data = data;
 

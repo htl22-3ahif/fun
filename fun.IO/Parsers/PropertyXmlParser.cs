@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace fun.IO.Parsers
+namespace fun.IO.XmlParsers
 {
-    internal sealed class PropertyParser : Parser
+    internal sealed class PropertyXmlParser : XmlParser
     {
         IPropertyDataStore data;
 
-        public PropertyParser(IPropertyDataStore data)
+        public PropertyXmlParser(IPropertyDataStore data)
         {
             this.data = data;
-            this.parsers = new Parser[]
+            this.parsers = new XmlParser[]
             {
-                new ParamParser(data)
+                new ParamXmlParser(data)
             };
         }
 

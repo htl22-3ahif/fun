@@ -3,20 +3,20 @@ using System.Xml;
 using System.Linq;
 using Environment = fun.Core.Environment;
 
-namespace fun.IO.Parsers
+namespace fun.IO.XmlParsers
 {
-    internal sealed class EnvironmentParser : Parser
+    internal sealed class EnvironmentXmlParser : XmlParser
     {
         private IEnvironmentDataStore data;
 
-        public EnvironmentParser(IEnvironmentDataStore data)
+        public EnvironmentXmlParser(IEnvironmentDataStore data)
         {
             this.data = data;
 
-            parsers = new Parser[] 
+            parsers = new XmlParser[] 
             {
-                new EntityParser(data),
-                new LibaryParser(data)
+                new EntityXmlParser(data),
+                new LibaryXmlParser(data)
             };
         }
 

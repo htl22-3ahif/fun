@@ -4,18 +4,18 @@ using System;
 using System.Xml;
 using System.Linq;
 
-namespace fun.IO.Parsers
+namespace fun.IO.XmlParsers
 {
-    internal sealed class ElementParser : Parser
+    internal sealed class ElementXmlParser : XmlParser
     {
         private IElementDataStore data;
 
-        public ElementParser(IElementDataStore data)
+        public ElementXmlParser(IElementDataStore data)
         {
             this.data = data;
-            this.parsers = new Parser[]
+            this.parsers = new XmlParser[]
             {
-                new PropertyParser(data)
+                new PropertyXmlParser(data)
             };
         }
 

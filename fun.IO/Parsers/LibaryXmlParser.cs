@@ -4,13 +4,13 @@ using System.Xml;
 using System.Linq;
 using Environment = fun.Core.Environment;
 
-namespace fun.IO.Parsers
+namespace fun.IO.XmlParsers
 {
-    internal sealed class LibaryParser : Parser
+    internal sealed class LibaryXmlParser : XmlParser
     {
         private ILibaryDataStore data;
 
-        public LibaryParser(ILibaryDataStore data)
+        public LibaryXmlParser(ILibaryDataStore data)
         {
             this.data = data;
             parsers = null;
