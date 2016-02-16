@@ -17,6 +17,21 @@ namespace fun.Basics
         private TransformElement transform;
         private List<ICollider> colliders;
 
+		public bool IsCollidingX {
+			get;
+			set;
+		}
+
+		public bool IsCollidingY {
+			get;
+			set;
+		}
+			
+		public bool IsCollidingZ {
+			get;
+			set;
+		}
+
         public CollidingElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
@@ -98,6 +113,10 @@ namespace fun.Basics
                         Y = distance.Y.HasValue && Math.Abs(move.Y) > distance.Y.Value,
                         Z = distance.Z.HasValue && Math.Abs(move.Z) > distance.Z.Value
                     };
+
+					IsCollidingX = isColliding.X;
+					IsCollidingY = isColliding.Y;
+					IsCollidingZ = isColliding.Z;
 
                     float reduction;
 
