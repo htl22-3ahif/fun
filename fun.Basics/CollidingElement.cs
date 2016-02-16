@@ -50,10 +50,13 @@ namespace fun.Basics
                 .Where(e => e is ICollider)
                 .Select(e => e as ICollider));
         }
-
         public override void Update(double time)
         {
             ICollider colliding = null;
+
+            IsCollidingX = false;
+            IsCollidingY = false;
+            IsCollidingZ = false;
 
             do
             {

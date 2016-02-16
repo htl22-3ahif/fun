@@ -12,13 +12,16 @@ namespace fun.Basics
     public sealed class GravitationElement : Element
     {
         private TransformElement transform;
+        private CollidingElement colliding;
 
         public float Weight { get; set; }
+        private float fallingTime;
 
         public GravitationElement(Environment environment, Entity entity) 
             : base(environment, entity)
         {
             transform = entity.GetElement<TransformElement>();
+            colliding = entity.GetElement<CollidingElement>();
         }
 
         public override void Initialize()
@@ -28,7 +31,19 @@ namespace fun.Basics
 
         public override void Update(double time)
         {
-            transform.Position -= new Vector3(0, 0, Weight * (float)time * 0.05f);
+            if (colliding.IsCollidingZ)
+            {
+                fallingTime = 0;
+            }
+            else
+            {
+                fallingTime += (float)time;
+            }
+
+
+            float FallingStrength = (9.81f * (float)Math.Pow(fallingTime, 2f) / 2f);
+
+            transform.Position -= new Vector3(0, 0, FallingStrength);
         }
     }
 }
