@@ -10,7 +10,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Client.Components
 {
-    internal sealed class SimulationComponent : GameComponent
+	internal sealed class SimulationComponent : GameComponent, IDisposable
     {
         private InputComponent input;
         private Environment environment;
@@ -46,5 +46,13 @@ namespace fun.Client.Components
 
             environment.Update(e.Time);
         }
+
+		public void Dispose() {
+			foreach (var entity in environment.Entities) {
+				foreach (var element in entity.Elements) {
+					element.OnClose ();
+				}
+			}
+		}
     }
 }
