@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,19 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CjClutter.ObjLoader.Loader">
       <HintPath>..\Libs\CjClutter.ObjLoader.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="OpenTK">
+      <HintPath>..\Libs\OpenTK.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\GameComponent.cs" />
@@ -115,21 +111,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="assets\textures\lsd1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\fun.Basics\fun.Basics.csproj">
-      <Project>{24fabea8-9481-4edb-b0b5-81cb94731690}</Project>
+      <Project>{24FABEA8-9481-4EDB-B0B5-81CB94731690}</Project>
       <Name>fun.Basics</Name>
     </ProjectReference>
     <ProjectReference Include="..\fun.Core\fun.Core.csproj">
-      <Project>{80175f3b-2c0d-4a9e-9944-b69abf3e8006}</Project>
+      <Project>{80175F3B-2C0D-4A9E-9944-B69ABF3E8006}</Project>
       <Name>fun.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\fun.IO\fun.IO.csproj">
-      <Project>{9b61bb6a-a8fc-4795-a9fa-3b3c60f28b15}</Project>
+      <Project>{9B61BB6A-A8FC-4795-A9FA-3B3C60F28B15}</Project>
       <Name>fun.IO</Name>
     </ProjectReference>
   </ItemGroup>

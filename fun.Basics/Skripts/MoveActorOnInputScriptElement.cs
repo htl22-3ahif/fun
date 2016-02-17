@@ -39,8 +39,8 @@ namespace fun.Basics.Skripts
             transform.Position += input.GetKeyDown(Key.D) ? Right * 0.1f : Vector3.Zero;
             transform.Position -= input.GetKeyDown(Key.A) ? Right * 0.1f : Vector3.Zero;
 
-            transform.Position += input.GetKeyDown(Key.Space) ? Up * 0.1f : Vector3.Zero;
-            transform.Position -= input.GetKeyDown(Key.LShift) ? Up * 0.1f : Vector3.Zero;
+            transform.Position += input.GetKeyDown(Key.Space) ? Up * 0.5f : Vector3.Zero;
+            transform.Position -= input.GetKeyDown(Key.LShift) ? Up * 0.5f : Vector3.Zero;
         }
     }
 }
