@@ -19,7 +19,7 @@ namespace fun.Client
         private HUDComponend UI;
 
         public FunGame()
-            : base(1980, 1080)
+            : base(1920, 1080)
         {
 			Title = "fun";
             WindowBorder = WindowBorder.Hidden;

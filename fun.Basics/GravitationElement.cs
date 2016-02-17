@@ -33,17 +33,19 @@ namespace fun.Basics
 
         public override void Update(double time)
         {
+            float FallingStrength;
             if (colliding.IsCollidingZ)
             {
-                fallingTime = 0;
+                fallingTime = 0f;
+                FallingStrength = 0.01f;
             }
             else
             {
                 fallingTime += (float)time;
+                FallingStrength = (9.81f * (float)Math.Pow(fallingTime, 2f) / 2f);
             }
 
 
-            float FallingStrength = (9.81f * (float)Math.Pow(fallingTime, 2f) / 2f);
 
             transform.Position -= new Vector3(0, 0, FallingStrength);
         }

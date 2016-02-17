@@ -33,14 +33,15 @@ namespace fun.Basics.Skripts
             var Forward = Vector3.Transform(Vector3.UnitY, rotation);
             var Up = Vector3.Transform(Vector3.UnitZ, rotation);
 
-            transform.Position += input.GetKeyDown(Key.W) ? Forward * (float)time * 5 : Vector3.Zero;
-			transform.Position -= input.GetKeyDown(Key.S) ? Forward * (float)time * 5 : Vector3.Zero;
+            var moveVector =
+                ((input.GetKeyDown(Key.W) ? Forward * (float)time * 5 : Vector3.Zero)
+                -(input.GetKeyDown(Key.S) ? Forward * (float)time * 5 : Vector3.Zero)
+                +(input.GetKeyDown(Key.D) ? Right * (float)time * 5 : Vector3.Zero )
+                -(input.GetKeyDown(Key.A) ? Right * (float)time * 5 : Vector3.Zero)
+                +(input.GetKeyDown(Key.Space) ? Up * (float)time * 100 : Vector3.Zero))
+                * (input.GetKeyDown(Key.LShift) ? new Vector3(3f, 3f, 1) : Vector3.One);
 
-			transform.Position += input.GetKeyDown(Key.D) ? Right * (float)time * 5 : Vector3.Zero;
-			transform.Position -= input.GetKeyDown(Key.A) ? Right * (float)time * 5 : Vector3.Zero;
-
-			transform.Position += input.GetKeyDown(Key.Space) ? Up * (float)time * 10 : Vector3.Zero;
-			transform.Position -= input.GetKeyDown(Key.LShift) ? Up * (float)time * 10 : Vector3.Zero;
+            transform.Position += moveVector;
         }
     }
 }
