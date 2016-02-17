@@ -64,6 +64,8 @@ namespace fun.Client
         {
             base.OnRenderFrame(e);
 
+			//System.Threading.Thread.Sleep (1000);
+
             foreach (var component in components)
                 component.Draw(e);
 			

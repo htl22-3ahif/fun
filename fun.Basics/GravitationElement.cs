@@ -20,13 +20,15 @@ namespace fun.Basics
         public GravitationElement(Environment environment, Entity entity) 
             : base(environment, entity)
         {
-            transform = entity.GetElement<TransformElement>();
-            colliding = entity.GetElement<CollidingElement>();
+			
         }
 
         public override void Initialize()
         {
-            Weight = 80f;
+			transform = Entity.GetElement<TransformElement>();
+			colliding = Entity.GetElement<CollidingElement>();
+         
+			Weight = 80f;
         }
 
         public override void Update(double time)

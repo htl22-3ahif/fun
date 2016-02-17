@@ -33,14 +33,14 @@ namespace fun.Basics.Skripts
             var Forward = Vector3.Transform(Vector3.UnitY, rotation);
             var Up = Vector3.Transform(Vector3.UnitZ, rotation);
 
-            transform.Position += input.GetKeyDown(Key.W) ? Forward * 0.1f : Vector3.Zero;
-            transform.Position -= input.GetKeyDown(Key.S) ? Forward * 0.1f : Vector3.Zero;
+            transform.Position += input.GetKeyDown(Key.W) ? Forward * (float)time * 5 : Vector3.Zero;
+			transform.Position -= input.GetKeyDown(Key.S) ? Forward * (float)time * 5 : Vector3.Zero;
 
-            transform.Position += input.GetKeyDown(Key.D) ? Right * 0.1f : Vector3.Zero;
-            transform.Position -= input.GetKeyDown(Key.A) ? Right * 0.1f : Vector3.Zero;
+			transform.Position += input.GetKeyDown(Key.D) ? Right * (float)time * 5 : Vector3.Zero;
+			transform.Position -= input.GetKeyDown(Key.A) ? Right * (float)time * 5 : Vector3.Zero;
 
-            transform.Position += input.GetKeyDown(Key.Space) ? Up * 0.5f : Vector3.Zero;
-            transform.Position -= input.GetKeyDown(Key.LShift) ? Up * 0.5f : Vector3.Zero;
+			transform.Position += input.GetKeyDown(Key.Space) ? Up * (float)time * 10 : Vector3.Zero;
+			transform.Position -= input.GetKeyDown(Key.LShift) ? Up * (float)time * 10 : Vector3.Zero;
         }
     }
 }
