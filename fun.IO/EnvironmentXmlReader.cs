@@ -7,12 +7,12 @@ using Environment = fun.Core.Environment;
 
 namespace fun.IO
 {
-    public sealed class EnvironmentXmlLoader
+    public sealed class EnvironmentXmlReader
     {
         private DataStore data;
         private XmlParser[] parsers;
 
-        public EnvironmentXmlLoader()
+        public EnvironmentXmlReader()
         {
             data = new DataStore();
             parsers = new XmlParser[]

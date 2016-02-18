@@ -7,14 +7,14 @@
     
     <Element Type="TransformElement"> 
       <Property Name="Position">
-        <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="5"/>
+        <Param Type="System.Single">0</Param>
+        <Param Type="System.Single">0</Param>
+        <Param Type="System.Single">5</Param>
       </Property>
       <Property Name="Scale">
-        <Param Type="System.Single" Value="0,1"/>
-        <Param Type="System.Single" Value="0,1"/>
-        <Param Type="System.Single" Value="0,1"/>
+        <Param Type="System.Single">0,1</Param>
+        <Param Type="System.Single">0,1</Param>
+        <Param Type="System.Single">0,1</Param>
       </Property>
     </Element>
     
@@ -26,7 +26,7 @@
     <Element Type="CollidingElement"/>
     <Element Type="PerceivedElement">
       <Property Name="Name">
-        <Param Type="System.String" Value="minion.obj"/>
+        <Param Type="System.String">minion.obj</Param>
       </Property>
     </Element>
 
@@ -36,32 +36,32 @@
 
     <Element Type="TransformElement">
       <Property Name="Position">
-        <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="0"/>
+        <Param Type="System.Single">0</Param>
+        <Param Type="System.Single">0</Param>
+        <Param Type="System.Single">0</Param>
       </Property>
       <Property Name="Scale">
-        <Param Type="System.Single" Value="10"/>
-        <Param Type="System.Single" Value="10"/>
-        <Param Type="System.Single" Value="0,5"/>
+        <Param Type="System.Single">10</Param>
+        <Param Type="System.Single">10</Param>
+        <Param Type="System.Single">0,5</Param>
       </Property>
     </Element>
     <Element Type="PerceivedElement">
       <Property Name="Name">
-        <Param Type="System.String" Value="block.obj"/>
+        <Param Type="System.String">block.obj</Param>
       </Property>
     </Element>
     <Element Type="InputElement"/>
     <Element Type="ColliderBoxElement">
       <Property Name="Min">
-        <Param Type="System.Single" Value="-50,6"/>
-        <Param Type="System.Single" Value="-50,6"/>
-        <Param Type="System.Single" Value="-3,1"/>
+        <Param Type="System.Single">-50,6</Param>
+        <Param Type="System.Single">-50,6</Param>
+        <Param Type="System.Single">-3,1</Param>
       </Property>
       <Property Name="Max">
-        <Param Type="System.Single" Value="50,6"/>
-        <Param Type="System.Single" Value="50,6"/>
-        <Param Type="System.Single" Value="3,1"/>
+        <Param Type="System.Single">50,6</Param>
+        <Param Type="System.Single">50,6</Param>
+        <Param Type="System.Single">3,1</Param>
       </Property>      
     </Element>
     
@@ -70,20 +70,20 @@
   <Entity Name="tree">
     <Element Type="TransformElement">
       <Property Name="Position">
-        <Param Type="System.Single" Value="-5"/>
-        <Param Type="System.Single" Value="15"/>
-        <Param Type="System.Single" Value="2,5"/>
+        <Param Type="System.Single">-5</Param>
+        <Param Type="System.Single">15</Param>
+        <Param Type="System.Single">2,5</Param>
       </Property>
       <Property Name="Scale">
-        <Param Type="System.Single" Value="0,5"/>
-        <Param Type="System.Single" Value="0,5"/>
-        <Param Type="System.Single" Value="0,5"/>
+        <Param Type="System.Single">0,5</Param>
+        <Param Type="System.Single">0,5</Param>
+        <Param Type="System.Single">0,5</Param>
       </Property>
     </Element>
     
     <Element Type="PerceivedElement">
       <Property Name="Name">
-        <Param Type="System.String" Value="tree.obj"/>
+        <Param Type="System.String">tree.obj</Param>
       </Property>
     </Element>
 
@@ -92,25 +92,25 @@
   <Entity Name="house">
     <Element Type="TransformElement">
       <Property Name="Position">
-        <Param Type="System.Single" Value="10"/>
-        <Param Type="System.Single" Value="10"/>
-        <Param Type="System.Single" Value="2,5"/>
+        <Param Type="System.Single">10</Param>
+        <Param Type="System.Single">10</Param>
+        <Param Type="System.Single">2,5</Param>
       </Property>
       <Property Name="Scale">
-        <Param Type="System.Single" Value="4"/>
-        <Param Type="System.Single" Value="4"/>
-        <Param Type="System.Single" Value="4"/>
+        <Param Type="System.Single">4</Param>
+        <Param Type="System.Single">4</Param>
+        <Param Type="System.Single">4</Param>
       </Property>
       <Property Name="Rotation">
-        <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="0"/>
-        <Param Type="System.Single" Value="4"/>
+        <Param Type="System.Single">0</Param>
+        <Param Type="System.Single">0</Param>
+        <Param Type="System.Single">4</Param>
       </Property>
     </Element>
 
     <Element Type="PerceivedElement">
       <Property Name="Name">
-        <Param Type="System.String" Value="house.obj"/>
+        <Param Type="System.String">house.obj</Param>
       </Property>
     </Element>
   </Entity>

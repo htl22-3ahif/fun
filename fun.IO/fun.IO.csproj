@@ -52,7 +52,7 @@
     <Compile Include="Parsers\ParamXmlParser.cs" />
     <Compile Include="Parsers\XmlParser.cs" />
     <Compile Include="Parsers\PropertyXmlParser.cs" />
-    <Compile Include="EnvironmentXmlLoader.cs" />
+    <Compile Include="EnvironmentXmlReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\fun.Core\fun.Core.csproj">

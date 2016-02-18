@@ -32,7 +32,7 @@ namespace fun.IO.XmlParsers
         public override void Parse(XmlNode node)
         {
             var type = Type.GetType(node.Attributes[typeof(Type).Name].Value);
-            var value = node.Attributes["Value"].Value;
+			var value = node.InnerText;
 
             if (type.IsPrimitive)
                 data.PushParam(Convert.ChangeType(value, type));
