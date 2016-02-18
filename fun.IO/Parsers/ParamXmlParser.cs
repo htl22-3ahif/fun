@@ -21,7 +21,7 @@ namespace fun.IO.XmlParsers
             //this.parsers = new Parser[]
             //{
             //    new ParamParser(mydata)
-            //};
+			//};
         }
 
         public override bool TryParse(XmlNode node)
@@ -34,12 +34,15 @@ namespace fun.IO.XmlParsers
             var type = Type.GetType(node.Attributes[typeof(Type).Name].Value);
 			var value = node.InnerText;
 
-            if (type.IsPrimitive)
-                data.PushParam(Convert.ChangeType(value, type));
-            else if (type == typeof(string))
-                data.PushParam(value.ToCharArray());
-            else
+			if (type.IsPrimitive)
+				data.PushParam (Convert.ChangeType (value, type));
+			else if (type == typeof(string))
+				data.PushParam (value.ToCharArray ());
+		    else if (type.IsClass || type.IsValueType) {  
+				
+			}
+			else
                 throw new NotImplementedException();
         }
-    }
+	}
 }
