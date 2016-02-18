@@ -8,20 +8,22 @@ namespace fun.Basics.Skripts
 {
     public sealed class MoveActorOnInputScriptElement : Element
     {
-        private readonly InputElement input;
-        private readonly TransformElement transform;
+        private InputElement input;
+        private GravitationElement gravitation;
+        private TransformElement transform;
+        private CollidingElement colliding;
 
         public MoveActorOnInputScriptElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
-            if (!entity.ContainsElement<InputElement>())
-                throw new NotSupportedException();
+        }
 
-            if (!entity.ContainsElement<TransformElement>())
-                throw new NotSupportedException();
-
-            input = entity.GetElement<InputElement>();
-            transform = entity.GetElement<TransformElement>();
+        public override void Initialize()
+        {
+            input = Entity.GetElement<InputElement>();
+            transform = Entity.GetElement<TransformElement>();
+            colliding = Entity.GetElement<CollidingElement>();
+            gravitation = Entity.GetElement<GravitationElement>();
         }
 
         public override void Update(double time)
@@ -33,12 +35,17 @@ namespace fun.Basics.Skripts
             var Forward = Vector3.Transform(Vector3.UnitY, rotation);
             var Up = Vector3.Transform(Vector3.UnitZ, rotation);
 
+            if (input.GetKeyDown(Key.Space) && colliding.IsCollidingZ)
+            {
+                transform.Position += new Vector3(0, 0, 0.003f);
+                gravitation.Speed = new Vector3(0, 0, 0.2f);
+            }
+
             var moveVector =
                 ((input.GetKeyDown(Key.W) ? Forward * (float)time * 5 : Vector3.Zero)
                 -(input.GetKeyDown(Key.S) ? Forward * (float)time * 5 : Vector3.Zero)
                 +(input.GetKeyDown(Key.D) ? Right * (float)time * 5 : Vector3.Zero )
-                -(input.GetKeyDown(Key.A) ? Right * (float)time * 5 : Vector3.Zero)
-                +(input.GetKeyDown(Key.Space) ? Up * (float)time * 100 : Vector3.Zero))
+                -(input.GetKeyDown(Key.A) ? Right * (float)time * 5 : Vector3.Zero))
                 * (input.GetKeyDown(Key.LShift) ? new Vector3(3f, 3f, 1) : Vector3.One);
 
             transform.Position += moveVector;
