@@ -30,7 +30,7 @@ namespace fun.Client.Constructs
                     throw new ArgumentException(log);
 
             InitAttribs();
-            InitUnifroms();
+            InitUniforms();
 
             GL.UseProgram(ID);
         }
@@ -50,7 +50,7 @@ namespace fun.Client.Constructs
                 Attribs[i] = new Attrib(this, sb.ToString(), type);
             }
         }
-        public void InitUnifroms()
+        public void InitUniforms()
         {
             int uniformCount;
             GL.GetProgramInterface(ID, ProgramInterface.Uniform, ProgramInterfaceParameter.ActiveResources, out uniformCount);

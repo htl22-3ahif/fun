@@ -221,3 +221,4 @@ C:\Users\Noby\Desktop\fun\bin\assets\models\minion.obj
 C:\Users\Noby\Desktop\fun\bin\assets\models\player.mtl
 C:\Users\Noby\Desktop\fun\bin\assets\models\player.obj
 C:\Users\Noby\Desktop\fun\bin\assets\textures\lsd1.png
+C:\Users\Noby\Desktop\fun\bin\assets\textures\violet.png

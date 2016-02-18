@@ -22,8 +22,9 @@ namespace fun.Client.Constructs
 
         public Mesh(ShaderProgram program,
             Vector3[] positions,
-            Vector2[] uvs,
-            Vector3[] normals)
+            Vector2[] uvs
+            //Vector3[] normals
+            )
         {
             this.program = program;
 
@@ -42,11 +43,11 @@ namespace fun.Client.Constructs
             GL.TexCoordPointer(2, TexCoordPointerType.Float, Vector2.SizeInBytes, 0);
             GL.VertexAttribPointer(program.GetAttrib("vUV").ID, 2, VertexAttribPointerType.Float, true, Vector2.SizeInBytes, 0);
 
-            NORMAL_VBO = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, NORMAL_VBO);
-            GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * normals.Length), normals, BufferUsageHint.StaticDraw);
-            GL.NormalPointer(NormalPointerType.Float, Vector3.SizeInBytes, 0);
-            GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
+            //NORMAL_VBO = GL.GenBuffer();
+            //GL.BindBuffer(BufferTarget.ArrayBuffer, NORMAL_VBO);
+            //GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * normals.Length), normals, BufferUsageHint.StaticDraw);
+            //GL.NormalPointer(NormalPointerType.Float, Vector3.SizeInBytes, 0);
+            //GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
 
             VerticesLength = positions.Length;
 

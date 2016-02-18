@@ -36,7 +36,7 @@ namespace fun.Client.Components
             GL.Enable(EnableCap.DepthTest);
             GL.DepthFunc(DepthFunction.Less);
 
-            texture = new Texture2D(@"assets\textures\lel.png");
+            texture = new Texture2D(@"assets\textures\violet.png");
 
             program = new ShaderProgram(
                 new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader),
@@ -83,7 +83,9 @@ namespace fun.Client.Components
                         }
 
                 meshes.Add(perceived.Name,
-                    new Mesh(program, _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
+                    new Mesh(program, _positions.ToArray(), _uvs.ToArray() 
+                    //, _normals.ToArray()
+                    ));
             }
         }
         
@@ -96,8 +98,8 @@ namespace fun.Client.Components
             
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
-            program.GetUniform("light_position").SetValue(new Vector3(0f, 0f, 0.4f));
-            //GL.GetShaderInfoLog(ID)program.GetUniform("range").SetValue(1000f);
+            program.GetUniform("light_position").SetValue(new Vector3(0f, 0f, 0.5f));
+            //GL.GetShaderInfoLog(ID)program.GetUniform("range").SetValue(1000f); not needed currently
             program.GetUniform("resolution").SetValue(new Vector2(Game.Width, Game.Height));
 
             foreach (var entity in camera.Seen)
