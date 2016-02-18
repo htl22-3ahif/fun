@@ -23,8 +23,8 @@ namespace fun.Client.Components
         {
             this.input = input;
 
-            var loader = new EnvironmentXmlLoader();
-            environment = loader.Load(new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))[0];
+			var reader = new EnvironmentXmlReader();
+            environment = reader.Load(new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))[0];
             Player = environment.GetEntity("player");
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
         }

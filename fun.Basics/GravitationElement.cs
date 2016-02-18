@@ -15,7 +15,9 @@ namespace fun.Basics
         private CollidingElement colliding;
 
         public float Weight { get; set; }
-        private float fallingTime;
+
+        public Vector3 Speed;
+        private Vector3 Gravity;
 
         public GravitationElement(Environment environment, Entity entity) 
             : base(environment, entity)
@@ -29,25 +31,16 @@ namespace fun.Basics
 			colliding = Entity.GetElement<CollidingElement>();
          
 			Weight = 80f;
+
+            Speed = Vector3.Zero;
+            Gravity = new Vector3(0, 0, -9.81f);
         }
 
         public override void Update(double time)
         {
-            float FallingStrength;
-            if (colliding.IsCollidingZ)
-            {
-                fallingTime = 0f;
-                FallingStrength = 0.01f;
-            }
-            else
-            {
-                fallingTime += (float)time;
-                FallingStrength = (9.81f * (float)Math.Pow(fallingTime, 2f) / 2f);
-            }
+            Speed += Gravity * 0.0005f; // would be good to take elapsed time into account here!
 
-
-
-            transform.Position -= new Vector3(0, 0, FallingStrength);
+            transform.Position += Speed;
         }
     }
 }
