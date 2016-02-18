@@ -27,7 +27,7 @@ namespace fun.Client.Constructs
 
             var log = GL.GetProgramInfoLog(ID);
             if (!string.IsNullOrEmpty(log))
-                throw new ArgumentException(log);
+                    throw new ArgumentException(log);
 
             InitAttribs();
             InitUnifroms();

@@ -1,0 +1,158 @@
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\fun.IO.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\fun.IO.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\fun.Core.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\MonoGame.Framework.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.XInput.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.RawInput.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\fun.Core.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\MonoGame.Framework.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.DXGI.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.XInput.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.RawInput.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\bin\Debug\SharpDX.Direct3D9.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\obj\Debug\fun.IO.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.IO\obj\Debug\fun.IO.pdb
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\fun.IO.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\fun.IO.pdb
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\fun.Core.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\MonoGame.Framework.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.MediaFoundation.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.XAudio2.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.Direct3D11.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.DXGI.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.Direct2D1.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.XInput.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.RawInput.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.Direct3D9.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\fun.Core.pdb
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\MonoGame.Framework.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.MediaFoundation.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.XAudio2.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.Direct3D11.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.DXGI.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.Direct2D1.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.XInput.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.RawInput.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\bin\Debug\SharpDX.Direct3D9.xml
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\obj\Debug\fun.IO.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.IO\obj\Debug\fun.IO.pdb
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\fun.IO.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\fun.IO.pdb
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\fun.Core.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\MonoGame.Framework.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.MediaFoundation.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.XAudio2.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.Direct3D11.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.DXGI.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.Direct2D1.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.XInput.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.RawInput.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.Direct3D9.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\fun.Core.pdb
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\MonoGame.Framework.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.MediaFoundation.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.XAudio2.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.Direct3D11.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.DXGI.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.Direct2D1.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.XInput.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.RawInput.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\bin\Debug\SharpDX.Direct3D9.xml
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\obj\Debug\fun.IO.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.IO\obj\Debug\fun.IO.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\fun.IO.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\fun.IO.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\fun.Core.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\MonoGame.Framework.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.XInput.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.RawInput.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\fun.Core.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\MonoGame.Framework.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.DXGI.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.XInput.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.RawInput.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\bin\Debug\SharpDX.Direct3D9.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\obj\Debug\fun.IO.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151118\fun.IO\obj\Debug\fun.IO.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\fun.IO.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\fun.IO.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\fun.Core.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.XInput.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.RawInput.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.Direct3D9.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\fun.Core.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\MonoGame.Framework.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.DXGI.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.XInput.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.RawInput.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\bin\Debug\SharpDX.Direct3D9.xml
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\obj\Debug\fun.IO.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151125\fun.IO\obj\Debug\fun.IO.pdb
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\bin\Debug\fun.IO.dll
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\bin\Debug\fun.IO.pdb
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\bin\Debug\fun.Core.dll
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\bin\Debug\OpenTK.dll
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\bin\Debug\fun.Core.pdb
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\bin\Debug\OpenTK.xml
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\obj\Debug\fun.IO.dll
+C:\Users\Ugi\Desktop\fun base stable opentk v20151125\fun.IO\obj\Debug\fun.IO.pdb
+C:\Users\Ugi\Desktop\fun base stable opentk v20151209\bin\fun.IO.dll
+C:\Users\Ugi\Desktop\fun base stable opentk v20151209\bin\fun.IO.pdb
+C:\Users\Ugi\Desktop\fun base stable opentk v20151209\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+C:\Users\Ugi\Desktop\fun base stable opentk v20151209\fun.IO\obj\Debug\fun.IO.dll
+C:\Users\Ugi\Desktop\fun base stable opentk v20151209\fun.IO\obj\Debug\fun.IO.pdb
+U:\github\fun\bin\fun.IO.dll
+U:\github\fun\bin\fun.IO.pdb
+U:\github\fun\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+U:\github\fun\fun.IO\obj\Debug\fun.IO.dll
+U:\github\fun\fun.IO\obj\Debug\fun.IO.pdb
+C:\Users\Noby\Desktop\fun\bin\fun.IO.dll
+C:\Users\Noby\Desktop\fun\bin\fun.IO.pdb
+C:\Users\Noby\Desktop\fun\fun.IO\obj\Debug\fun.IO.csprojResolveAssemblyReference.cache
+C:\Users\Noby\Desktop\fun\fun.IO\obj\Debug\fun.IO.dll
+C:\Users\Noby\Desktop\fun\fun.IO\obj\Debug\fun.IO.pdb

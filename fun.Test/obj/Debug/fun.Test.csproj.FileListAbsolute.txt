@@ -1,0 +1,29 @@
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.Test\bin\Debug\fun.Test.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.Test\bin\Debug\fun.Test.pdb
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.Test\obj\Debug\fun.Test.csprojResolveAssemblyReference.cache
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.Test\obj\Debug\fun.Test.dll
+C:\Users\Ugljesa\Desktop\fun base stable v20151101\fun.Test\obj\Debug\fun.Test.pdb
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\bin\Debug\fun.Test.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\bin\Debug\fun.Test.pdb
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\bin\Debug\de\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\obj\Debug\fun.Test.csprojResolveAssemblyReference.cache
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\obj\Debug\fun.Test.dll
+U:\Programmieren\fun\fun base stable v20151112\fun.Test\obj\Debug\fun.Test.pdb
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\bin\Debug\fun.Test.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\bin\Debug\fun.Test.pdb
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\bin\Debug\de\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\obj\Debug\fun.Test.csprojResolveAssemblyReference.cache
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\obj\Debug\fun.Test.dll
+U:\Programmieren\fun\fun base stable v20151117\fun.Test\obj\Debug\fun.Test.pdb
+U:\github\fun\bin\fun.Test.dll
+U:\github\fun\bin\fun.Test.pdb
+U:\github\fun\fun.Test\obj\Debug\fun.Test.csprojResolveAssemblyReference.cache
+U:\github\fun\fun.Test\obj\Debug\fun.Test.dll
+U:\github\fun\fun.Test\obj\Debug\fun.Test.pdb
+C:\Users\Noby\Desktop\fun\bin\fun.Test.dll
+C:\Users\Noby\Desktop\fun\bin\fun.Test.pdb
+C:\Users\Noby\Desktop\fun\fun.Test\obj\Debug\fun.Test.csprojResolveAssemblyReference.cache
+C:\Users\Noby\Desktop\fun\fun.Test\obj\Debug\fun.Test.dll
+C:\Users\Noby\Desktop\fun\fun.Test\obj\Debug\fun.Test.pdb

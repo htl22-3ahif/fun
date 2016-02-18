@@ -21,6 +21,8 @@ namespace fun.Client.Constructs
             ID = GL.CreateShader(shadertype);
             GL.ShaderSource(ID, source);
             GL.CompileShader(ID);
+
+            Console.WriteLine(GL.GetShaderInfoLog(ID));
         }
 
 		public void Dispose(){

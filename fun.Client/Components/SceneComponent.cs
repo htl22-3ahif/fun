@@ -96,8 +96,9 @@ namespace fun.Client.Components
             
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
-            program.GetUniform("light_position").SetValue(new Vector3(0, 0, 10));
-            program.GetUniform("range").SetValue(1000f);
+            program.GetUniform("light_position").SetValue(new Vector3(0f, 0f, 0.4f));
+            //GL.GetShaderInfoLog(ID)program.GetUniform("range").SetValue(1000f);
+            program.GetUniform("resolution").SetValue(new Vector2(Game.Width, Game.Height));
 
             foreach (var entity in camera.Seen)
             {
