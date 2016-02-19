@@ -63,7 +63,7 @@ namespace fun.Client.Constructs
 
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
-            GL.EnableClientState(ArrayCap.NormalArray);
+            //GL.EnableClientState(ArrayCap.NormalArray);
 
             program.Enable();
 

@@ -13,6 +13,8 @@ namespace fun.Basics.Skripts
         private TransformElement transform;
         private CollidingElement colliding;
 
+        public float Speed { get; set; }
+
         public MoveActorOnInputScriptElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
@@ -24,6 +26,8 @@ namespace fun.Basics.Skripts
             transform = Entity.GetElement<TransformElement>();
             colliding = Entity.GetElement<CollidingElement>();
             gravitation = Entity.GetElement<GravitationElement>();
+
+            Speed = 10;
         }
 
         public override void Update(double time)
@@ -42,11 +46,15 @@ namespace fun.Basics.Skripts
             }
 
             var moveVector =
-                ((input.GetKeyDown(Key.W) ? Forward * (float)time * 5 : Vector3.Zero)
-                -(input.GetKeyDown(Key.S) ? Forward * (float)time * 5 : Vector3.Zero)
-                +(input.GetKeyDown(Key.D) ? Right * (float)time * 5 : Vector3.Zero )
-                -(input.GetKeyDown(Key.A) ? Right * (float)time * 5 : Vector3.Zero))
-                * (input.GetKeyDown(Key.LShift) ? new Vector3(3f, 3f, 1) : Vector3.One);
+                (input.GetKeyDown(Key.W) ? Forward : (input.GetKeyDown(Key.S) ? -Forward : Vector3.Zero))
+                + (input.GetKeyDown(Key.D) ? Right : (input.GetKeyDown(Key.A) ? -Right : Vector3.Zero));
+
+            if (moveVector != Vector3.Zero)
+                moveVector.Normalize();
+
+            moveVector *= Speed;
+            moveVector *= (input.GetKeyDown(Key.LShift) ? ((Speed * 0.1f) + 1) : 1);
+            moveVector *= (float)time;
 
             transform.Position += moveVector;
         }

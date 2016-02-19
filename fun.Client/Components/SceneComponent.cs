@@ -36,7 +36,7 @@ namespace fun.Client.Components
             GL.Enable(EnableCap.DepthTest);
             GL.DepthFunc(DepthFunction.Less);
 
-            texture = new Texture2D(@"assets\textures\violet.png");
+            texture = new Texture2D(@"assets\textures\lel.png");
 
             program = new ShaderProgram(
                 new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader),
