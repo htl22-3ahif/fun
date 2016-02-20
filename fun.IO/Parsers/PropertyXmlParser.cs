@@ -40,6 +40,13 @@ namespace fun.IO.XmlParsers
 
             if (property.PropertyType.IsPrimitive)
                 property.SetValue(data.Element, data.Params.First());
+            else if (property.PropertyType.IsArray)
+            {
+                Array propertyObject = (Array)Activator.CreateInstance(property.PropertyType, data.Params.Length);
+                for (int i = 0; i < data.Params.Length; i++)
+                    propertyObject.SetValue(data.Params[i], i);
+                property.SetValue(data.Element, propertyObject);
+            }
             else
             {
                 var propertyObject = Activator.CreateInstance(property.PropertyType, data.Params);

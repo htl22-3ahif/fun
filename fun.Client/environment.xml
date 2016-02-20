@@ -2,6 +2,7 @@
 <Environment>
   
   <Lib Path="fun.Basics.dll"/>
+  <Lib Path="OpenTK.dll"/>
   
   <Entity Name="player">
     
@@ -53,16 +54,32 @@
     </Element>
     <Element Type="InputElement"/>
     <Element Type="ColliderBoxElement">
-      <Property Name="Min">
-        <Param Type="System.Single">-50,6</Param>
-        <Param Type="System.Single">-50,6</Param>
-        <Param Type="System.Single">-3,1</Param>
+      <Property Name="Boxes">
+        <Param Type="fun.Basics.Shapes.Box">
+          <Param Type="OpenTK.Vector3">
+            <Param Type="System.Single">-50,6</Param>
+            <Param Type="System.Single">-50,6</Param>
+            <Param Type="System.Single">-3,1</Param>
+          </Param>
+          <Param Type="OpenTK.Vector3">
+            <Param Type="System.Single">50,6</Param>
+            <Param Type="System.Single">50,6</Param>
+            <Param Type="System.Single">3,1</Param>
+          </Param>
+        </Param>
+        <!--<Param Type="fun.Basics.Shapes.Box">
+          <Param Type="OpenTK.Vector3">
+            <Param Type="System.Single">30,6</Param>
+            <Param Type="System.Single">30,6</Param>
+            <Param Type="System.Single">3,1</Param>
+          </Param>
+          <Param Type="OpenTK.Vector3">
+            <Param Type="System.Single">50,6</Param>
+            <Param Type="System.Single">50,6</Param>
+            <Param Type="System.Single">6,1</Param>
+          </Param>
+        </Param>-->
       </Property>
-      <Property Name="Max">
-        <Param Type="System.Single">50,6</Param>
-        <Param Type="System.Single">50,6</Param>
-        <Param Type="System.Single">3,1</Param>
-      </Property>      
     </Element>
     
   </Entity>

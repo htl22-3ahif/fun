@@ -8,6 +8,5 @@ namespace fun.IO.Data
     {
         void PushElement(Type type);
         void DepushElement();
-        Assembly[] Assemblys { get; }
     }
 }
