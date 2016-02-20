@@ -83,9 +83,7 @@ namespace fun.Client.Components
                         }
 
                 meshes.Add(perceived.Name,
-                    new Mesh(program, _positions.ToArray(), _uvs.ToArray() 
-                    //, _normals.ToArray()
-                    ));
+                    new Mesh(program, _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
             }
         }
         
@@ -95,12 +93,11 @@ namespace fun.Client.Components
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
-            
+
             program.GetUniform("projection").SetValue(camera.Projection);
             program.GetUniform("view").SetValue(camera.View);
-            program.GetUniform("light_position").SetValue(new Vector3(0f, 0f, 0.5f));
-            //GL.GetShaderInfoLog(ID)program.GetUniform("range").SetValue(1000f); not needed currently
-            program.GetUniform("resolution").SetValue(new Vector2(Game.Width, Game.Height));
+            program.GetUniform("light").SetValue(new Vector3(0, 0, 10));
+            program.GetUniform("range").SetValue(1000f);
 
             foreach (var entity in camera.Seen)
             {

@@ -2,7 +2,7 @@
 
 in vec3 vPosition;
 in vec2 vUV;
-//in vec3 vNormal;
+in vec3 vNormal;
 
 uniform mat4 world;
 uniform mat4 view;
@@ -10,8 +10,7 @@ uniform mat4 projection;
 
 out vec3 position;
 out vec2 uv;
-//out vec3 normal;
-// ahhh
+out vec3 normal;
 
 void
 main(){
@@ -20,5 +19,5 @@ main(){
 
 	position = realPosition.xyz;
 	uv = vUV;
-	//normal = normalize((world * vec4(vNormal, 0)).xyz); screw you
+	normal = normalize((world * vec4(vNormal, 0)).xyz);
 }
