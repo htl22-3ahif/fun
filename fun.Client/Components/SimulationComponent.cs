@@ -8,7 +8,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
 using Environment = fun.Core.Environment;
-using YAXLib;
 
 namespace fun.Client.Components
 {

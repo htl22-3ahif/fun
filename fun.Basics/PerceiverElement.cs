@@ -16,7 +16,7 @@ namespace fun.Basics
     {
         private readonly TransformElement transform;
 
-        public Entity[] Seen { get; private set; }
+        public IEnumerable<Entity> Seen { get; private set; }
         public Sphere Sphere{ get; set; }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace fun.Basics
             Seen = Environment.Entities
                 .Where(e => 
                     Sphere.Contains(e.GetElement<TransformElement>().Position - transform.Position) && 
-                    e.ContainsElement<PerceivedElement>()).ToArray();
+                    e.ContainsElement<PerceivedElement>());
         }
     }
 }
