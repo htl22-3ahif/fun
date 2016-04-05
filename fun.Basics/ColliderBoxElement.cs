@@ -6,6 +6,7 @@ using fun.Basics.Shapes;
 
 namespace fun.Basics
 {
+    [Serializable]
     public sealed class ColliderBoxElement : Element, ICollider
     {
         private TransformElement transform;

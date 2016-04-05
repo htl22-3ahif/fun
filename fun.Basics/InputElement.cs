@@ -1,12 +1,14 @@
 ﻿using fun.Core;
 using OpenTK;
 using OpenTK.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Environment = fun.Core.Environment;
 
 namespace fun.Basics
 {
+    [Serializable]
     public sealed class InputElement : Element
     {
         private Key[] lastKeys;

@@ -4,6 +4,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Basics.Skripts
 {
+    [Serializable]
     public sealed class RotateActorOnInputScriptElement : Element
     {
         private readonly InputElement input;

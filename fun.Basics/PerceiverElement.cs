@@ -11,11 +11,12 @@ namespace fun.Basics
     /// <summary>
     /// Defines the element of an entity, which is able to draw other seen entities on the monitor.
     /// </summary>
+    [Serializable]
     public sealed class PerceiverElement : Element
     {
         private readonly TransformElement transform;
 
-        public IEnumerable<Entity> Seen { get; private set; }
+        public Entity[] Seen { get; private set; }
         public Sphere Sphere{ get; set; }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace fun.Basics
             Seen = Environment.Entities
                 .Where(e => 
                     Sphere.Contains(e.GetElement<TransformElement>().Position - transform.Position) && 
-                    e.ContainsElement<PerceivedElement>());
+                    e.ContainsElement<PerceivedElement>()).ToArray();
         }
     }
 }

@@ -4,9 +4,11 @@ using fun.IO;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
 using Environment = fun.Core.Environment;
+using YAXLib;
 
 namespace fun.Client.Components
 {
@@ -23,8 +25,21 @@ namespace fun.Client.Components
         {
             this.input = input;
 
-			var reader = new EnvironmentXmlReader();
+            var reader = new EnvironmentXmlReader();
             environment = reader.Load(new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))[0];
+
+            var file = new FileStream("environment.bin", FileMode.Create, FileAccess.Write);
+            var bf = new BinaryFormatter();
+
+            bf.Serialize(file, environment);
+            file.Close();
+
+            file = new FileStream("environment.bin", FileMode.Open, FileAccess.Read);
+            environment = null;
+
+            environment = bf.Deserialize(file) as Environment;
+            file.Close();
+
             Player = environment.GetEntity("player");
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
         }

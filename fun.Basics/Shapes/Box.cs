@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace fun.Basics.Shapes
 {
+    [Serializable]
     public struct Box
     {
         public Vector3 Min;

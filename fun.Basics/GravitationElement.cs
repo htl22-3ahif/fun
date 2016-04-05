@@ -9,6 +9,7 @@ using OpenTK;
 
 namespace fun.Basics
 {
+    [Serializable]
     public sealed class GravitationElement : Element
     {
         private TransformElement transform;

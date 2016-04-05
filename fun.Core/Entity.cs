@@ -7,6 +7,7 @@ namespace fun.Core
     /// <summary>
     /// Describes an existing object in the environment.
     /// </summary>
+    [Serializable]
     public sealed class Entity
     {
         private readonly List<Element> elements;

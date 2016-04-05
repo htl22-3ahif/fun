@@ -6,6 +6,7 @@ namespace fun.Core
     /// <summary>
     /// Describes the environment of the game and manages communication between entities.
     /// </summary>
+    [Serializable]
     public sealed class Environment
     {
         private readonly List<Entity> entities;

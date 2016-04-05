@@ -6,6 +6,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Basics.Skripts
 {
+    [Serializable]
     public sealed class MoveActorOnInputScriptElement : Element
     {
         private InputElement input;

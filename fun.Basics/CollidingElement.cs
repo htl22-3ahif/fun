@@ -8,6 +8,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Basics
 {
+    [Serializable]
     public sealed class CollidingElement : Element
     {
         private static float GAP = 0.0001f;

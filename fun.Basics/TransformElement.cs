@@ -1,5 +1,6 @@
 ﻿using fun.Core;
 using OpenTK;
+using System;
 using Environment = fun.Core.Environment;
 
 namespace fun.Basics
@@ -7,6 +8,7 @@ namespace fun.Basics
     /// <summary>
     /// Describes basic informations of an entity.
     /// </summary>
+    [Serializable]
     public sealed class TransformElement : Element
     {
         /// <summary>
