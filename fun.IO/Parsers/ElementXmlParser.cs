@@ -15,7 +15,8 @@ namespace fun.IO.XmlParsers
             this.data = data;
             this.parsers = new XmlParser[]
             {
-                new PropertyXmlParser(data)
+                new PropertyXmlParser(data),
+                new FieldXmlParser(data)
             };
         }
 
@@ -33,7 +34,10 @@ namespace fun.IO.XmlParsers
             foreach (var assembly in data.Assemblys)
                 foreach (var type in assembly.ExportedTypes)
                     if (type.Name == typename)
+                    {
                         data.PushElement(type);
+                        data.Receiver = data.Element;
+                    }
 
             if (data.Element == null)
                 throw new XmlException(typename + " does not exist.");

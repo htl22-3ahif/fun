@@ -14,15 +14,15 @@ namespace fun.Basics
         /// <summary>
         /// Describes the position of an entity.
         /// </summary>
-        public Vector3 Position { get; set; }
+        public Vector3 Position;// { get; set; }
         /// <summary>
         /// Describes the scale of an entity.
         /// </summary>
-        public Vector3 Scale { get; set; }
+        public Vector3 Scale;// { get; set; }
         /// <summary>
         /// Describes the rotation of an entity.
         /// </summary>
-        public Vector3 Rotation { get; set; }
+        public Vector3 Rotation;// { get; set; }
 
         /// <summary>
         /// Creates a transform-Object.

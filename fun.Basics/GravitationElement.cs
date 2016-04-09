@@ -15,10 +15,10 @@ namespace fun.Basics
         private TransformElement transform;
         private CollidingElement colliding;
 
-        public float Weight { get; set; }
+        public float Weight;// { get; set; }
 
         public Vector3 Speed;
-        private Vector3 Gravity;
+        public Vector3 Gravity;
 
         public GravitationElement(Environment environment, Entity entity) 
             : base(environment, entity)

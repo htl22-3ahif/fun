@@ -42,12 +42,14 @@
   <ItemGroup>
     <Compile Include="Data\DataStore.cs" />
     <Compile Include="Data\IElementDataStore.cs" />
+    <Compile Include="Data\IFieldDataStore.cs" />
     <Compile Include="Data\IParamDataStore.cs" />
     <Compile Include="Data\IPropertyDataStore.cs" />
     <Compile Include="Data\IEntityDataStore.cs" />
     <Compile Include="Data\IEnvironmentDataStore.cs" />
     <Compile Include="Data\ILibaryDataStore.cs" />
     <Compile Include="EnvironmentXmlWriter.cs" />
+    <Compile Include="Parsers\FieldXmlParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsers\ElementXmlParser.cs" />
     <Compile Include="Parsers\EntityXmlParser.cs" />

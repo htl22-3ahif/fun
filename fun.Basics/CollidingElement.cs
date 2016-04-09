@@ -20,17 +20,17 @@ namespace fun.Basics
 
 		public bool IsCollidingX {
 			get;
-			set;
+            private set;
 		}
 
 		public bool IsCollidingY {
 			get;
-			set;
+            private set;
 		}
 			
 		public bool IsCollidingZ {
 			get;
-			set;
+			private set;
 		}
 
         public CollidingElement(Environment environment, Entity entity)

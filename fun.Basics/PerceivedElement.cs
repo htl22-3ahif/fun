@@ -7,7 +7,7 @@ namespace fun.Basics
     [Serializable]
     public sealed class PerceivedElement : Element
     {
-        public string Name { get; set; }
+        public string Name;// { get; set; }
 
         //public VertexPositionNormalTexture 
         public PerceivedElement(Environment environment, Entity entity)
