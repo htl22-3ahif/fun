@@ -25,19 +25,9 @@ namespace fun.Client.Components
             this.input = input;
 
             var reader = new EnvironmentXmlReader();
-            environment = reader.Load(new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))[0];
 
-            var file = new FileStream("environment.bin", FileMode.Create, FileAccess.Write);
-            var bf = new BinaryFormatter();
-
-            bf.Serialize(file, environment);
-            file.Close();
-
-            file = new FileStream("environment.bin", FileMode.Open, FileAccess.Read);
-            environment = null;
-
-            environment = bf.Deserialize(file) as Environment;
-            file.Close();
+            using (var file = new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))
+                environment = reader.Load(file)[0];
 
             Player = environment.GetEntity("player");
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
