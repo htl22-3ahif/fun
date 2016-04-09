@@ -43,8 +43,6 @@
     <Compile Include="Data\DataStore.cs" />
     <Compile Include="Data\IElementDataStore.cs" />
     <Compile Include="Data\IFieldDataStore.cs" />
-    <Compile Include="Data\IParamDataStore.cs" />
-    <Compile Include="Data\IPropertyDataStore.cs" />
     <Compile Include="Data\IEntityDataStore.cs" />
     <Compile Include="Data\IEnvironmentDataStore.cs" />
     <Compile Include="Data\ILibaryDataStore.cs" />
@@ -55,9 +53,7 @@
     <Compile Include="Parsers\EntityXmlParser.cs" />
     <Compile Include="Parsers\EnvironmentXmlParser.cs" />
     <Compile Include="Parsers\LibaryXmlParser.cs" />
-    <Compile Include="Parsers\ParamXmlParser.cs" />
     <Compile Include="Parsers\XmlParser.cs" />
-    <Compile Include="Parsers\PropertyXmlParser.cs" />
     <Compile Include="EnvironmentXmlReader.cs" />
   </ItemGroup>
   <ItemGroup>

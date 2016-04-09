@@ -10,7 +10,7 @@ namespace fun.Basics
     public sealed class ColliderBoxElement : Element, ICollider
     {
         private TransformElement transform;
-        public Box[] Boxes { get; set; }
+        public Box[] Boxes;// { get; set; }
 
         //public Vector3 Min
         //{

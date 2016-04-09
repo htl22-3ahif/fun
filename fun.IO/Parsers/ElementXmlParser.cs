@@ -15,7 +15,6 @@ namespace fun.IO.XmlParsers
             this.data = data;
             this.parsers = new XmlParser[]
             {
-                new PropertyXmlParser(data),
                 new FieldXmlParser(data)
             };
         }
@@ -28,19 +27,11 @@ namespace fun.IO.XmlParsers
         public override void Parse(XmlNode node)
         {
             var typename = node.Attributes[typeof(Type).Name].Value;
-            var props = node.Attributes.OfType<XmlAttribute>().Where(a => a.Value != typeof(Type).Name);
-            var lastElement = data.Element;
 
             foreach (var assembly in data.Assemblys)
-                foreach (var type in assembly.ExportedTypes)
-                    if (type.Name == typename)
-                    {
-                        data.PushElement(type);
-                        data.Receiver = data.Element;
-                    }
+                data.PushElement(assembly.DefinedTypes.First(t => t.Name == typename));
 
-            if (data.Element == null)
-                throw new XmlException(typename + " does not exist.");
+            data.Receiver = data.Element;
 
             foreach (var _node in node.ChildNodes.OfType<XmlNode>())
                 foreach (var parser in parsers)

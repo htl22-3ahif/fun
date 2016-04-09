@@ -2,7 +2,6 @@
 <Environment>
   
   <Lib Path="fun.Basics.dll"/>
-  <Lib Path="OpenTK.dll"/>
   
   <Entity Name="player">
     
@@ -26,9 +25,6 @@
     <Element Type="RotateActorOnInputScriptElement"/>
     <Element Type="CollidingElement"/>
     <Element Type="PerceivedElement">
-      <!--<Property Name="Name">
-        <Param Type="System.String">minion.obj</Param>
-      </Property>-->
       <Field Name="Name">minion.obj</Field>
     </Element>
 
@@ -49,39 +45,26 @@
       </Field>
     </Element>
     <Element Type="PerceivedElement">
-      <!--<Property Name="Name">
-        <Param Type="System.String">block.obj</Param>
-      </Property>-->
       <Field Name="Name">block.obj</Field>
     </Element>
     <Element Type="InputElement"/>
     <Element Type="ColliderBoxElement">
-      <Property Name="Boxes">
-        <Param Type="fun.Basics.Shapes.Box">
-          <Param Type="OpenTK.Vector3">
-            <Param Type="System.Single">-50,6</Param>
-            <Param Type="System.Single">-50,6</Param>
-            <Param Type="System.Single">-3,1</Param>
-          </Param>
-          <Param Type="OpenTK.Vector3">
-            <Param Type="System.Single">50,6</Param>
-            <Param Type="System.Single">50,6</Param>
-            <Param Type="System.Single">3,1</Param>
-          </Param>
-        </Param>
-        <!--<Param Type="fun.Basics.Shapes.Box">
-          <Param Type="OpenTK.Vector3">
-            <Param Type="System.Single">30,6</Param>
-            <Param Type="System.Single">30,6</Param>
-            <Param Type="System.Single">3,1</Param>
-          </Param>
-          <Param Type="OpenTK.Vector3">
-            <Param Type="System.Single">50,6</Param>
-            <Param Type="System.Single">50,6</Param>
-            <Param Type="System.Single">6,1</Param>
-          </Param>
-        </Param>-->
-      </Property>
+      <Field Name="Boxes">
+        
+        <Field Name="0_">
+          <Field Name="Min">
+            <Field Name="X">-50,6</Field>
+            <Field Name="Y">-50,6</Field>
+            <Field Name="Z">-3,6</Field>
+          </Field>
+          <Field Name="Max">
+            <Field Name="X">50,6</Field>
+            <Field Name="Y">50,6</Field>
+            <Field Name="Z">3,6</Field>
+          </Field>
+        </Field>
+        
+      </Field>
     </Element>
     
   </Entity>
@@ -101,9 +84,6 @@
     </Element>
     
     <Element Type="PerceivedElement">
-      <!--<Property Name="Name">
-        <Param Type="System.String">tree.obj</Param>
-      </Property>-->
       <Field Name="Name">tree.obj</Field>
     </Element>
 
@@ -129,9 +109,6 @@
     </Element>
 
     <Element Type="PerceivedElement">
-      <!--<Property Name="Name">
-        <Param Type="System.String">house.obj</Param>
-      </Property>-->
       <Field Name="Name">house.obj</Field>
     </Element>
   </Entity>
