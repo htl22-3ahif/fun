@@ -16,7 +16,6 @@ namespace fun.Basics
         private CollidingElement colliding;
 
         public float Weight;// { get; set; }
-
         public Vector3 Speed;
         public Vector3 Gravity;
 
@@ -30,11 +29,6 @@ namespace fun.Basics
         {
 			transform = Entity.GetElement<TransformElement>();
 			colliding = Entity.GetElement<CollidingElement>();
-         
-			Weight = 80f;
-
-            Speed = Vector3.Zero;
-            Gravity = new Vector3(0, 0, -9.81f);
         }
 
         public override void Update(double time)

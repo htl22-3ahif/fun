@@ -12,18 +12,6 @@ namespace fun.Basics
         private TransformElement transform;
         public Box[] Boxes;// { get; set; }
 
-        //public Vector3 Min
-        //{
-        //    get { return box.Min; }
-        //    set { box.Min = value; }
-        //}
-
-        //public Vector3 Max
-        //{
-        //    get { return box.Max; }
-        //    set { box.Max = value; }
-        //}
-
         public ColliderBoxElement(Environment environment, Entity entity)
             : base(environment, entity)
         {

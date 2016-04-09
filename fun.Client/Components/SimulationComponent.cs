@@ -30,8 +30,8 @@ namespace fun.Client.Components
             using (var file = new FileStream("environment.xml", FileMode.Open, FileAccess.Read))
                 environment = reader.Load(file)[0];
 
-            using (var file = new FileStream("environment2.xml", FileMode.Create, FileAccess.Write))
-                writer.Save(file, environment, "fun.Basics.dll");
+            //using (var file = new FileStream("environment2.xml", FileMode.Create, FileAccess.Write))
+            //    writer.Save(file, environment, "fun.Basics.dll");
 
             Player = environment.GetEntity("player");
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());

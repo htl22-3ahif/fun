@@ -17,7 +17,7 @@ namespace fun.Basics
         private readonly TransformElement transform;
 
         public IEnumerable<Entity> Seen { get; private set; }
-        public Sphere Sphere{ get; set; }
+        public Sphere Sphere;// { get; set; }
 
         /// <summary>
         /// Creates a camera-Object.
@@ -33,7 +33,7 @@ namespace fun.Basics
 
             transform = entity.GetElement<TransformElement>();
 
-            Sphere = new Sphere(Vector3.Zero, 100f);
+            //Sphere = new Sphere(Vector3.Zero, 100f);
         }
 
         public override void Initialize()
