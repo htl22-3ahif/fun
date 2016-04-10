@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace fun.Editor
 {
-    internal sealed class Commands
+    internal sealed class CommandManager
     {
         private CommandParser[] parsers;
 
-        public Commands(params CommandParser[] parsers)
+        public CommandManager(params CommandParser[] parsers)
         {
             this.parsers = parsers;
         }

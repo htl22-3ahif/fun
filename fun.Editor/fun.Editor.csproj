@@ -36,17 +36,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
-    <Compile Include="Commands.cs" />
+    <Compile Include="CommandManager.cs" />
+    <Compile Include="Commands\CreateCommandParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,6 +48,16 @@
     <None Include="editor.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\fun.Core\fun.Core.csproj">
+      <Project>{80175f3b-2c0d-4a9e-9944-b69abf3e8006}</Project>
+      <Name>fun.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fun.IO\fun.IO.csproj">
+      <Project>{9b61bb6a-a8fc-4795-a9fa-3b3c60f28b15}</Project>
+      <Name>fun.IO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
