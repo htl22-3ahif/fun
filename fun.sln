@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B31C8C4A-7
 		Libs\OpenTK.xml = Libs\OpenTK.xml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fun.Editor", "fun.Editor\fun.Editor.csproj", "{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,18 @@ Global
 		{28E7F305-4969-4651-BD5A-E12FE427A603}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{28E7F305-4969-4651-BD5A-E12FE427A603}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{28E7F305-4969-4651-BD5A-E12FE427A603}.Release|x86.ActiveCfg = Release|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{F02AE438-22DC-4DC7-AFCD-6CA5E47322DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
