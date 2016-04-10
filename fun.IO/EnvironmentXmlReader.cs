@@ -21,7 +21,7 @@ namespace fun.IO
             };
         }
 
-        public Environment[] Load(Stream input)
+        public Environment[] Load(Stream input, out string[] libaries)
         {
             var doc = new XmlDocument();
             doc.Load(input);
@@ -30,6 +30,8 @@ namespace fun.IO
                 foreach (var parser in parsers)
                     if (parser.TryParse(node))
                         parser.Parse(node);
+
+            libaries = data.Assemblys.Select(a => a.GetName().Name).ToArray();
 
             return data.Envionments;
         }

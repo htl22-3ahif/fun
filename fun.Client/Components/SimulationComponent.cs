@@ -26,9 +26,10 @@ namespace fun.Client.Components
 
             var reader = new EnvironmentXmlReader();
             var writer = new EnvironmentXmlWriter();
+            string[] libaries;
 
             using (var file = new FileStream("environment.xml", FileMode.Open, FileAccess.Read))
-                environment = reader.Load(file)[0];
+                environment = reader.Load(file, out libaries)[0];
 
             //using (var file = new FileStream("environment2.xml", FileMode.Create, FileAccess.Write))
             //    writer.Save(file, environment, "fun.Basics.dll");
