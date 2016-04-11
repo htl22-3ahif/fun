@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using fun.Core;
+using Environment = fun.Core.Environment;
+using System.IO;
+using fun.IO;
 
 namespace fun.Editor.Commands
 {
     internal sealed class AddEntityCommandParser : CommandParser
     {
-        private GetCommandParser get;
-
         public override string Keyword
         {
             get
@@ -19,15 +20,28 @@ namespace fun.Editor.Commands
             }
         }
 
-        public AddEntityCommandParser(GetCommandParser get)
+        public AddEntityCommandParser()
         {
-            this.get = get;
         }
 
         protected override void Do(string[] args)
         {
-            get.Environment.AddEntity(new Entity(args[0], get.Environment));
-            Console.WriteLine("Entity \"{0}\" added", args[0]);
+            Environment env;
+            var envPath = args[0];
+            string[] libaries;
+
+            using (var file = new FileStream(envPath, FileMode.Open, FileAccess.Read))
+            {
+                env = new EnvironmentXmlReader().Load(file, out libaries)[0];
+            }
+
+            env.AddEntity(new Entity(args[1], env));
+            Console.WriteLine("Entity \"{0}\" in Environment \"{1}\" added", args[1], args[0]);
+
+            using (var file = new FileStream(envPath, FileMode.Open, FileAccess.Write))
+            {
+                new EnvironmentXmlWriter().Save(file, env, libaries);
+            }
         }
     }
 }

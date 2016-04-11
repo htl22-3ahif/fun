@@ -8,8 +8,6 @@ namespace fun.Editor.Commands
 {
     internal sealed class AddCommandParser : CommandParser
     {
-        private GetCommandParser get;
-
         public override string Keyword
         {
             get
@@ -18,13 +16,11 @@ namespace fun.Editor.Commands
             }
         }
 
-        public AddCommandParser(GetCommandParser get)
+        public AddCommandParser()
         {
-            this.get = get;
-
             subCommands = new CommandParser[]
             {
-                new AddEntityCommandParser(get)
+                new AddEntityCommandParser()
             };
         }
 

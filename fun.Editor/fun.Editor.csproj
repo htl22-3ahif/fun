@@ -43,7 +43,6 @@
     <Compile Include="Commands\AddCommandParser.cs" />
     <Compile Include="Commands\AddEntityCommandParser.cs" />
     <Compile Include="Commands\CreateCommandParser.cs" />
-    <Compile Include="Commands\GetCommandParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
