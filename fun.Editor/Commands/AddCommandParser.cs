@@ -20,7 +20,8 @@ namespace fun.Editor.Commands
         {
             subCommands = new CommandParser[]
             {
-                new AddEntityCommandParser()
+                new AddEntityCommandParser(),
+                new AddElementCommandParser()
             };
         }
 

@@ -35,12 +35,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
     <Compile Include="CommandManager.cs" />
     <Compile Include="Commands\AddCommandParser.cs" />
+    <Compile Include="Commands\AddElementCommandParser.cs" />
     <Compile Include="Commands\AddEntityCommandParser.cs" />
     <Compile Include="Commands\CreateCommandParser.cs" />
     <Compile Include="Program.cs" />
