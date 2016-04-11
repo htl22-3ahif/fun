@@ -97,7 +97,7 @@ namespace fun.IO.XmlParsers
 
             for (int i = 0; i < count; i++)
             {
-                var fb = tb.DefineField(i + "_", field.FieldType.GetElementType(), FieldAttributes.Public);
+                var fb = tb.DefineField("_" + i, field.FieldType.GetElementType(), FieldAttributes.Public);
             }
 
             mydata.Receiver = FormatterServices.GetUninitializedObject(tb.CreateType());
@@ -110,7 +110,7 @@ namespace fun.IO.XmlParsers
                 parser.Parse(_node);
 
                 array.SetValue(mydata.Receiver
-                    .GetType().GetField(i + "_")
+                    .GetType().GetField("_" + i)
                     .GetValue(mydata.Receiver), i);
             }
 

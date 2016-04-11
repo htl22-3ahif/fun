@@ -1,5 +1,5 @@
-﻿<Environment>
-  <Lib Path="fun.Basics.dll"/>
+<Environment>
+  <Lib Path="fun.Basics.dll" />
   <Entity Name="player">
     <Element Type="TransformElement">
       <Field Name="Position">
@@ -41,10 +41,10 @@
         <Field Name="Radius">100</Field>
       </Field>
     </Element>
-    <Element Type="InputElement"/>
-    <Element Type="MoveActorOnInputScriptElement"/>
-    <Element Type="RotateActorOnInputScriptElement"/>
-    <Element Type="CollidingElement"/>
+    <Element Type="InputElement" />
+    <Element Type="MoveActorOnInputScriptElement" />
+    <Element Type="RotateActorOnInputScriptElement" />
+    <Element Type="CollidingElement" />
     <Element Type="PerceivedElement">
       <Field Name="Name">minion.obj</Field>
     </Element>
@@ -70,10 +70,10 @@
     <Element Type="PerceivedElement">
       <Field Name="Name">block.obj</Field>
     </Element>
-    <Element Type="InputElement"/>
+    <Element Type="InputElement" />
     <Element Type="ColliderBoxElement">
       <Field Name="Boxes">
-        <Field Name="0_">
+        <Field Name="_0">
           <Field Name="Min">
             <Field Name="X">-50,6</Field>
             <Field Name="Y">-50,6</Field>

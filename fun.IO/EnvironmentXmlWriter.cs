@@ -99,30 +99,30 @@ namespace fun.IO
 
             for (int i = 0; i < array.Length; i++)
             {
-                var fb = tb.DefineField(i + "_", field.FieldType.GetElementType(), FieldAttributes.Public);
+                var fb = tb.DefineField("_" + i, field.FieldType.GetElementType(), FieldAttributes.Public);
             }
 
             var _receiver = FormatterServices.GetUninitializedObject(tb.CreateType());
 
             for (int i = 0; i < array.Length; i++)
             {
-                _receiver.GetType().GetField(i + "_").SetValue(_receiver, array.GetValue(i));
+                _receiver.GetType().GetField("_" + i).SetValue(_receiver, array.GetValue(i));
             }
 
             for (int i = 0; i < array.Length; i++)
             {
                 var _xmlfield = doc.CreateElement("Field");
-                _xmlfield.SetAttribute("Name", i + "_");
+                _xmlfield.SetAttribute("Name", "_" + i);
 
                 if (field.FieldType.GetElementType().IsPrimitive || field.FieldType.GetElementType() == typeof(string))
                     PrimitiveOrStringTypeHandler(doc, 
-                        _receiver.GetType().GetField(i + "_", BindingFlags.Instance | BindingFlags.Public), 
+                        _receiver.GetType().GetField("_" + i, BindingFlags.Instance | BindingFlags.Public), 
                         _xmlfield, _receiver);
                 else if (field.FieldType.GetElementType().IsArray)
-                    ArrayTypeHandler(doc, _receiver.GetType().GetField(i + "_", BindingFlags.Instance | BindingFlags.Public), 
+                    ArrayTypeHandler(doc, _receiver.GetType().GetField("_" + i, BindingFlags.Instance | BindingFlags.Public), 
                         _xmlfield, _receiver);
                 else if (field.FieldType.GetElementType().IsClass || field.FieldType.GetElementType().IsValueType)
-                    ClassOrStructTypeHandler(doc, _receiver.GetType().GetField(i + "_", BindingFlags.Instance | BindingFlags.Public), 
+                    ClassOrStructTypeHandler(doc, _receiver.GetType().GetField("_" + i, BindingFlags.Instance | BindingFlags.Public), 
                         _xmlfield, _receiver);
 
                 xmlfield.AppendChild(_xmlfield);
