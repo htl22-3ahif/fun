@@ -1,17 +1,17 @@
-﻿using fun.Core;
-using fun.IO;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using fun.Core;
 using Environment = fun.Core.Environment;
+using System.IO;
+using fun.IO;
+using System.Reflection;
 
 namespace fun.Editor.Commands
 {
-    internal sealed class AddElementCommandParser : CommandParser
+    internal sealed class RemoveElementCommandParser : CommandParser
     {
         public override string Keyword
         {
@@ -42,8 +42,8 @@ namespace fun.Editor.Commands
                 .ExportedTypes
                 .First(t => t.Name == args[2]);
 
-            env.GetEntity(args[1]).AddElement(type);
-            Console.WriteLine("Element \"{0}\" in Entity \"{0}\" from Environment \"{0}\" added!", args[2], args[1], args[0]);
+            env.GetEntity(args[1]).RemoveElement(type);
+            Console.WriteLine("Element \"{0}\" in Entity \"{1}\" from Environment \"{2}\" removed!", args[2], args[1], args[0]);
 
             using (var file = new FileStream(envPath, FileMode.Create, FileAccess.Write))
             {

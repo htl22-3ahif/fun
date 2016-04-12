@@ -32,9 +32,9 @@ namespace fun.Editor.Commands
             }
 
             env.AddEntity(new Entity(args[1], env));
-            Console.WriteLine("Entity \"{0}\" in Environment \"{1}\" added", args[1], args[0]);
+            Console.WriteLine("Entity \"{0}\" in Environment \"{1}\" added!", args[1], args[0]);
 
-            using (var file = new FileStream(envPath, FileMode.Open, FileAccess.Write))
+            using (var file = new FileStream(envPath, FileMode.Create, FileAccess.Write))
             {
                 new EnvironmentXmlWriter().Save(file, env, libaries);
             }

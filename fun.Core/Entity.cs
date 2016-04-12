@@ -83,12 +83,20 @@ namespace fun.Core
         }
 
         /// <summary>
-        /// Adds an element of the given type to the entity.
+        /// Removes an element of the given type from the entity.
         /// </summary>
         /// <typeparam name="T">type of element</typeparam>
         public void AddElement<T>() where T : Element
         {
             AddElement(typeof(T));
+        }
+
+        public void RemoveElement(Type elementType)
+        {
+            if (!elementType.IsSubclassOf(typeof(Element)))
+                throw new ArgumentException(string.Format("You can not remove an element of type \"{0}\"", elementType.Name));
+
+            elements.Remove(elements.First(e => e.GetType() == elementType));
         }
 
         /// <summary>

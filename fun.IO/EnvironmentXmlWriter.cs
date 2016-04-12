@@ -23,6 +23,7 @@ namespace fun.IO
         public void Save(Stream output, Environment environment, params string[] libs)
         {
             var doc = new XmlDocument();
+            doc.InsertBefore(doc.CreateXmlDeclaration("1.0", "UTF-8", null), doc.DocumentElement);
 
             var xmlenv = doc.CreateElement("Environment");
             foreach (var lib in libs)

@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
@@ -43,6 +44,10 @@
     <Compile Include="Commands\AddElementCommandParser.cs" />
     <Compile Include="Commands\AddEntityCommandParser.cs" />
     <Compile Include="Commands\CreateCommandParser.cs" />
+    <Compile Include="Commands\RemoveCommandParser.cs" />
+    <Compile Include="Commands\RemoveElementCommandParser.cs" />
+    <Compile Include="Commands\RemoveEntityCommandParser.cs" />
+    <Compile Include="Commands\ViewCommandParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

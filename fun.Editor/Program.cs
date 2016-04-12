@@ -9,7 +9,9 @@ namespace fun.Editor
         {
             CommandManager commands = new CommandManager(
                 new CreateCommandParser(),
-                new AddCommandParser());
+                new AddCommandParser(),
+                new ViewCommandParser(),
+                new RemoveCommandParser());
 
             commands.Parse(args);
         }
