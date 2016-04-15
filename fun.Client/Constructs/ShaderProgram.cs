@@ -10,7 +10,7 @@ namespace fun.Client.Constructs
 {
     internal sealed class ShaderProgram : IDisposable
     {
-        public readonly int ID;
+        public int ID;
 
         public Attrib[] Attribs { get; private set; }
         public Uniform[] Uniforms { get; private set; }
@@ -18,7 +18,13 @@ namespace fun.Client.Constructs
 
         public ShaderProgram(params Shader[] shaders)
         {
+            InitShader(shaders);
+        }
+
+        public void InitShader(params Shader[] shaders)
+        {
             ID = GL.CreateProgram();
+
             foreach (var shader in shaders)
                 GL.AttachShader(ID, shader.ID);
             GL.LinkProgram(ID);
@@ -27,7 +33,7 @@ namespace fun.Client.Constructs
 
             var log = GL.GetProgramInfoLog(ID);
             if (!string.IsNullOrEmpty(log))
-                    throw new ArgumentException(log);
+                throw new ArgumentException(log);
 
             InitAttribs();
             InitUniforms();
@@ -73,13 +79,19 @@ namespace fun.Client.Constructs
         public void Enable() { foreach (var attrib in Attribs) attrib.Enable(); }
         public void Disable() { foreach (var attrib in Attribs) attrib.Disable(); }
 
+        public void ChangeShader(params Shader[] shaders)
+        {
+            Dispose();
+            InitShader(shaders);
+        }
+
         public void Dispose()
         {
 			foreach (var shader in Shaders) {
 				shader.Dispose ();
 			}
 
-			GL.DeleteProgram (ID);
+			GL.DeleteProgram(ID);
 		}
     }
 }

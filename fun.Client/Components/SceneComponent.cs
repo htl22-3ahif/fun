@@ -3,6 +3,7 @@ using fun.Client.Constructs;
 using ObjLoader.Loader.Loaders;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,16 +17,21 @@ namespace fun.Client.Components
     {
         private SimulationComponent simulation;
         private CameraComponent camera;
+        private InputComponent input;
 
         private Dictionary<string, Mesh> meshes;
         private ShaderProgram program;
+        private Shader[] shaders;
         private Texture2D texture;
 
-        public SceneComponent(GameWindow game, SimulationComponent simulaiton, CameraComponent camera)
+        private bool x = false;
+
+        public SceneComponent(GameWindow game, InputComponent input, SimulationComponent simulation, CameraComponent camera)
             : base(game)
         {
-            this.simulation = simulaiton;
+            this.simulation = simulation;
             this.camera = camera;
+            this.input = input;
 
             meshes = new Dictionary<string, Mesh>();
         }
@@ -38,9 +44,14 @@ namespace fun.Client.Components
 
             texture = new Texture2D(@"assets\textures\lel.png");
 
-            program = new ShaderProgram(
-                new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader),
-                new Shader(new StreamReader(@"assets\shaders\fs.glsl").ReadToEnd(), ShaderType.FragmentShader));
+            shaders = new Shader[10];
+
+            shaders[0] = new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[1] = new Shader(new StreamReader(@"assets\shaders\fs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[2] = new Shader(new StreamReader(@"assets\shaders\betavs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[3] = new Shader(new StreamReader(@"assets\shaders\betafs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+
+            program = new ShaderProgram(shaders[0], shaders[1]);
 
             //GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
@@ -121,7 +132,24 @@ namespace fun.Client.Components
             GL.Flush();
         }
 
-		public void Dispose(){
+        public override void Update(FrameEventArgs e)
+        {
+            if (input.Keyboard.GetKeyDown(Key.P))
+            {
+                if (x)
+                {
+                    program.ChangeShader(shaders[0], shaders[1]);
+                    x = false;
+                }
+                else
+                {
+                    program.ChangeShader(shaders[2], shaders[3]);
+                    x = true;
+                }
+            }
+        }
+
+        public void Dispose(){
 			foreach (var mesh in meshes.Values) {
 				mesh.Dispose ();
 			}

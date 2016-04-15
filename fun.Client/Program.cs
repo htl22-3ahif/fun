@@ -8,7 +8,7 @@ namespace fun.Client
     static class Program
     {
         /// <summary>
-        /// Der Haupteinstiegspunkt für die Anwendung.
+        /// Main entry point for application. 
         /// </summary>
         [STAThread]
         static void Main(string[] args)
