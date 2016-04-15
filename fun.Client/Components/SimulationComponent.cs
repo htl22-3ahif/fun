@@ -4,6 +4,7 @@ using fun.IO;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
 using Environment = fun.Core.Environment;
@@ -23,8 +24,16 @@ namespace fun.Client.Components
         {
             this.input = input;
 
-			var reader = new EnvironmentXmlReader();
-            environment = reader.Load(new FileStream("environment.xml", FileMode.Open, FileAccess.Read, FileShare.None))[0];
+            var reader = new EnvironmentXmlReader();
+            var writer = new EnvironmentXmlWriter();
+            string[] libaries;
+
+            using (var file = new FileStream("environment.xml", FileMode.Open, FileAccess.Read))
+                environment = reader.Load(file, out libaries)[0];
+
+            using (var file = new FileStream("environment.xml", FileMode.Create, FileAccess.Write))
+                writer.Save(file, environment, "fun.Basics.dll");
+
             Player = environment.GetEntity("player");
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
         }

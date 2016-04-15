@@ -11,12 +11,13 @@ namespace fun.Basics
     /// <summary>
     /// Defines the element of an entity, which is able to draw other seen entities on the monitor.
     /// </summary>
+    [Serializable]
     public sealed class PerceiverElement : Element
     {
         private readonly TransformElement transform;
 
         public IEnumerable<Entity> Seen { get; private set; }
-        public Sphere Sphere{ get; set; }
+        public Sphere Sphere;// { get; set; }
 
         /// <summary>
         /// Creates a camera-Object.
@@ -32,7 +33,7 @@ namespace fun.Basics
 
             transform = entity.GetElement<TransformElement>();
 
-            Sphere = new Sphere(Vector3.Zero, 100f);
+            //Sphere = new Sphere(Vector3.Zero, 100f);
         }
 
         public override void Initialize()

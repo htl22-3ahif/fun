@@ -8,6 +8,7 @@ using Environment = fun.Core.Environment;
 
 namespace fun.Basics
 {
+    [Serializable]
     public sealed class CollidingElement : Element
     {
         private static float GAP = 0.0001f;
@@ -19,17 +20,17 @@ namespace fun.Basics
 
 		public bool IsCollidingX {
 			get;
-			set;
+            private set;
 		}
 
 		public bool IsCollidingY {
 			get;
-			set;
+            private set;
 		}
 			
 		public bool IsCollidingZ {
 			get;
-			set;
+			private set;
 		}
 
         public CollidingElement(Environment environment, Entity entity)

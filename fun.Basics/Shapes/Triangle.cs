@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace fun.Basics.Shapes
 {
+    [Serializable]
     public struct Triangle
     {
         public Vector3 A;

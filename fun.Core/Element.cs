@@ -5,6 +5,7 @@ namespace fun.Core
     /// <summary>
     /// This class exists to ensure entitys uniqueness.
     /// </summary>
+    [Serializable]
     public class Element
     {
         public Environment Environment { get; private set; }

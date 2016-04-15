@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace fun.Basics.Shapes
 {
+    [Serializable]
     public struct Sphere
     {
         public Vector3 Center;

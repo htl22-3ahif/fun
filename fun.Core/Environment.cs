@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace fun.Core
 {
     /// <summary>
     /// Describes the environment of the game and manages communication between entities.
     /// </summary>
+    [Serializable]
     public sealed class Environment
     {
         private readonly List<Entity> entities;
@@ -50,6 +52,15 @@ namespace fun.Core
                 if (_entity != entity)
                     foreach (var element in _entity.Elements)
                         element.OnEntityAdded(entity);
+        }
+
+        /// <summary>
+        /// Removes an entity from the environment
+        /// </summary>
+        /// <param name="name">Name to specifie the entity</param>
+        public void RemoveEntity(string name)
+        {
+            entities.Remove(entities.First(e => e.Name == name));
         }
 
         /// <summary>

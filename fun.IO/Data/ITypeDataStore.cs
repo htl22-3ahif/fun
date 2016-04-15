@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace fun.IO.Data
 {
-    internal interface IParamDataStore
+    internal interface ITypeDataStore
     {
-        void PushParam(object param);
+        object Receiver { get; set; }
         Assembly[] Assemblys { get; }
     }
 }

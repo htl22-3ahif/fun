@@ -18,6 +18,7 @@ namespace fun.IO.Data
         public Environment[] Envionments { get { return environments.ToArray(); } }
         public Assembly[] Assemblys { get { return assemblys.ToArray(); } }
         public Element Element { get { return currElement; } }
+        public object Receiver { get; set; }
 
         public object[] Params { get { return parameters.ToArray(); } }
 

@@ -1,7 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Environment>
-  <Lib Path="fun.Basics.dll" />
+  
+  <Lib Path="fun.Basics.dll"/>
+  
   <Entity Name="player">
+    
     <Element Type="TransformElement">
       <Field Name="Position">
         <Field Name="X">0</Field>
@@ -13,44 +16,22 @@
         <Field Name="Y">0,1</Field>
         <Field Name="Z">0,1</Field>
       </Field>
-      <Field Name="Rotation">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">0</Field>
-      </Field>
     </Element>
-    <Element Type="GravitationElement">
-      <Field Name="Weight">80</Field>
-      <Field Name="Speed">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">0</Field>
-      </Field>
-      <Field Name="Gravity">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">-9,81</Field>
-      </Field>
-    </Element>
-    <Element Type="PerceiverElement">
-      <Field Name="Sphere">
-        <Field Name="Center">
-          <Field Name="X">0</Field>
-          <Field Name="Y">0</Field>
-          <Field Name="Z">0</Field>
-        </Field>
-        <Field Name="Radius">100</Field>
-      </Field>
-    </Element>
-    <Element Type="InputElement" />
-    <Element Type="MoveActorOnInputScriptElement" />
-    <Element Type="RotateActorOnInputScriptElement" />
-    <Element Type="CollidingElement" />
+    
+    <Element Type="GravitationElement"/>
+    <Element Type="PerceiverElement"/>
+    <Element Type="InputElement"/>
+    <Element Type="MoveActorOnInputScriptElement"/>
+    <Element Type="RotateActorOnInputScriptElement"/>
+    <Element Type="CollidingElement"/>
     <Element Type="PerceivedElement">
       <Field Name="Name">minion.obj</Field>
     </Element>
+
   </Entity>
+
   <Entity Name="block">
+
     <Element Type="TransformElement">
       <Field Name="Position">
         <Field Name="X">0</Field>
@@ -62,19 +43,15 @@
         <Field Name="Y">10</Field>
         <Field Name="Z">0,5</Field>
       </Field>
-      <Field Name="Rotation">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">0</Field>
-      </Field>
     </Element>
     <Element Type="PerceivedElement">
       <Field Name="Name">block.obj</Field>
     </Element>
-    <Element Type="InputElement" />
+    <Element Type="InputElement"/>
     <Element Type="ColliderBoxElement">
       <Field Name="Boxes">
-        <Field Name="_0">
+        
+        <Field Name="0_">
           <Field Name="Min">
             <Field Name="X">-50,6</Field>
             <Field Name="Y">-50,6</Field>
@@ -86,9 +63,12 @@
             <Field Name="Z">3,6</Field>
           </Field>
         </Field>
+        
       </Field>
     </Element>
+    
   </Entity>
+  
   <Entity Name="tree">
     <Element Type="TransformElement">
       <Field Name="Position">
@@ -101,16 +81,14 @@
         <Field Name="Y">0,5</Field>
         <Field Name="Z">0,5</Field>
       </Field>
-      <Field Name="Rotation">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">0</Field>
-      </Field>
     </Element>
+    
     <Element Type="PerceivedElement">
       <Field Name="Name">tree.obj</Field>
     </Element>
+
   </Entity>
+  
   <Entity Name="house">
     <Element Type="TransformElement">
       <Field Name="Position">
@@ -129,8 +107,10 @@
         <Field Name="Z">4</Field>
       </Field>
     </Element>
+
     <Element Type="PerceivedElement">
       <Field Name="Name">house.obj</Field>
     </Element>
   </Entity>
+  
 </Environment>
