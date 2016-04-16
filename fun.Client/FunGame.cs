@@ -40,7 +40,7 @@ namespace fun.Client
             scene = new SceneComponent(this, input, simulation, camera);
             components.Add(scene);
 
-            UI = new HUDComponend(this);
+            UI = new HUDComponend(this, input);
             components.Add(UI);
         }
 

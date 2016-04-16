@@ -46,20 +46,17 @@ namespace fun.Client.Components
 
             texture = new Texture2D(@"assets\textures\lel.png");
 
-            shaders = new Shader[6];
+            shaders = new Shader[4];
 
             shaders[0] = new Shader(new StreamReader(@"assets\shaders\αVs.glsl").ReadToEnd(), ShaderType.VertexShader);
             shaders[1] = new Shader(new StreamReader(@"assets\shaders\αFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
             shaders[2] = new Shader(new StreamReader(@"assets\shaders\βVs.glsl").ReadToEnd(), ShaderType.VertexShader);
             shaders[3] = new Shader(new StreamReader(@"assets\shaders\βFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[4] = new Shader(new StreamReader(@"assets\shaders\γVs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[5] = new Shader(new StreamReader(@"assets\shaders\γFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
 
-            program = new ShaderProgram[3];
+            program = new ShaderProgram[2];
 
             program[0] = new ShaderProgram(shaders[0], shaders[1]);
             program[1] = new ShaderProgram(shaders[2], shaders[3]);
-            program[2] = new ShaderProgram(shaders[4], shaders[5]);
 
             //GL.ActiveTexture(TextureUnit.Texture0);
             //GL.Uniform1(program.GetUniform("texture").ID, 0);
@@ -117,9 +114,6 @@ namespace fun.Client.Components
             program[currentProgram].GetUniform("light").SetValue(new Vector3(0, 0, 10));
             program[currentProgram].GetUniform("range").SetValue(1000f);
 
-            if (currentProgram == 2)
-                program[currentProgram].GetUniform("time").SetValue((float)e.Time);
-
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
 
             foreach (var entity in camera.Seen)
@@ -146,9 +140,8 @@ namespace fun.Client.Components
 
         public override void Update(FrameEventArgs e)
         {
-            if (input.Keyboard.GetKeyDown(Key.P))
+            if (input.Keyboard.GetKeyPressed(Key.P))
             {
-                System.Threading.Thread.Sleep(500);
                 if (currentProgram < program.Length - 1)
                     currentProgram++;
                 else
