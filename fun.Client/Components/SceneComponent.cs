@@ -54,7 +54,6 @@ namespace fun.Client.Components
             program = new ShaderProgram(shaders[0], shaders[1]);
 
             //GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, texture.ID);
             //GL.Uniform1(program.GetUniform("texture").ID, 0);
 
             foreach (var perceived in simulation.Perceiveder)
@@ -70,7 +69,6 @@ namespace fun.Client.Components
                 var objloader = objFactory.Create();
                 var result = objloader.Load(new FileStream(perceived.Name, FileMode.Open, FileAccess.Read));
                 Directory.SetCurrentDirectory("..\\..");
-
 
                 var positions = result.Vertices.Select(v => new Vector3(v.X, v.Y, v.Z)).ToArray();
                 var uvs = result.Textures.Select(t => new Vector2(t.X, t.Y)).ToArray();
@@ -100,6 +98,7 @@ namespace fun.Client.Components
         
         public override void Draw(FrameEventArgs e)
         {
+            GL.UseProgram(program.ID);
             GL.Viewport(0, 0, Game.Width, Game.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -109,6 +108,7 @@ namespace fun.Client.Components
             program.GetUniform("view").SetValue(camera.View);
             program.GetUniform("light").SetValue(new Vector3(0, 0, 10));
             program.GetUniform("range").SetValue(1000f);
+            GL.BindTexture(TextureTarget.Texture2D, texture.ID);
 
             foreach (var entity in camera.Seen)
             {
