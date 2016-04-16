@@ -15,7 +15,7 @@ main (){
 	vec3 offset = position - light;
 	vec3 lightVector = normalize(offset);
 
-	float diffuse = max(dot(normal, lightVector), 0);
+	float diffuse = max(dot(-normal, lightVector), 0);
 	diffuse = diffuse * max(((-1/range) * length(offset) + 1), 0);
 	float ambient = 0.3;
 	float lighting = max(diffuse, ambient);
