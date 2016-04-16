@@ -67,8 +67,7 @@ namespace fun.Client.Constructs
                 int length, size;
                 ActiveUniformType type;
                 var sb = new StringBuilder();
-                //Buffersize is 2^15 ;) 32768
-                GL.GetActiveUniform(ID, i, 32768, out length, out size, out type, sb);
+                GL.GetActiveUniform(ID, i, byte.MaxValue, out length, out size, out type, sb);
                 Uniforms[i] = new Uniform(this, sb.ToString(), type);
             }
         }
