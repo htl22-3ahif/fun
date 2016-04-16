@@ -34,22 +34,21 @@ namespace fun.Client.Constructs
             POSITION_VBO =  GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, POSITION_VBO);
             GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * positions.Length), positions, BufferUsageHint.StaticDraw);
-            GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, 0);
             GL.VertexAttribPointer(program.GetAttrib("vPosition").ID, 3, VertexAttribPointerType.Float, false, Vector3.SizeInBytes, 0);
 
             UV_VBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, UV_VBO);
             GL.BufferData(BufferTarget.ArrayBuffer, (Vector2.SizeInBytes * uvs.Length), uvs, BufferUsageHint.StaticDraw);
-            GL.TexCoordPointer(2, TexCoordPointerType.Float, Vector2.SizeInBytes, 0);
             GL.VertexAttribPointer(program.GetAttrib("vUV").ID, 2, VertexAttribPointerType.Float, true, Vector2.SizeInBytes, 0);
 
             NORMAL_VBO = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, NORMAL_VBO);
             GL.BufferData(BufferTarget.ArrayBuffer, (Vector3.SizeInBytes * normals.Length), normals, BufferUsageHint.StaticDraw);
-            GL.NormalPointer(NormalPointerType.Float, Vector3.SizeInBytes, 0);
             GL.VertexAttribPointer(program.GetAttrib("vNormal").ID, 3, VertexAttribPointerType.Float, true, Vector3.SizeInBytes, 0);
 
+            program.Enable();
             VerticesLength = positions.Length;
+            GL.BindVertexArray(0);
 
             //INDICES = GL.GenBuffer();
             //GL.BindBuffer(BufferTarget.ElementArrayBuffer, INDICES);
@@ -63,14 +62,15 @@ namespace fun.Client.Constructs
 
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
-            //GL.EnableClientState(ArrayCap.NormalArray);
+            GL.EnableClientState(ArrayCap.NormalArray);
 
-            program.Enable();
+            //program.Enable();
 
             GL.BindVertexArray(VAO);
             GL.DrawArrays(PrimitiveType.Triangles, 0, VerticesLength);
+            GL.BindVertexArray(0);
 
-            program.Disable();
+            //program.Disable();
         }
 
 		public void Dispose() {
