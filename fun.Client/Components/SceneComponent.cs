@@ -24,7 +24,7 @@ namespace fun.Client.Components
         private Shader[] shaders;
         private Texture2D texture;
 
-        private int currendShader = 0;
+        private int currentProgram = 0;
 
         public SceneComponent(GameWindow game, InputComponent input, SimulationComponent simulation, CameraComponent camera)
             : base(game)
@@ -46,17 +46,20 @@ namespace fun.Client.Components
 
             texture = new Texture2D(@"assets\textures\lel.png");
 
-            shaders = new Shader[9];
+            shaders = new Shader[6];
 
-            shaders[0] = new Shader(new StreamReader(@"assets\shaders\vs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[1] = new Shader(new StreamReader(@"assets\shaders\fs.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[2] = new Shader(new StreamReader(@"assets\shaders\betavs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[3] = new Shader(new StreamReader(@"assets\shaders\betafs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[0] = new Shader(new StreamReader(@"assets\shaders\αVs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[1] = new Shader(new StreamReader(@"assets\shaders\αFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[2] = new Shader(new StreamReader(@"assets\shaders\βVs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[3] = new Shader(new StreamReader(@"assets\shaders\βFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[4] = new Shader(new StreamReader(@"assets\shaders\γVs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[5] = new Shader(new StreamReader(@"assets\shaders\γFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
 
-            program = new ShaderProgram[2];
+            program = new ShaderProgram[3];
 
             program[0] = new ShaderProgram(shaders[0], shaders[1]);
             program[1] = new ShaderProgram(shaders[2], shaders[3]);
+            program[2] = new ShaderProgram(shaders[4], shaders[5]);
 
             //GL.ActiveTexture(TextureUnit.Texture0);
             //GL.Uniform1(program.GetUniform("texture").ID, 0);
@@ -97,22 +100,23 @@ namespace fun.Client.Components
                         }
 
                 meshes.Add(perceived.Name,
-                    new Mesh(program[currendShader], _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
+                    new Mesh(program[currentProgram], _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
             }
         }
         
         public override void Draw(FrameEventArgs e)
         {
-            GL.UseProgram(program[currendShader].ID);
+            GL.UseProgram(program[currentProgram].ID);
             GL.Viewport(0, 0, Game.Width, Game.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
-            program[currendShader].GetUniform("projection").SetValue(camera.Projection);
-            program[currendShader].GetUniform("view").SetValue(camera.View);
-            program[currendShader].GetUniform("light").SetValue(new Vector3(0, 0, 10));
-            program[currendShader].GetUniform("range").SetValue(1000f);
+            program[currentProgram].GetUniform("projection").SetValue(camera.Projection);
+            program[currentProgram].GetUniform("view").SetValue(camera.View);
+            program[currentProgram].GetUniform("light").SetValue(new Vector3(0, 0, 10));
+            program[currentProgram].GetUniform("range").SetValue(1000f);
+
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
 
             foreach (var entity in camera.Seen)
@@ -142,10 +146,10 @@ namespace fun.Client.Components
             if (input.Keyboard.GetKeyDown(Key.P))
             {
                 System.Threading.Thread.Sleep(500);
-                if (currendShader < program.Length - 1)
-                    currendShader++;
+                if (currentProgram < program.Length - 1)
+                    currentProgram++;
                 else
-                    currendShader = 0;
+                    currentProgram = 0;
             }
         }
 
@@ -154,7 +158,7 @@ namespace fun.Client.Components
 				mesh.Dispose ();
 			}
 
-			program[currendShader].Dispose ();
+			program[currentProgram].Dispose ();
 			texture.Dispose ();
 		}
     }

@@ -3,6 +3,7 @@
 in vec3 position;
 in vec2 uv;
 in vec3 normal;
+in float time;
 
 uniform vec3 light;
 uniform float range;
