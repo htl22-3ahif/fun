@@ -38,11 +38,6 @@ namespace fun.Client
         public override void Initialize()
         {
             bitmap = new Bitmap(Game.ClientRectangle.Width, Game.ClientRectangle.Height);
-            using (Graphics graphics = Graphics.FromImage(bitmap))
-            {
-                graphics.Clear(Color.FromArgb(0, 0, 0, 0));
-                graphics.DrawString("FPS: " + Game.RenderFrequency, sans, Brushes.Tomato, new PointF(0, 0));
-            }
             fpsTexture = new Texture2D(bitmap);
             program = new ShaderProgram(
                 new Shader(VertexShader, ShaderType.VertexShader),
@@ -93,13 +88,25 @@ namespace fun.Client
             time += e.Time;
             if (time > 1)
             {
-                fpsTexture.Dispose();
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
                     graphics.Clear(Color.FromArgb(0, 0, 0, 0));
-                    graphics.DrawString("FPS: " + Game.RenderFrequency.ToString("0.00"), sans, Brushes.Tomato, new PointF(0, 0));
+                    graphics.DrawString("FPS: " + Game.RenderFrequency.ToString("0.00"), sans, Brushes.Honeydew, new PointF(0, 0));
+
+                    GL.BindTexture(TextureTarget.Texture2D, fpsTexture.ID);
+
+                    var data = bitmap.LockBits(
+                        new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                        ImageLockMode.ReadOnly,
+                        System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                    GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba,
+                        data.Width, data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+
+                    bitmap.UnlockBits(data);
+
+                    GL.BindTexture(TextureTarget.Texture2D, 0);
                 }
-                fpsTexture = new Texture2D(bitmap);
                 time = 0;
             }
             GL.BindTexture(TextureTarget.Texture2D, fpsTexture.ID);
