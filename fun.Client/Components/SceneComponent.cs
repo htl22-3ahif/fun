@@ -117,6 +117,9 @@ namespace fun.Client.Components
             program[currentProgram].GetUniform("light").SetValue(new Vector3(0, 0, 10));
             program[currentProgram].GetUniform("range").SetValue(1000f);
 
+            if (currentProgram == 2)
+                program[currentProgram].GetUniform("time").SetValue((float)e.Time);
+
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
 
             foreach (var entity in camera.Seen)

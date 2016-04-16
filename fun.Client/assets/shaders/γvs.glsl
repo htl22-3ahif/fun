@@ -11,7 +11,6 @@ uniform mat4 projection;
 out vec3 position;
 out vec2 uv;
 out vec3 normal;
-out float random;
 
 void
 main(){
@@ -21,5 +20,4 @@ main(){
 	position = realPosition.xyz;
 	uv = vUV;
 	normal = normalize((world * vec4(vNormal, 0)).xyz);
-	random = sin(vPosition.x * normal.z);
 }

@@ -8,12 +8,18 @@ in float random;
 uniform vec3 light;
 uniform float range;
 uniform sampler2D texture;
+uniform float time;
 
 out vec4 fragment;
 
 float
+correctTime (){
+	return time;
+}
+
+float
 rand (){
-	return fract(sin(random)*1e4);
+	return fract(sin(correctTime())*1e4);
 }
 
 void
@@ -36,7 +42,7 @@ main (){
 	uvR.x = uvCopy.x * 1.0 - rand() * 0.02 * 0.8;
 	uvR.y = uvCopy.y * 1.0 + rand() * 0.02 * 0.8;
 
-	if(uvCopy.y < rand() && uvCopy.y > rand() * -0.1 && sin(random) < 0.0)
+	if(uvCopy.y < rand() && uvCopy.y > rand() * -0.1 && sin(correctTime()) < 0.0)
 	{
 		uvCopy.x = (uvCopy + 0.02 * rand()).x;
 	}

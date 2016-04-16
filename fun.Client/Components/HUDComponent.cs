@@ -23,9 +23,9 @@ namespace fun.Client
         private Bitmap bitmap;
         private ShaderProgram program;
 
-        private Font serif = new Font(FontFamily.GenericSerif, 24);
-        private Font sans = new Font(FontFamily.GenericSansSerif, 24);
-        private Font mono = new Font(FontFamily.GenericMonospace, 50);
+        private Font serif = new Font(FontFamily.GenericSerif, 32);
+        private Font sans = new Font(FontFamily.GenericSansSerif, 32);
+        private Font mono = new Font(FontFamily.GenericMonospace, 32);
 
         //private bool textRender = true;
 
@@ -41,7 +41,7 @@ namespace fun.Client
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
                 graphics.Clear(Color.FromArgb(0, 0, 0, 0));
-                graphics.DrawString("FPS: " + Game.RenderFrequency, mono, Brushes.Tomato, new PointF(0, 0));
+                graphics.DrawString("FPS: " + Game.RenderFrequency, sans, Brushes.Tomato, new PointF(0, 0));
             }
             fpsTexture = new Texture2D(bitmap);
             program = new ShaderProgram(
@@ -97,7 +97,7 @@ namespace fun.Client
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
                     graphics.Clear(Color.FromArgb(0, 0, 0, 0));
-                    graphics.DrawString("FPS: " + Game.RenderFrequency.ToString("0.00"), mono, Brushes.Tomato, new PointF(0, 0));
+                    graphics.DrawString("FPS: " + Game.RenderFrequency.ToString("0.00"), sans, Brushes.Tomato, new PointF(0, 0));
                 }
                 fpsTexture = new Texture2D(bitmap);
                 time = 0;
