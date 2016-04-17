@@ -70,13 +70,23 @@ namespace fun.Client
                 new Vector3((Game.ClientRectangle.Width/2), (Game.ClientRectangle.Height/2), 0)
             };
 
+            //for glitch
             var uvs = new Vector2[]
             {
-                new Vector2(0, 0),
                 new Vector2(0, 1),
-                new Vector2(1, 1),
-                new Vector2(1, 0)
+                new Vector2(0, 0),
+                new Vector2(1, 0),
+                new Vector2(1, 1)
             };
+            //for coolness
+            //var uvs = new Vector2[]
+            //{
+            //    new Vector2(0, 0),
+            //    new Vector2(0, 1),
+            //    new Vector2(1, 1),
+            //    new Vector2(1, 0)
+            //};
+
 
             vao = GL.GenVertexArray();
             GL.BindVertexArray(vao);
@@ -127,6 +137,7 @@ namespace fun.Client
                     GL.BindTexture(TextureTarget.Texture2D, fpsTexture.ID);
 
                     var data = bitmap.LockBits(
+
                         new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                         ImageLockMode.ReadOnly,
                         System.Drawing.Imaging.PixelFormat.Format32bppArgb);
