@@ -32,6 +32,8 @@ namespace fun.Client
         private Font mono = new Font(FontFamily.GenericMonospace, 32);
 
         private int currentProgram = 0;
+        byte[] pixels;
+
         //private bool textRender = true;
 
         public HUDComponend(GameWindow game, InputComponent input)
@@ -44,13 +46,14 @@ namespace fun.Client
         {
             bitmap = new Bitmap(Game.ClientRectangle.Width, Game.ClientRectangle.Height);
             fpsTexture = new Texture2D(bitmap);
+            pixels = new byte[Game.ClientRectangle.Width * Game.ClientRectangle.Height * 4];
 
             shaders = new Shader[4];
 
+            shaders[2] = new Shader(new StreamReader(@"assets\hudshaders\cool_vs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[3] = new Shader(new StreamReader(@"assets\hudshaders\cool_fs.glsl").ReadToEnd(), ShaderType.FragmentShader);
             shaders[0] = new Shader(new StreamReader(@"assets\hudshaders\χVs.glsl").ReadToEnd(), ShaderType.VertexShader);
             shaders[1] = new Shader(new StreamReader(@"assets\hudshaders\χFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[2] = new Shader(new StreamReader(@"assets\hudshaders\ψVs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[3] = new Shader(new StreamReader(@"assets\hudshaders\ψFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
 
             program = new ShaderProgram[2];
 
@@ -88,7 +91,10 @@ namespace fun.Client
 
             GL.BindVertexArray(0);
 
-            program[currentProgram].GetUniform("proj").SetValue(Matrix4.CreateOrthographic(Game.ClientRectangle.Width, Game.ClientRectangle.Height, 0f, 1000f));
+            program[0].GetUniform("proj").SetValue(Matrix4.CreateOrthographic(Game.ClientRectangle.Width, Game.ClientRectangle.Height, 0f, 1000f));
+            GL.UseProgram(program[1].ID);
+            program[1].GetUniform("proj").SetValue(Matrix4.CreateOrthographic(Game.ClientRectangle.Width, Game.ClientRectangle.Height, 0f, 1000f));
+            program[1].GetUniform("screen").SetValue(Game.ClientRectangle.Width, Game.ClientRectangle.Height);
         }
 
         public override void Update(FrameEventArgs e)
@@ -102,17 +108,14 @@ namespace fun.Client
             }
         }
 
-        double time = 0;
         public override void Draw(FrameEventArgs e)
         {
             GL.UseProgram(program[currentProgram].ID);
 
-            if (currentProgram == 1)
+            if (currentProgram == 2)
                 program[currentProgram].GetUniform("time").SetValue((float)e.Time);
 
-            time += e.Time;
-            if (time > 1)
-            {
+            if (currentProgram == 0)
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
                     graphics.Clear(Color.FromArgb(0, 0, 0, 0));
@@ -132,7 +135,18 @@ namespace fun.Client
 
                     GL.BindTexture(TextureTarget.Texture2D, 0);
                 }
-                time = 0;
+            else if (currentProgram == 1)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, fpsTexture.ID);
+
+                GL.ReadPixels(0, 0, Game.ClientRectangle.Width, Game.ClientRectangle.Height,
+                    OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, pixels);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba,
+                        Game.ClientRectangle.Width, Game.ClientRectangle.Height, 0,
+                        OpenTK.Graphics.OpenGL.PixelFormat.Rgba, PixelType.UnsignedByte, pixels);
+
+                GL.BindTexture(TextureTarget.Texture2D, 0);
             }
             GL.BindTexture(TextureTarget.Texture2D, fpsTexture.ID);
 

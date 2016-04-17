@@ -104,7 +104,6 @@ namespace fun.Client.Components
         public override void Draw(FrameEventArgs e)
         {
             GL.UseProgram(program[currentProgram].ID);
-            GL.Viewport(0, 0, Game.Width, Game.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
@@ -134,8 +133,6 @@ namespace fun.Client.Components
 
                 mesh.Draw(world);
             }
-
-            GL.Flush();
         }
 
         public override void Update(FrameEventArgs e)
