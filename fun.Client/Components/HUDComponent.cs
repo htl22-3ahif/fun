@@ -50,10 +50,10 @@ namespace fun.Client
 
             shaders = new Shader[4];
 
+            shaders[0] = new Shader(new StreamReader(@"assets\hudshaders\ψVs.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[1] = new Shader(new StreamReader(@"assets\hudshaders\ψFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
             shaders[2] = new Shader(new StreamReader(@"assets\hudshaders\cool_vs.glsl").ReadToEnd(), ShaderType.VertexShader);
             shaders[3] = new Shader(new StreamReader(@"assets\hudshaders\cool_fs.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[0] = new Shader(new StreamReader(@"assets\hudshaders\χVs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[1] = new Shader(new StreamReader(@"assets\hudshaders\χFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
 
             program = new ShaderProgram[2];
 
@@ -72,8 +72,10 @@ namespace fun.Client
 
             var uvs = new Vector2[]
             {
-                new Vector2(0, 0), new Vector2(0, 1),
-                new Vector2(1, 1), new Vector2(1, 0)
+                new Vector2(0, 0),
+                new Vector2(0, 1),
+                new Vector2(1, 1),
+                new Vector2(1, 0)
             };
 
             vao = GL.GenVertexArray();
@@ -92,6 +94,7 @@ namespace fun.Client
             GL.BindVertexArray(0);
 
             program[0].GetUniform("proj").SetValue(Matrix4.CreateOrthographic(Game.ClientRectangle.Width, Game.ClientRectangle.Height, 0f, 1000f));
+            //program[0].GetUniform("resolution").SetValue(Game.ClientRectangle.Width, Game.ClientRectangle.Height);
             GL.UseProgram(program[1].ID);
             program[1].GetUniform("proj").SetValue(Matrix4.CreateOrthographic(Game.ClientRectangle.Width, Game.ClientRectangle.Height, 0f, 1000f));
             program[1].GetUniform("screen").SetValue(Game.ClientRectangle.Width, Game.ClientRectangle.Height);
@@ -112,10 +115,10 @@ namespace fun.Client
         {
             GL.UseProgram(program[currentProgram].ID);
 
-            if (currentProgram == 2)
+            if (currentProgram == 0)
                 program[currentProgram].GetUniform("time").SetValue((float)e.Time);
 
-            if (currentProgram == 0)
+            if (currentProgram == 10)
                 using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
                     graphics.Clear(Color.FromArgb(0, 0, 0, 0));
@@ -135,7 +138,7 @@ namespace fun.Client
 
                     GL.BindTexture(TextureTarget.Texture2D, 0);
                 }
-            else if (currentProgram == 1)
+            //else if (currentProgram == 1)
             {
                 GL.BindTexture(TextureTarget.Texture2D, fpsTexture.ID);
 
