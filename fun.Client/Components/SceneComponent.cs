@@ -48,10 +48,10 @@ namespace fun.Client.Components
 
             shaders = new Shader[4];
 
-            shaders[0] = new Shader(new StreamReader(@"assets\shaders\αVs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[1] = new Shader(new StreamReader(@"assets\shaders\αFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[2] = new Shader(new StreamReader(@"assets\shaders\βVs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[3] = new Shader(new StreamReader(@"assets\shaders\βFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[0] = new Shader(new StreamReader(@"assets\shaders\regularVertex.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[1] = new Shader(new StreamReader(@"assets\shaders\regularFragment.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[2] = new Shader(new StreamReader(@"assets\shaders\celVertex.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[3] = new Shader(new StreamReader(@"assets\shaders\celFragment.glsl").ReadToEnd(), ShaderType.FragmentShader);
 
             program = new ShaderProgram[2];
 

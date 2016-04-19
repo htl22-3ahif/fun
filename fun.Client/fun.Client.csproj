@@ -66,10 +66,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="assets\hudshaders\cool_fs.glsl">
+    <None Include="assets\hudshaders\coolFragment.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\hudshaders\cool_vs.glsl">
+    <None Include="assets\hudshaders\coolVertex.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="assets\hudshaders\χFs.glsl">
@@ -78,10 +78,10 @@
     <None Include="assets\hudshaders\χVs.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\hudshaders\ψFs.glsl">
+    <None Include="assets\hudshaders\glitchFragment.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\hudshaders\ψVs.glsl">
+    <None Include="assets\hudshaders\glitchVertex.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="assets\models\block.mtl">
@@ -114,16 +114,16 @@
     <None Include="assets\models\tree.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\βFs.glsl">
+    <None Include="assets\shaders\celFragment.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\αFs.glsl">
+    <None Include="assets\shaders\regularFragment.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\βVs.glsl">
+    <None Include="assets\shaders\celVertex.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\αVs.glsl">
+    <None Include="assets\shaders\regularVertex.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">

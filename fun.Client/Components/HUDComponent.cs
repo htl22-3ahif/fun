@@ -50,10 +50,10 @@ namespace fun.Client
 
             shaders = new Shader[4];
 
-            shaders[0] = new Shader(new StreamReader(@"assets\hudshaders\ψVs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[1] = new Shader(new StreamReader(@"assets\hudshaders\ψFs.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[2] = new Shader(new StreamReader(@"assets\hudshaders\cool_vs.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[3] = new Shader(new StreamReader(@"assets\hudshaders\cool_fs.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[0] = new Shader(new StreamReader(@"assets\hudshaders\glitchVertex.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[1] = new Shader(new StreamReader(@"assets\hudshaders\glitchFragment.glsl").ReadToEnd(), ShaderType.FragmentShader);
+            shaders[2] = new Shader(new StreamReader(@"assets\hudshaders\coolVertex.glsl").ReadToEnd(), ShaderType.VertexShader);
+            shaders[3] = new Shader(new StreamReader(@"assets\hudshaders\coolFragment.glsl").ReadToEnd(), ShaderType.FragmentShader);
 
             program = new ShaderProgram[2];
 
