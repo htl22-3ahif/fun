@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Environment>
   <Lib Path="fun.Basics.dll" />
-  <Entity Name="player">
+  <Entity Name="Player">
     <Element Type="TransformElement">
       <Field Name="Position">
         <Field Name="X">0</Field>

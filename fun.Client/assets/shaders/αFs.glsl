@@ -1,4 +1,4 @@
-﻿#version 450
+﻿#version 400
 
 in vec3 position;
 in vec2 uv;
