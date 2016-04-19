@@ -34,7 +34,7 @@ namespace fun.Client.Components
             using (var file = new FileStream("environment.xml", FileMode.Create, FileAccess.Write))
                 writer.Save(file, environment, "fun.Basics.dll");
 
-            Player = environment.GetEntity("player");
+            Player = environment.GetEntity("Player");
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
         }
 
