@@ -28,7 +28,7 @@ namespace fun.Editor.Commands
         protected override void Do(string[] args)
         {
             var env = new Environment();
-            using (var file = new FileStream(args[0], FileMode.CreateNew, FileAccess.Write))
+            using (var file = new FileStream(args[0], FileMode.Create, FileAccess.Write))
             {
                 new EnvironmentXmlWriter().Save(file, env, args.Skip(1).ToArray());
             }
