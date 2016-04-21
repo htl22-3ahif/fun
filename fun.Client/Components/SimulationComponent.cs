@@ -19,7 +19,7 @@ namespace fun.Client.Components
         public Entity Player { get; private set; }
         public IEnumerable<PerceivedElement> Perceiveder { get; set; }
 
-        public SimulationComponent(GameWindow game, InputComponent input)
+        public SimulationComponent(GameWindow game, InputComponent input, string env)
             : base(game)
         {
             this.input = input;
@@ -28,13 +28,13 @@ namespace fun.Client.Components
             var writer = new EnvironmentXmlWriter();
             string[] libaries;
 
-            using (var file = new FileStream("environment.xml", FileMode.Open, FileAccess.Read))
+            using (var file = new FileStream(env, FileMode.Open, FileAccess.Read))
                 environment = reader.Load(file, out libaries)[0];
 
-            using (var file = new FileStream("environment.xml", FileMode.Create, FileAccess.Write))
-                writer.Save(file, environment, "fun.Basics.dll");
+            //using (var file = new FileStream("environment.xml", FileMode.Create, FileAccess.Write))
+            //    writer.Save(file, environment, "fun.Basics.dll");
 
-            Player = environment.GetEntity("Player");
+            Player = environment.Entities.First(e => e.Elements.Any(el => el.GetType().Name == "PerceiverElement"));
             Perceiveder = environment.Entities.Where(e => e.ContainsElement<PerceivedElement>()).Select(e => e.GetElement<PerceivedElement>());
         }
 

@@ -18,8 +18,8 @@ namespace fun.Client
         private SimulationComponent simulation;
         private HUDComponend UI;
 
-        public FunGame()
-            : base(1280, 720)
+        public FunGame(int width, int height, string env)
+            : base(width, height)
         {
 			Title = "fun";
             WindowBorder = WindowBorder.Hidden;
@@ -31,7 +31,7 @@ namespace fun.Client
             input = new InputComponent(this);
             components.Add(input);
 
-            simulation = new SimulationComponent(this, input);
+            simulation = new SimulationComponent(this, input, env);
             components.Add(simulation);
 
             camera = new CameraComponent(this, input, simulation);
