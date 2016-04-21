@@ -21,10 +21,6 @@ namespace fun.Editor
             if (args[0] != Keyword)
                 return false;
 
-            if (subCommands != null)
-                if (!subCommands.Any(c => c.TryParse(args.Skip(1).ToArray())))
-                    return false;
-
             return true;
 
             //if (args.Length > 1)
@@ -50,15 +46,15 @@ namespace fun.Editor
 
             if (args.Length == 0)
                 Do(new string[0]);
-
-            if (subCommands != null)
-            {
-                foreach (var c in subCommands)
-                    if (c.Keyword == args[0])
-                        c.Parse(args);
-            }
             else
-                Do(args);
+                if (subCommands != null)
+                {
+                    foreach (var c in subCommands)
+                        if (c.Keyword == args[0])
+                            c.Parse(args);
+                }
+                else
+                    Do(args);
 
             //for (int i = 0; i < args.Length; i++)
             //{

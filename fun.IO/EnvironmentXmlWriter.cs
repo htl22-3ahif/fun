@@ -132,7 +132,10 @@ namespace fun.IO
 
         private void PrimitiveOrStringTypeHandler(XmlDocument doc, FieldInfo field, XmlElement xmlfield, object receiver)
         {
-            xmlfield.InnerText = field.GetValue(receiver).ToString();
+            if (field.GetValue(receiver) != null)
+                xmlfield.InnerText = field.GetValue(receiver).ToString();
+            else
+                xmlfield.InnerText = "";
         }
     }
 }

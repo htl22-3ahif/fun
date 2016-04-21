@@ -22,21 +22,45 @@ namespace fun.Editor.Commands
 
         protected override void Do(string[] args)
         {
+            var err = Console.Error;
+            if (args == null || args.Length < 2)
+            {
+                err.WriteLine("There are no Arguments");
+                err.WriteLine("Arguments: <environment_file> <entity_name>");
+                return;
+            }
+
             Environment env;
             var envPath = args[0];
             string[] libaries;
 
-            using (var file = new FileStream(envPath, FileMode.Open, FileAccess.Read))
+            try
             {
-                env = new EnvironmentXmlReader().Load(file, out libaries)[0];
+                using (var file = new FileStream(envPath, FileMode.Open, FileAccess.Read))
+                {
+                    env = new EnvironmentXmlReader().Load(file, out libaries)[0];
+                }
+            }
+            catch (Exception)
+            {
+                err.WriteLine("File could not bee found");
+                return;
             }
 
             env.AddEntity(new Entity(args[1], env));
             Console.WriteLine("Entity \"{0}\" in Environment \"{1}\" added!", args[1], args[0]);
 
-            using (var file = new FileStream(envPath, FileMode.Create, FileAccess.Write))
+            try
             {
-                new EnvironmentXmlWriter().Save(file, env, libaries);
+                using (var file = new FileStream(envPath, FileMode.Create, FileAccess.Write))
+                {
+                    new EnvironmentXmlWriter().Save(file, env, libaries);
+                }
+            }
+            catch (Exception)
+            {
+                err.WriteLine("Assembly could not be load");
+                return;
             }
         }
     }
