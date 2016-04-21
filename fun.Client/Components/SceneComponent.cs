@@ -20,8 +20,7 @@ namespace fun.Client.Components
         private InputComponent input;
 
         private Dictionary<string, Mesh> meshes;
-        private ShaderProgram[] program;
-        private Shader[] shaders;
+        private ShaderProgram[] programs;
         private Texture2D texture;
 
         private int currentProgram = 0;
@@ -44,19 +43,22 @@ namespace fun.Client.Components
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.DepthFunc(DepthFunction.Less);
 
-            texture = new Texture2D(@"assets\textures\lel.png");
+            texture = new Texture2D(@"assets\textures\violet.png");
 
-            shaders = new Shader[4];
+            programs = new ShaderProgram[3];
 
-            shaders[0] = new Shader(new StreamReader(@"assets\shaders\regularVertex.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[1] = new Shader(new StreamReader(@"assets\shaders\regularFragment.glsl").ReadToEnd(), ShaderType.FragmentShader);
-            shaders[2] = new Shader(new StreamReader(@"assets\shaders\celVertex.glsl").ReadToEnd(), ShaderType.VertexShader);
-            shaders[3] = new Shader(new StreamReader(@"assets\shaders\celFragment.glsl").ReadToEnd(), ShaderType.FragmentShader);
-
-            program = new ShaderProgram[2];
-
-            program[0] = new ShaderProgram(shaders[0], shaders[1]);
-            program[1] = new ShaderProgram(shaders[2], shaders[3]);
+            programs[0] = new ShaderProgram(
+                new Shader(new StreamReader(@"assets\shaders\regularVertex.glsl").ReadToEnd(), ShaderType.VertexShader),
+                new Shader(new StreamReader(@"assets\shaders\regularFragment.glsl").ReadToEnd(), ShaderType.FragmentShader)
+            );
+            programs[1] = new ShaderProgram(
+                new Shader(new StreamReader(@"assets\shaders\celVertex.glsl").ReadToEnd(), ShaderType.VertexShader),
+                new Shader(new StreamReader(@"assets\shaders\celFragment.glsl").ReadToEnd(), ShaderType.FragmentShader)
+            );
+            programs[2] = new ShaderProgram(
+                new Shader(new StreamReader(@"assets\shaders\phongVertex.glsl").ReadToEnd(), ShaderType.VertexShader),
+                new Shader(new StreamReader(@"assets\shaders\phongFragment.glsl").ReadToEnd(), ShaderType.FragmentShader)
+            );
 
             //GL.ActiveTexture(TextureUnit.Texture0);
             //GL.Uniform1(program.GetUniform("texture").ID, 0);
@@ -97,21 +99,21 @@ namespace fun.Client.Components
                         }
 
                 meshes.Add(perceived.Name,
-                    new Mesh(program[currentProgram], _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
+                    new Mesh(programs[currentProgram], _positions.ToArray(), _uvs.ToArray(), _normals.ToArray()));
             }
         }
         
         public override void Draw(FrameEventArgs e)
         {
-            GL.UseProgram(program[currentProgram].ID);
+            GL.UseProgram(programs[currentProgram].ID);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.PolygonMode(MaterialFace.Front, PolygonMode.Fill);
 
-            program[currentProgram].GetUniform("projection").SetValue(camera.Projection);
-            program[currentProgram].GetUniform("view").SetValue(camera.View);
-            program[currentProgram].GetUniform("light").SetValue(new Vector3(0, 0, 10));
-            program[currentProgram].GetUniform("range").SetValue(1000f);
+            programs[currentProgram].GetUniform("projection").SetValue(camera.Projection);
+            programs[currentProgram].GetUniform("view").SetValue(camera.View);
+            programs[currentProgram].GetUniform("light").SetValue(new Vector3(0, 0, 10));
+            programs[currentProgram].GetUniform("range").SetValue(1000f);
 
             GL.BindTexture(TextureTarget.Texture2D, texture.ID);
 
@@ -137,9 +139,16 @@ namespace fun.Client.Components
 
         public override void Update(FrameEventArgs e)
         {
+            // complex codemess to switch shader on 'P' keypress
             if (input.Keyboard.GetKeyPressed(Key.P))
             {
-                if (currentProgram < program.Length - 1)
+                if (input.Keyboard.GetKeyDown(Key.AltLeft))
+                    if (currentProgram < 1)
+                        currentProgram = programs.Length - 2;
+                    else
+                        currentProgram -= 2;
+
+                if (currentProgram < programs.Length - 1)
                     currentProgram++;
                 else
                     currentProgram = 0;
@@ -147,11 +156,12 @@ namespace fun.Client.Components
         }
 
         public void Dispose(){
-			foreach (var mesh in meshes.Values) {
+			foreach (var mesh in meshes.Values)
 				mesh.Dispose ();
-			}
 
-			program[currentProgram].Dispose ();
+            foreach (var program in programs)
+                program.Dispose();
+
 			texture.Dispose ();
 		}
     }
