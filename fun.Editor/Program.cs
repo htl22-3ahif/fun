@@ -12,7 +12,8 @@ namespace fun.Editor
                 new CreateCommandParser(),
                 new AddCommandParser(),
                 new ViewCommandParser(),
-                new RemoveCommandParser());
+                new RemoveCommandParser(),
+                new ListCommandParser());
 
             commands.Parse(args);
         }

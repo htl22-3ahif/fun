@@ -44,6 +44,7 @@
     <Compile Include="Commands\AddElementCommandParser.cs" />
     <Compile Include="Commands\AddEntityCommandParser.cs" />
     <Compile Include="Commands\CreateCommandParser.cs" />
+    <Compile Include="Commands\ListCommandParser.cs" />
     <Compile Include="Commands\RemoveCommandParser.cs" />
     <Compile Include="Commands\RemoveElementCommandParser.cs" />
     <Compile Include="Commands\RemoveEntityCommandParser.cs" />
