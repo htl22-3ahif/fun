@@ -112,7 +112,7 @@ namespace fun.Core
                     return element;
 
             // 404 not found
-            throw new ArgumentException("Entity does not contain" + elementType.Name);
+            throw new ArgumentException("Entity does not contain " + elementType.Name);
         }
         
         /// <summary>

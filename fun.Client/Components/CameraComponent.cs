@@ -57,7 +57,7 @@ namespace fun.Client.Components
                 input.Keyboard.GetKeyDown(Key.A) ||
                 input.Keyboard.GetKeyDown(Key.S) ||
                 input.Keyboard.GetKeyDown(Key.D))
-                player.GetElement<InputElement>().Content = new Vector3(0, 0, rotation.Z);
+                transform.Rotation = new Vector3(0, 0, rotation.Z);
 
             View = Matrix4.LookAt(
                 transform.Position - (forward * Distance), forward + (transform.Position - (forward * Distance)), up);

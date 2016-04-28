@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Environment>
-  <Lib Path="fun.Basics.dll" />
+  <Lib Path="fun.Basics.DLL" />
   <Entity Name="Player">
     <Element Type="TransformElement">
       <Field Name="Position">
         <Field Name="X">0</Field>
         <Field Name="Y">0</Field>
-        <Field Name="Z">5</Field>
+        <Field Name="Z">50</Field>
       </Field>
       <Field Name="Scale">
         <Field Name="X">0,1</Field>
@@ -17,19 +17,6 @@
         <Field Name="X">0</Field>
         <Field Name="Y">0</Field>
         <Field Name="Z">0</Field>
-      </Field>
-    </Element>
-    <Element Type="GravitationElement">
-      <Field Name="Weight">80</Field>
-      <Field Name="Speed">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">0</Field>
-      </Field>
-      <Field Name="Gravity">
-        <Field Name="X">0</Field>
-        <Field Name="Y">0</Field>
-        <Field Name="Z">-9,81</Field>
       </Field>
     </Element>
     <Element Type="PerceiverElement">
@@ -43,11 +30,15 @@
       </Field>
     </Element>
     <Element Type="InputElement" />
-    <Element Type="MoveActorOnInputScriptElement" />
     <Element Type="RotateActorOnInputScriptElement" />
-    <Element Type="CollidingElement" />
+    <Element Type="MoveActorOnInputScriptElement" />
     <Element Type="PerceivedElement">
       <Field Name="Name">minion.obj</Field>
+    </Element>
+    <Element Type="RigidbodyElement">
+      <Field Name="Mass">100</Field>
+      <Field Name="Speed">1</Field>
+      <Field Name="JumpPower">75</Field>
     </Element>
   </Entity>
   <Entity Name="block">

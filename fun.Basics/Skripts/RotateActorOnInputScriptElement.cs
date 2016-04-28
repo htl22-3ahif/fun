@@ -25,7 +25,7 @@ namespace fun.Basics.Skripts
 
         public override void Update(double time)
         {
-            transform.Rotation = input.Content;//new Vector3(input.MouseDelta.Y / 100f, 0f, input.MouseDelta.X / 100f);
+            //transform.Rotation = input.Content;//new Vector3(input.MouseDelta.Y / 100f, 0f, input.MouseDelta.X / 100f);
         }
     }
 }

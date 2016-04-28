@@ -28,7 +28,7 @@ namespace fun.Basics
         public override void Initialize()
         {
 			transform = Entity.GetElement<TransformElement>();
-			colliding = Entity.GetElement<CollidingElement>();
+			//colliding = Entity.GetElement<CollidingElement>();
         }
 
         public override void Update(double time)
