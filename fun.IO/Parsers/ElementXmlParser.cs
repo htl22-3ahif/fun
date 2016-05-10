@@ -27,9 +27,20 @@ namespace fun.IO.XmlParsers
         public override void Parse(XmlNode node)
         {
             var typename = node.Attributes[typeof(Type).Name].Value;
+            Type type = null;
 
             foreach (var assembly in data.Assemblys)
-                data.PushElement(assembly.DefinedTypes.First(t => t.Name == typename));
+            {
+                type = assembly.DefinedTypes.FirstOrDefault(t => t.Name == typename);
+                if (type != default(Type))
+                    break;
+            }
+
+            if (type == default(Type))
+                // TODO: Write message
+                throw new XmlException();
+
+            data.PushElement(type);
 
             data.Receiver = data.Element;
 
