@@ -22,6 +22,8 @@ namespace fun.Core
 
         public Element[] Elements { get { return elements.ToArray(); } }
 
+        public bool Enable { get; set; }
+
         /// <summary>
         /// Parent-Property
         /// for the parenting system.
@@ -51,6 +53,7 @@ namespace fun.Core
             this.Environment = environment;
             this.elements = new List<Element>();
             this.children = new List<Entity>();
+            this.Enable = true;
         }
 
         /// <summary>

@@ -37,10 +37,12 @@ namespace fun.IO
             {
                 var xmlentity = doc.CreateElement("Entity");
                 xmlentity.SetAttribute("Name", entity.Name);
+                xmlentity.SetAttribute("Enable", entity.Enable.ToString());
                 foreach (var element in entity.Elements)
                 {
                     var xmlelement = doc.CreateElement("Element");
                     xmlelement.SetAttribute("Type", element.GetType().Name);
+                    xmlelement.SetAttribute("Enable", element.Enable.ToString());
 
                     var elemtype = element.GetType();
                     foreach (var field in elemtype.GetFields(BindingFlags.Instance | BindingFlags.Public))

@@ -9,7 +9,10 @@ namespace fun.Core
     public class Element
     {
         public Environment Environment { get; private set; }
+
         public Entity Entity { get; private set; }
+
+        public bool Enable { get; set; }
 
         /// <summary>
         /// Creates an element-Object.
@@ -26,6 +29,7 @@ namespace fun.Core
 
             this.Environment = environment;
             this.Entity = entity;
+            this.Enable = true;
         }
 
         // Event Methods

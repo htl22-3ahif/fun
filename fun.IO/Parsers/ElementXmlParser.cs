@@ -27,6 +27,9 @@ namespace fun.IO.XmlParsers
         public override void Parse(XmlNode node)
         {
             var typename = node.Attributes[typeof(Type).Name].Value;
+            var enable = true;
+            if (node.Attributes["Enable"] != null)
+                enable = bool.Parse(node.Attributes["Enable"].Value);
             Type type = null;
 
             foreach (var assembly in data.Assemblys)
@@ -41,8 +44,8 @@ namespace fun.IO.XmlParsers
                 throw new XmlException();
 
             data.PushElement(type);
-
             data.Receiver = data.Element;
+            data.Element.Enable = enable;
 
             foreach (var _node in node.ChildNodes.OfType<XmlNode>())
                 foreach (var parser in parsers)

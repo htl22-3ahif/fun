@@ -28,9 +28,13 @@ namespace fun.IO.XmlParsers
         public override void Parse(XmlNode node)
         {
             var name = node.Attributes["Name"].Value;
+            var enable = true;
+            if (node.Attributes["Enable"] != null)
+                enable = bool.Parse(node.Attributes["Enable"].Value);
 
             data.PushEntity(name);
             data.AddPushedEntity();
+            data.Entity.Enable = enable;
 
             foreach (var _node in node.ChildNodes.OfType<XmlNode>())
                 foreach (var parser in parsers)

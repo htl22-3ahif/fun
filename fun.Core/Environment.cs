@@ -12,7 +12,7 @@ namespace fun.Core
     {
         private readonly List<Entity> entities;
 
-        private bool inizialized;
+        private bool initialized;
 
         /// <summary>
         /// entities available for communication.
@@ -25,7 +25,7 @@ namespace fun.Core
         public Environment()
         {
             entities = new List<Entity>();
-            inizialized = false;
+            initialized = false;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace fun.Core
             // Add entity to entity-List
             entities.Add(entity);
 
-            if (!inizialized)
+            if (!initialized)
                 return;
 
             entity.Initialize();
@@ -87,15 +87,15 @@ namespace fun.Core
 
         public void Initialize()
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Where(e => e.Enable))
                 entity.Initialize();
 
-            inizialized = true;
+            initialized = true;
         }
 
         public void Update(double time)
         {
-            foreach (var entity in entities)
+            foreach (var entity in entities.Where(e => e.Enable))
                 entity.Update(time);
         }
     }
