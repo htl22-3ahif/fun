@@ -43,6 +43,10 @@
       <Project>{80175f3b-2c0d-4a9e-9944-b69abf3e8006}</Project>
       <Name>fun.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\fun.IO\fun.IO.csproj">
+      <Project>{9b61bb6a-a8fc-4795-a9fa-3b3c60f28b15}</Project>
+      <Name>fun.IO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

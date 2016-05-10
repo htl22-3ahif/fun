@@ -1,6 +1,8 @@
 ﻿using fun.Core;
+using fun.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -66,15 +68,18 @@ namespace fun.Network
             clientPlayer.RemoveElement(typeof(NetworkProcessHostElement));
             clientPlayer.AddElement<NetworkProcessClientElement>();
             env.AddEntity(clientPlayer);
+            foreach (var entity in Environment.Entities)
+            {
+                if (entity.ContainsElement<NetworkInitializationElement>())
+                    continue;
+                if (entity.Name == clientPlayer.Name)
+                    continue;
+
+                env.AddEntity(entity);
+            }
 
             clientCount++;
             udp.BeginReceive(new AsyncCallback(HandleNewClient), null);
-        }
-
-        private int GetFreePort()
-        {
-            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            return (socket.RemoteEndPoint as IPEndPoint).Port;
         }
     }
 }

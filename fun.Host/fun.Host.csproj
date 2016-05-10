@@ -42,6 +42,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\fun.Basics\fun.Basics.csproj">
+      <Project>{24fabea8-9481-4edb-b0b5-81cb94731690}</Project>
+      <Name>fun.Basics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\fun.Core\fun.Core.csproj">
       <Project>{80175f3b-2c0d-4a9e-9944-b69abf3e8006}</Project>
       <Name>fun.Core</Name>
@@ -49,6 +53,10 @@
     <ProjectReference Include="..\fun.IO\fun.IO.csproj">
       <Project>{9b61bb6a-a8fc-4795-a9fa-3b3c60f28b15}</Project>
       <Name>fun.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\fun.Network\fun.Network.csproj">
+      <Project>{5c9c87cf-ebe2-4b4c-a478-b4a96e4129a4}</Project>
+      <Name>fun.Network</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
