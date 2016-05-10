@@ -64,7 +64,9 @@ namespace fun.Client
         {
             base.OnRenderFrame(e);
 
-			//System.Threading.Thread.Sleep (1000);
+            //and again, this helped me to find an bug
+            //love you <3
+			//System.Threading.Thread.Sleep(100);
 
             foreach (var component in components)
                 component.Draw(e);

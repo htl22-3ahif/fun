@@ -38,7 +38,7 @@
     <Element Type="RigidbodyElement">
       <Field Name="Mass">100</Field>
       <Field Name="Speed">1</Field>
-      <Field Name="JumpPower">75</Field>
+      <Field Name="JumpPower">20</Field>
     </Element>
   </Entity>
   <Entity Name="block">

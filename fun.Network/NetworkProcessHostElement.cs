@@ -14,8 +14,6 @@ namespace fun.Network
     {
         private UdpClient udp;
 
-        public IPEndPoint EndPoint;
-
         public NetworkProcessHostElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
@@ -24,7 +22,12 @@ namespace fun.Network
 
         public override void Initialize()
         {
-            udp = new UdpClient(EndPoint);
+            udp = new UdpClient(new IPEndPoint(IPAddress.Any, 0));
+        }
+
+        public override void OnClose()
+        {
+            udp.Close();
         }
     }
 }

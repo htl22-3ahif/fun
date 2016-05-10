@@ -13,7 +13,7 @@ namespace fun.Basics
     public sealed class RigidbodyElement : Element
     {
         private const float GAP = 0.0001f;
-        private const float RADIUS = 500;
+        private const float RADIUS = 1000;
 
         private TransformElement transform;
         private List<ICollider> colliders;
@@ -50,7 +50,7 @@ namespace fun.Basics
         {
             var gravity = new Vector3(0, 0, -9.81f * (Mass / RADIUS));
             var velmove = VelocityDirection * Speed;
-            var friction = new Vector3(0.1f, 0.1f, 0.1f);
+            var friction = new Vector3(.1f, .1f, .1f);
             var jump = new Vector3();
 
             if (Jump && IsCollidingZ)
@@ -137,6 +137,8 @@ namespace fun.Basics
             } while (colliding != null);
 
             transform.Position += Velocity;
+            if (IsCollidingZ)
+                Velocity = new Vector3(Velocity.X, Velocity.Y, 0);
         }
     }
 }
