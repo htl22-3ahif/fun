@@ -15,11 +15,12 @@ namespace fun.Network
 {
     public sealed class NetworkInitializationElement : Element
     {
-        private UdpClient udp;
+        private TcpListener tcp;
         private int clientCount;
+        private int bufferSize;
 
         public int Port;
-        
+
         public NetworkInitializationElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
@@ -28,21 +29,42 @@ namespace fun.Network
 
         public override void Initialize()
         {
-            udp = new UdpClient(new IPEndPoint(IPAddress.Any, Port));
-            udp.BeginReceive(new AsyncCallback(HandleNewClient), null);
+            tcp = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
+            tcp.Start();
+            tcp.BeginAcceptTcpClient(HandleNewClient, null);
+            //udp = new UdpClient(new IPEndPoint(IPAddress.Any, Port));
+            //udp.BeginReceive(new AsyncCallback(HandleNewClient), null);
             clientCount = 0;
-        }
-
-        public override void Update(double time)
-        {
+            bufferSize = 2;
         }
 
         private void HandleNewClient(IAsyncResult res)
         {
-            var sender = new IPEndPoint(IPAddress.Any, 0);
-            var data = udp.EndReceive(res, ref sender);
-            Console.WriteLine(Encoding.ASCII.GetString(data) + " was sent by " + sender.ToString());
+            var client = tcp.EndAcceptTcpClient(res);
 
+            var data = new byte[bufferSize];
+            client.GetStream().BeginRead(data, 0, data.Length, ReadClientStream, new { Client = client, Data = data });
+            tcp.BeginAcceptTcpClient(HandleNewClient, null);
+        }
+
+        private void ReadClientStream(IAsyncResult res)
+        {
+            var client = (TcpClient)res.AsyncState.GetType().GetProperty("Client").GetValue(res.AsyncState);
+            var data = (byte[])res.AsyncState.GetType().GetProperty("Data").GetValue(res.AsyncState);
+
+            try { client.GetStream().EndRead(res); }
+            catch (IOException) { return; }
+
+            if (data.Last() != 0)
+            {
+                var _data = new byte[data.Length + bufferSize];
+                client.GetStream().BeginRead(_data, 0, _data.Length, ReadClientStream, new { Client = client, Data = data });
+                return;
+            }
+
+            var sender = new IPEndPoint(IPAddress.Any, 0);
+            var request = Encoding.UTF8.GetString(data).Trim('\0');
+            Console.WriteLine(request);
             var player = Environment.GetEntity("Player");
             var hostPlayer = new Entity("Player" + clientCount, Environment);
             foreach (var element in player.Elements)
@@ -79,7 +101,8 @@ namespace fun.Network
             }
 
             clientCount++;
-            udp.BeginReceive(new AsyncCallback(HandleNewClient), null);
+            var next_data = new byte[bufferSize];
+            client.GetStream().BeginRead(next_data, 0, next_data.Length, ReadClientStream, new { Client = client, Data = data });
         }
     }
 }
