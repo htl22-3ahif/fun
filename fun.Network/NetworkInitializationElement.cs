@@ -16,8 +16,7 @@ namespace fun.Network
     public sealed class NetworkInitializationElement : Element
     {
         private TcpListener tcp;
-        private int clientCount;
-        private int bufferSize;
+        public int BufferSize;
 
         public int Port;
 
@@ -32,15 +31,13 @@ namespace fun.Network
             tcp = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
             tcp.Start();
             tcp.BeginAcceptTcpClient(HandleNewClient, null);
-            clientCount = 0;
-            bufferSize = 2;
         }
 
         private void HandleNewClient(IAsyncResult res)
         {
             var client = tcp.EndAcceptTcpClient(res);
 
-            var data = new byte[bufferSize];
+            var data = new byte[BufferSize];
             client.GetStream().BeginRead(data, 0, data.Length, ReadClientStream, new { Client = client, Data = data });
             tcp.BeginAcceptTcpClient(HandleNewClient, null);
         }
@@ -64,7 +61,7 @@ namespace fun.Network
             if (data.Last() != 0)
             {
                 // the data's size will be increazed
-                var _data = new byte[data.Length + bufferSize];
+                var _data = new byte[data.Length + BufferSize];
 
                 // the data will be stored in the async state
                 res.AsyncState.GetType().GetProperty("Data").SetValue(res.AsyncState, _data);
@@ -85,23 +82,23 @@ namespace fun.Network
             // converting the data into a string encoded in UTF8
             var request = Encoding.UTF8.GetString(data).Trim('\0');
 
+            if (request != "nyaa~")
+                return;
+
             // showing the request
-            Console.WriteLine(request);
+            Console.WriteLine("Someone wants to play with us! nyaa~");
 
             // geting the shema for the client's entity
             var player = Environment.GetEntity("Player");
 
             // creating the player that will stay in the host's environment
-            var hostPlayer = new Entity("Player" + clientCount, Environment);
+            var hostPlayer = new Entity("Player" + sender.Address.ToString(), Environment);
 
             // applying the shema's elements to the host's entity
             ApplyElementsTo(player, hostPlayer);
 
             // adding the element that handles the networking process on the host side
             hostPlayer.AddElement<NetworkProcessHostElement>();
-
-            // inizializing the whole entity
-            hostPlayer.Initialize();
 
             // and finally, we are adding it to our environment
             Environment.AddEntity(hostPlayer);
@@ -139,13 +136,15 @@ namespace fun.Network
                 env.AddEntity(entity);
             }
 
-            // increasing the client count
-            clientCount++;
+            new EnvironmentXmlWriter().Save(client.GetStream(), env, new[] { "fun.Basics.dll", "fun.Network.dll" });
+
+            // inizializing the whole entity
+            hostPlayer.Initialize();
 
             // then we will set the new data buffer for the next package to be received
             // we do it because it may be that our current data buffer is bigger than the defined buffer size
             // this could be the case if we ran into the if at the begining
-            var next_data = new byte[bufferSize];
+            var next_data = new byte[BufferSize];
 
             // again we are seting to wait for the next bytes to come in
             client.GetStream().BeginRead(next_data, 0, next_data.Length, ReadClientStream, new { Client = client, Data = next_data });
