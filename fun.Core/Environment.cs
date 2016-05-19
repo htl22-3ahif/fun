@@ -12,8 +12,6 @@ namespace fun.Core
     {
         private readonly List<Entity> entities;
 
-        private bool initialized;
-
         /// <summary>
         /// entities available for communication.
         /// </summary>
@@ -25,7 +23,6 @@ namespace fun.Core
         public Environment()
         {
             entities = new List<Entity>();
-            initialized = false;
         }
 
         /// <summary>
@@ -42,16 +39,6 @@ namespace fun.Core
 
             // Add entity to entity-List
             entities.Add(entity);
-
-            if (!initialized)
-                return;
-
-            entity.Initialize();
-
-            foreach (var _entity in entities)
-                if (_entity != entity)
-                    foreach (var element in _entity.Elements)
-                        element.OnEntityAdded(entity);
         }
 
         /// <summary>
@@ -89,8 +76,6 @@ namespace fun.Core
         {
             foreach (var entity in entities.Where(e => e.Enable))
                 entity.Initialize();
-
-            initialized = true;
         }
 
         public void Update(double time)

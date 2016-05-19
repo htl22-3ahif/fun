@@ -32,8 +32,6 @@ namespace fun.Network
             tcp = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
             tcp.Start();
             tcp.BeginAcceptTcpClient(HandleNewClient, null);
-            //udp = new UdpClient(new IPEndPoint(IPAddress.Any, Port));
-            //udp.BeginReceive(new AsyncCallback(HandleNewClient), null);
             clientCount = 0;
             bufferSize = 2;
         }
@@ -49,60 +47,119 @@ namespace fun.Network
 
         private void ReadClientStream(IAsyncResult res)
         {
+            // get the affected client and the received data
             var client = (TcpClient)res.AsyncState.GetType().GetProperty("Client").GetValue(res.AsyncState);
             var data = (byte[])res.AsyncState.GetType().GetProperty("Data").GetValue(res.AsyncState);
 
+            // if the data is empty (filled with zeros)
+            if (!data.Any(b => b != 0))
+                // just get outta here
+                return;
+
+            // if stream is already at end, exit
             try { client.GetStream().EndRead(res); }
             catch (IOException) { return; }
 
+            // if the chunck's size is not enough to respresent the whole data
             if (data.Last() != 0)
             {
+                // the data's size will be increazed
                 var _data = new byte[data.Length + bufferSize];
-                client.GetStream().BeginRead(_data, 0, _data.Length, ReadClientStream, new { Client = client, Data = data });
+
+                // the data will be stored in the async state
+                res.AsyncState.GetType().GetProperty("Data").SetValue(res.AsyncState, _data);
+
+                // now the begin read async method will be launched
+                // it will call the same method, but the chunck will be larger
+                // there is the posibility, that the size still is not enough
+                // in this case, he will just do the same again
+                client.GetStream().BeginRead(_data, 0, _data.Length, new AsyncCallback(ReadClientStream), res.AsyncState);
+
+                // exit from this method
                 return;
             }
 
+            // defining the sender (client's destination)
             var sender = new IPEndPoint(IPAddress.Any, 0);
+
+            // converting the data into a string encoded in UTF8
             var request = Encoding.UTF8.GetString(data).Trim('\0');
+
+            // showing the request
             Console.WriteLine(request);
+
+            // geting the shema for the client's entity
             var player = Environment.GetEntity("Player");
+
+            // creating the player that will stay in the host's environment
             var hostPlayer = new Entity("Player" + clientCount, Environment);
-            foreach (var element in player.Elements)
-            {
-                hostPlayer.AddElement(element.GetType());
-                var clientElement = hostPlayer.GetElement(element.GetType());
-                foreach (var field in element.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public))
-                    field.SetValue(clientElement, field.GetValue(element));
-            }
+
+            // applying the shema's elements to the host's entity
+            ApplyElementsTo(player, hostPlayer);
+
+            // adding the element that handles the networking process on the host side
             hostPlayer.AddElement<NetworkProcessHostElement>();
+
+            // inizializing the whole entity
             hostPlayer.Initialize();
+
+            // and finally, we are adding it to our environment
             Environment.AddEntity(hostPlayer);
 
+            // after modifying the environment on the host's side
+            // we now have to define the environment, which will be send to the client
+
+            // contructing the new environment
             var env = new Environment();
+
+            // constructing the new Entity, the client is authorized to control
             var clientPlayer = new Entity("Player", env);
-            foreach (var element in hostPlayer.Elements)
-            {
-                clientPlayer.AddElement(element.GetType());
-                var clientElement = clientPlayer.GetElement(element.GetType());
-                foreach (var field in element.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public))
-                    field.SetValue(clientElement, field.GetValue(element));
-            }
-            clientPlayer.RemoveElement(typeof(NetworkProcessHostElement));
+
+            // applying the elements of the shema to the client's entity
+            ApplyElementsTo(player, clientPlayer);
+
+            // adding the elements that handles the networking on the client's side
             clientPlayer.AddElement<NetworkProcessClientElement>();
+
+            // adding the client's entity to his environment
             env.AddEntity(clientPlayer);
+
+            // now add all the other entities the client is authorized to perceive
             foreach (var entity in Environment.Entities)
             {
+                // of course, we won't send the entity that contains the network initialization element
                 if (entity.ContainsElement<NetworkInitializationElement>())
                     continue;
+
+                // and it won't add itself, because it is already added
                 if (entity.Name == clientPlayer.Name)
                     continue;
 
+                // adding the entity
                 env.AddEntity(entity);
             }
 
+            // increasing the client count
             clientCount++;
+
+            // then we will set the new data buffer for the next package to be received
+            // we do it because it may be that our current data buffer is bigger than the defined buffer size
+            // this could be the case if we ran into the if at the begining
             var next_data = new byte[bufferSize];
-            client.GetStream().BeginRead(next_data, 0, next_data.Length, ReadClientStream, new { Client = client, Data = data });
+
+            // again we are seting to wait for the next bytes to come in
+            client.GetStream().BeginRead(next_data, 0, next_data.Length, ReadClientStream, new { Client = client, Data = next_data });
+        }
+
+        private void ApplyElementsTo(Entity source, Entity destination)
+        {
+            foreach (var element in source.Elements)
+            {
+                destination.AddElement(element.GetType());
+                var clientElement = destination.GetElement(element.GetType());
+                foreach (var field in element.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public))
+                    field.SetValue(clientElement, field.GetValue(element));
+            }
         }
     }
 }
