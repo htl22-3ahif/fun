@@ -15,6 +15,9 @@ namespace fun.Network
 {
     public sealed class NetworkInitializationElement : Element
     {
+        public static readonly byte[] CHECK_HOST = Encoding.UTF8.GetBytes("nyaa~ do you rly want to play with me? >///<");
+        public static readonly byte[] CHECK_CLIENT = Encoding.UTF8.GetBytes("haaai~ yes i do >.<");
+
         private TcpListener tcp;
         public int BufferSize;
 
