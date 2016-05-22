@@ -139,7 +139,12 @@ namespace fun.Network
                 env.AddEntity(entity);
             }
 
+            // sending the environment to the client
             new EnvironmentXmlWriter().Save(client.GetStream(), env, new[] { "fun.Basics.dll", "fun.Network.dll" });
+
+            // setting the perceiveable entities to get them sended to the client
+            hostPlayer.GetElement<NetworkProcessHostElement>().PerceiveableEntities =
+                env.Entities.Where(e => e.Name != clientPlayer.Name).Select(e => e.Name).ToArray();
 
             // inizializing the whole entity
             hostPlayer.Initialize();
