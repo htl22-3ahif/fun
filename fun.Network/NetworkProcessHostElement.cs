@@ -40,7 +40,7 @@ namespace fun.Network
 
             // waiting for receive
             var received = udp.Receive(ref sender);
-            
+
             // checking if the response of client maches with the defined response
             if (received != NetworkInitializationElement.CHECK_CLIENT)
             {
@@ -55,9 +55,14 @@ namespace fun.Network
                 udp.Close();
             }
             else
+            {
                 // if it matches then
                 // writing a message so you understand that the client does connect (may be replaced by log)
                 Console.WriteLine("The user wants to play with us! yay");
+
+                // begining to handle packets sent by the client
+                udp.BeginReceive(new AsyncCallback(HandleClientPackets), null);
+            }
 
         }
 
@@ -110,6 +115,30 @@ namespace fun.Network
                 // sending the message async
                 udp.BeginSend(message, message.Length, null, null);
             }
+        }
+
+        public void HandleClientPackets(IAsyncResult res)
+        {
+            // here we will receive informations about the client's entity
+
+            var sender = new IPEndPoint(0, 0);
+            // getting the data and where its from
+            var data = udp.EndReceive(res, ref sender);
+            udp.BeginReceive(new AsyncCallback(HandleClientPackets), null);
+
+            // encode the packet
+            var message = Encoding.UTF8.GetString(data);
+
+            var str = message.Split(';');
+            var x = float.Parse(str[0]);
+            var y = float.Parse(str[1]);
+            var z = float.Parse(str[2]);
+
+            var transform = Entity.Elements.First(e => e.GetType().Name == "TransformElement");
+            var position = transform.GetType().GetField("Position").GetValue(transform);
+            position.GetType().GetField("X").SetValue(position, x);
+            position.GetType().GetField("Y").SetValue(position, y);
+            position.GetType().GetField("Z").SetValue(position, z);
         }
 
         public override void OnClose()
