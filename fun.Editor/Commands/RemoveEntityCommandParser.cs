@@ -25,7 +25,7 @@ namespace fun.Editor.Commands
             var err = Console.Error;
             if (args == null || args.Length < 2)
             {
-                err.WriteLine("There are no Arguments");
+                err.WriteLine("There are no arguments");
                 err.WriteLine("Arguments: <environment_file> <entity_name>");
                 return;
             }

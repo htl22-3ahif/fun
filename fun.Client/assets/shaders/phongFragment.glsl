@@ -17,8 +17,15 @@ main (){
 	vec3 offset = position - light;
 	vec3 lightVector = normalize(offset);
 
+	float distance = length(offset);
+	float d = max(distance - range, 0);
+	offset /= distance;
+
+	float denom = d/range + 1;
+	float attentuation = 1 / (denom * denom);
+
 	float lambertian = max(dot(lightVector, -normal), 0.0);	
-	lambertian *= max(((-1/range) * length(offset) + 1), 0);
+	//lambertian *= max(((-1/range) * length(offset) + 1), 0);
 	float specular = 0.0;
 
 	if(lambertian > 0.0){

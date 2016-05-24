@@ -27,7 +27,7 @@ namespace fun.Editor.Commands
 
             if (args.Length == 0)
             {
-                err.WriteLine("There are no Arguments");
+                err.WriteLine("There are no arguments");
                 err.WriteLine("Arguments: <environment_file> [<entity_name> <element_type> <field>...]");
                 return;
             }

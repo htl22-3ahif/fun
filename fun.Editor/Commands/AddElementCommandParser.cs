@@ -44,7 +44,7 @@ namespace fun.Editor.Commands
             }
             catch (Exception)
             {
-                err.WriteLine("File could not bee found");
+                err.WriteLine("File could not be found");
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace fun.Editor.Commands
             }
             catch (Exception)
             {
-                err.WriteLine("Assembly could not be load");
+                err.WriteLine("Assembly could not be loaded");
                 return;
             }
 
