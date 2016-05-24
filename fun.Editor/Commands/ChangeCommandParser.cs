@@ -33,6 +33,7 @@ namespace fun.Editor.Commands
                 return;
             }
 
+            // get the specified environment
             Environment env;
             var envPath = args[0];
             string[] libaries;
@@ -50,43 +51,65 @@ namespace fun.Editor.Commands
                 return;
             }
 
+            // get an object that contains all fields of another object with all its values
             string ent = args[1];
             string elem = args[2];
+            string[] fieldTree = args[3].Split('.');
 
-            Element element;
+            object obj;
             try
             {
-                element = env.GetEntity(ent).Elements.First(e => e.GetType().Name == elem);
+                obj = env.GetEntity(ent).Elements
+                    .First(e => e.GetType().Name == elem);
             }
             catch (Exception)
             {
-                err.WriteLine("Element could not be found.");
+                err.WriteLine("Element does not exist");
                 return;
             }
 
-            int depth = Regex.Matches(args[4], ".").Count;
-
-            for (int i = 0; i < depth; i++)
+            for (int i = 3; i < args.Length; i++)
             {
-                
+                try
+                {
+                    obj = obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public)
+                        .First(f => f.Name == fieldTree[i - 3]).GetValue(obj);
+                }
+                catch (Exception)
+                {
+                    err.Write("There is no {0} field", fieldTree[i - 3]);
+                    return;
+                }
             }
 
-            var fields = element.GetType().GetFields(
-                BindingFlags.Instance | BindingFlags.Public);
+            //// get the "depth" of the field tree (e.g. Position.X => depth = 1), used whenever a more complex field tree is specified
+            //int depth = args[3].Count(s => s == '.');
 
-            if (fields == null)
-            {
-                err.WriteLine("There are no fields");
-                return;
-            }
+            //for (int i = 0; i < depth; i++)
+            //{
+            //    try
+            //    {
+            //       // check for relevant field
+            //       // get subfields for relevant field
+            //    }
+            //    catch (Exception)
+            //    {
+            //        err.Write("<error message>");
+            //        return;
+            //    }
+            //}
+
+            // set field to value (args[4])
 
             //fields.First(f => f.Name == args[3]).SetValue(env.GetEntity(ent).Elements.First(e => e.GetType().Name == elem), args[4]);
+
+
         }
 
-        //protected FieldInfo[] GetCurrentFields(Environment env, string ent, string elem, int depth, FieldInfo[] currentFields)
+        //protected FieldInfo GetRelevantField(FieldInfo field, object obj)
         //{
-        //    currentFields.First(f => f.Name == args[3]).SetValue(env.GetEntity(ent).Elements.First(e => e.GetType().Name == elem), args[4])
-        //    return new FieldInfo[] { };
+        //    
+        //    return field;
         //}
     }
 }

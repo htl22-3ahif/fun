@@ -13,11 +13,10 @@ namespace fun.Editor
                 new AddCommandParser(),
                 new ViewCommandParser(),
                 new RemoveCommandParser(),
-                new ListCommandParser());
+                new ListCommandParser(),
+                new ChangeCommandParser());
 
             commands.Parse(args);
-
-            System.Threading.Thread.Sleep(2500);
         }
     }
 }

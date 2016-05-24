@@ -43,6 +43,7 @@
     <Compile Include="Commands\AddCommandParser.cs" />
     <Compile Include="Commands\AddElementCommandParser.cs" />
     <Compile Include="Commands\AddEntityCommandParser.cs" />
+    <Compile Include="Commands\AddLibCommandParser.cs" />
     <Compile Include="Commands\ChangeCommandParser.cs" />
     <Compile Include="Commands\CreateCommandParser.cs" />
     <Compile Include="Commands\ListCommandParser.cs" />
