@@ -4,9 +4,73 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:fun.Editor.GUI"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="684.828" Width="819.421">
+    <Grid Margin="0,80,275,-1">
+        <!-- Treeview Area -->
+        <Grid 
+            HorizontalAlignment="Left" 
+            Height="655" 
+            Margin="538,0,-276,-80" 
+            VerticalAlignment="Top" 
+            Width="274">
+            <TextBox 
+                x:Name="tb_treeview" 
+                HorizontalAlignment="Left"
+                Height="620" 
+                Margin="10,26,0,0" 
+                TextWrapping="Wrap"
+                VerticalAlignment="Top"
+                Width="254"/>
+            <Label 
+                x:Name="lb_TreeView" 
+                Content="Tree view of environment" 
+                HorizontalAlignment="Left" 
+                Margin="10,0,0,0"
+                VerticalAlignment="Top"/>
+        </Grid>
+        <!-- Environment Area -->
+        <Grid 
+            HorizontalAlignment="Left" 
+            Height="63" 
+            Margin="0,-77,-265,0" 
+            VerticalAlignment="Top" 
+            Width="801">
+            <CheckBox 
+                x:Name="cb_NewEnv" 
+                Content="New Environment" 
+                HorizontalAlignment="Left" 
+                Margin="10,10,0,0" 
+                VerticalAlignment="Top"/>
+            <CheckBox 
+                x:Name="cb_SelectOld" 
+                Content="Search old" 
+                HorizontalAlignment="Left" 
+                Margin="10,33,0,0" 
+                VerticalAlignment="Top" 
+                Width="116"/>
+            <TextBox 
+                x:Name="tb_FolderOrFile" 
+                HorizontalAlignment="Left" 
+                Height="23" 
+                Margin="149,18,0,0" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Top"
+                Width="480"
+                materialDesign:TextFieldAssist.Hint="Path to file or folder"/>
+            <Button 
+                x:Name="btn_openFolderorFile"
+                HorizontalAlignment="Left" 
+                Margin="643,12,0,0"
+                VerticalAlignment="Top" 
+                Width="78">
+                <materialDesign:PackIcon Kind="Folder"/>
+            </Button>
+        </Grid>
+
     </Grid>
 </Window>
