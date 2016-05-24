@@ -17,6 +17,7 @@ namespace fun.Client
         private CameraComponent camera;
         private SimulationComponent simulation;
         private HUDComponend UI;
+        private NetworkComponent network;
 
         public FunGame(int width, int height, string env)
             : base(width, height)
@@ -27,6 +28,9 @@ namespace fun.Client
             CursorVisible = false;
 
             components = new List<GameComponent>();
+
+            network = new NetworkComponent(this);
+            components.Add(network);
 
             input = new InputComponent(this);
             components.Add(input);
