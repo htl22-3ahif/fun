@@ -119,14 +119,6 @@ namespace fun.Network
 
             // inizializing the whole entity
             hostPlayer.Initialize();
-
-            // then we will set the new data buffer for the next package to be received
-            // we do it because it may be that our current data buffer is bigger than the defined buffer size
-            // this could be the case if we ran into the if at the begining
-            var next_data = new byte[BUFFERSIZE];
-            
-            // again we are seting to wait for the next bytes to come in
-            client.GetStream().BeginRead(next_data, 0, next_data.Length, ReadClientStream, new { Client = client, Data = next_data });
         }
 
         private void ApplyElementsTo(Entity source, Entity destination)
@@ -138,23 +130,6 @@ namespace fun.Network
                 foreach (var field in element.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public))
                     field.SetValue(clientElement, field.GetValue(element));
             }
-        }
-        private byte[] Receive(NetworkStream net)
-        {
-            var mem = new MemoryStream();
-            
-            var data = new byte[BUFFERSIZE];
-            var bytes = net.Read(data, 0, data.Length);
-            while (bytes > 0)
-            {
-                mem.Write(data, 0, bytes);
-                bytes = net.Read(data, 0, data.Length);
-            }
-
-            var result = new byte[mem.Length];
-            mem.Read(result, 0, result.Length);
-
-            return result;
         }
     }
 }
