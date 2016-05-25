@@ -30,27 +30,45 @@ namespace fun.Client.Components
             // so please excuse for the pretty long spaghetti
 
             string[] libaries;
+            // initializing the two clients
             tcp = new TcpClient();
             udp = new UdpClient();
 
+            // connecting to a given IP end point (currently hardcoded)
             tcp.Connect(IPAddress.Parse("127.0.0.1"), 844);
+            
+            // setting the receive time out
             tcp.Client.ReceiveTimeout = 20;
 
             var net = tcp.GetStream();
             var mem = new MemoryStream();
             var message = Encoding.UTF8.GetBytes("nyaa~");
 
+            // sending the message
             net.Write(message, 0, message.Length);
 
+            // this is the receive process (pretty long)
+
+            // creating a 4k chunck
             var data = new byte[4096];
+
+            // getting the data and its length
             var length = net.Read(data, 0, data.Length);
+
+            // now the critical part is coming
             try
             {
+                // while the received bytes count is not null
                 while (length > 0)
                 {
+                    // writing the data in an own stream (memorystream)
                     mem.Write(data, 0, length);
+
+                    // after that, again getting the data and its length
                     length = net.Read(data, 0, data.Length);
                 }
+                // at the end, it has to happen an receive time out exception
+                // thats the very moment, where the host if finished with sending
             }
             catch (IOException e)
             {
@@ -68,6 +86,8 @@ namespace fun.Client.Components
             // you are sending nothing
             // so its really important, and it takes long to find the error
             mem.Position = 0;
+
+            // reding and creating the environment
             var environment = new EnvironmentXmlReader().Load(mem, out libaries)[0];
         }
     }
