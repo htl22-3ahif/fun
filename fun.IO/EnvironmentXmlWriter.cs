@@ -95,6 +95,9 @@ namespace fun.IO
         {
             var array = field.GetValue(receiver) as Array;
 
+            if (array == null)
+                return;
+
             var an = new AssemblyName("dynass");
             var ab = AppDomain.CurrentDomain.DefineDynamicAssembly(an, AssemblyBuilderAccess.Run);
             var mb = ab.DefineDynamicModule("dynmod");
