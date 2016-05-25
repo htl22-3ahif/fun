@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Environment = fun.Core.Environment;
 
 namespace fun.Client.Components
 {
@@ -16,6 +17,8 @@ namespace fun.Client.Components
     {
         private TcpClient tcp;
         private UdpClient udp;
+
+        public Environment Environment { get; private set; }
 
         public NetworkComponent(GameWindow game)
             : base(game)
@@ -88,7 +91,12 @@ namespace fun.Client.Components
             mem.Position = 0;
 
             // reding and creating the environment
-            var environment = new EnvironmentXmlReader().Load(mem, out libaries)[0];
+            Environment = new EnvironmentXmlReader().Load(mem, out libaries)[0];
+        }
+
+        public override void Update(FrameEventArgs e)
+        {
+            Environment.Update(e.Time);
         }
     }
 }

@@ -74,6 +74,9 @@ namespace fun.Network
             // adding the element that handles the networking process on the host side
             hostPlayer.AddElement<NetworkProcessHostElement>();
 
+            // defining the client end point
+            hostPlayer.GetElement<NetworkProcessHostElement>().ClientEndPoint = sender;
+
             // and finally, we are adding it to our environment
             Environment.AddEntity(hostPlayer);
 
