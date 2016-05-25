@@ -16,6 +16,8 @@ namespace fun.Editor
                 new ListCommandParser());
 
             commands.Parse(args);
+
+            System.Threading.Thread.Sleep(2500);
         }
     }
 }

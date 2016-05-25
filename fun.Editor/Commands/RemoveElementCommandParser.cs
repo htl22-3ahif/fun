@@ -26,7 +26,7 @@ namespace fun.Editor.Commands
             var err = Console.Error;
             if (args == null || args.Length < 3)
             {
-                err.WriteLine("There are no Arguments");
+                err.WriteLine("There are no arguments");
                 err.WriteLine("Arguments: <environment_file> <entity_name> <element_type>");
                 return;
             }
@@ -44,7 +44,7 @@ namespace fun.Editor.Commands
             }
             catch (Exception)
             {
-                err.WriteLine("File could not bee found");
+                err.WriteLine("File could not be found");
                 return;
             }
 
