@@ -16,7 +16,9 @@ namespace fun.Network
         private UdpClient udp;
         private double delta;
 
-        public IPEndPoint ClientEndPoint;
+        //public IPEndPoint ClientEndPoint;
+        public string IP;
+        public int Port;
         public string[] PerceiveableEntities;
 
         public NetworkProcessHostElement(Environment environment, Entity entity)
@@ -28,9 +30,10 @@ namespace fun.Network
         {
             delta = 0;
             udp = new UdpClient();
+            var endpoint = new IPEndPoint(IPAddress.Parse(IP), Port);
 
             // connecting to the client
-            udp.Connect(ClientEndPoint);
+            udp.Connect(endpoint);
 
             // defining receive time out (not to wait infinitly long)
             // udp.Client.ReceiveTimeout = 1000;

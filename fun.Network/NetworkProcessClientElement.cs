@@ -11,12 +11,18 @@ namespace fun.Network
 {
     public sealed class NetworkProcessClientElement : Element
     {
-        public IPEndPoint HostEndPoint;
+        public string IP;
+        public int Port;
 
         public NetworkProcessClientElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
 
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
         }
     }
 }
