@@ -35,13 +35,7 @@ namespace fun.Network
             // connecting to the client
             udp.Connect(endpoint);
 
-            // defining receive time out (not to wait infinitly long)
-            // udp.Client.ReceiveTimeout = 1000;
-
             new Task(() => { while (true) HandleClientPackets(); }).Start();
-
-            // begining to handle packets sent by the client
-            //udp.BeginReceive(new AsyncCallback(HandleClientPackets), null);
         }
 
         public override void Update(double time)
@@ -126,6 +120,11 @@ namespace fun.Network
                 // since he loves to throw exceptions instead of waiting for a packet
                 // idc
             }
+        }
+
+        public override void OnEntityAdded(Entity entity)
+        {
+            // notifying client to add a new entity;
         }
 
         public override void OnClose()
