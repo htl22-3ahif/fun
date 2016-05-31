@@ -15,8 +15,6 @@ namespace fun.Network
 {
     public sealed class NetworkInitializationElement : Element
     {
-        public const int BUFFERSIZE = 4096;
-
         private TcpListener tcp;
 
         public int Port;

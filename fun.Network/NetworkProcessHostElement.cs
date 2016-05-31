@@ -26,8 +26,7 @@ namespace fun.Network
         public override void Initialize()
         {
             delta = 0;
-            var sender = new IPEndPoint(0, 0);
-            udp = new UdpClient(new IPEndPoint(IPAddress.Any, 0));
+            udp = new UdpClient();
 
             // connecting to the client
             udp.Connect(ClientEndPoint);
