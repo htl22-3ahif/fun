@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\GameComponent.cs" />
+    <Compile Include="Components\NetworkComponent.cs" />
     <Compile Include="Constructs\Attrib.cs" />
     <Compile Include="Constructs\Mesh.cs" />
     <Compile Include="Constructs\Shader.cs" />

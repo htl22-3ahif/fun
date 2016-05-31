@@ -33,37 +33,10 @@ namespace fun.Network
             udp.Connect(ClientEndPoint);
 
             // defining receive time out (not to wait infinitly long)
-            udp.Client.ReceiveTimeout = 1000;
+            // udp.Client.ReceiveTimeout = 1000;
 
-            // sending the defined code to make sure the client is connected too
-            udp.Send(NetworkInitializationElement.CHECK_HOST, NetworkInitializationElement.CHECK_HOST.Length);
-
-            // waiting for receive
-            var received = udp.Receive(ref sender);
-
-            // checking if the response of client maches with the defined response
-            if (received != NetworkInitializationElement.CHECK_CLIENT)
-            {
-                // if not then
-                // writing a message so you understand that the client does not connect (may be replaced by log)
-                Console.WriteLine("The user does not reply D: i think we should disconnect");
-
-                // since the client is not responding correctily, we are removing his entity
-                Environment.RemoveEntity(Entity.Name);
-
-                // closing the connection
-                udp.Close();
-            }
-            else
-            {
-                // if it matches then
-                // writing a message so you understand that the client does connect (may be replaced by log)
-                Console.WriteLine("The user wants to play with us! yay");
-
-                // begining to handle packets sent by the client
-                udp.BeginReceive(new AsyncCallback(HandleClientPackets), null);
-            }
-
+            // begining to handle packets sent by the client
+            udp.BeginReceive(new AsyncCallback(HandleClientPackets), null);
         }
 
         public override void Update(double time)

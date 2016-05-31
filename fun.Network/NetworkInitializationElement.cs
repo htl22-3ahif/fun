@@ -15,13 +15,12 @@ namespace fun.Network
 {
     public sealed class NetworkInitializationElement : Element
     {
-        public static readonly byte[] CHECK_HOST = Encoding.UTF8.GetBytes("nyaa~ do you rly wanna play with me? >///<");
-        public static readonly byte[] CHECK_CLIENT = Encoding.UTF8.GetBytes("haaai~ yes i do >.<");
+        public const int BUFFERSIZE = 4096;
 
         private TcpListener tcp;
-        public int BufferSize;
 
         public int Port;
+        public string BlueprintEntity;
 
         public NetworkInitializationElement(Environment environment, Entity entity)
             : base(environment, entity)
@@ -39,10 +38,10 @@ namespace fun.Network
         private void HandleNewClient(IAsyncResult res)
         {
             var client = tcp.EndAcceptTcpClient(res);
-
-            var data = new byte[BufferSize];
-            client.GetStream().BeginRead(data, 0, data.Length, ReadClientStream, new { Client = client, Data = data });
             tcp.BeginAcceptTcpClient(HandleNewClient, null);
+
+            var data = new byte[5];
+            client.GetStream().BeginRead(data, 0, data.Length, ReadClientStream, new { Client = client, Data = data });
         }
 
         private void ReadClientStream(IAsyncResult res)
@@ -50,37 +49,6 @@ namespace fun.Network
             // get the affected client and the received data
             var client = (TcpClient)res.AsyncState.GetType().GetProperty("Client").GetValue(res.AsyncState);
             var data = (byte[])res.AsyncState.GetType().GetProperty("Data").GetValue(res.AsyncState);
-
-            // if the data is empty (filled with zeros)
-            if (!data.Any(b => b != 0))
-                // just get outta here
-                return;
-
-            // if stream is already at end, exit
-            try { client.GetStream().EndRead(res); }
-            catch (IOException) { return; }
-
-            // if the chunck's size is not enough to respresent the whole data
-            if (data.Last() != 0)
-            {
-                // the data's size will be increazed
-                var _data = new byte[data.Length + BufferSize];
-
-                // the data will be stored in the async state
-                res.AsyncState.GetType().GetProperty("Data").SetValue(res.AsyncState, _data);
-
-                // now the begin read async method will be launched
-                // it will call the same method, but the chunck will be larger
-                // there is the posibility, that the size still is not enough
-                // in this case, he will just do the same again
-                client.GetStream().BeginRead(_data, 0, _data.Length, new AsyncCallback(ReadClientStream), res.AsyncState);
-
-                // exit from this method
-                return;
-            }
-
-            // defining the sender (client's destination)
-            var sender = new IPEndPoint(IPAddress.Any, 0);
 
             // converting the data into a string encoded in UTF8
             var request = Encoding.UTF8.GetString(data).Trim('\0');
@@ -92,16 +60,22 @@ namespace fun.Network
             Console.WriteLine("Someone wants to play with us! nyaa~");
 
             // geting the shema for the client's entity
-            var player = Environment.GetEntity("Player");
+            var player = Environment.GetEntity(BlueprintEntity);
+
+            // defining the sender (client's destination)
+            var sender = client.Client.LocalEndPoint as IPEndPoint;
 
             // creating the player that will stay in the host's environment
-            var hostPlayer = new Entity("Player" + sender.Address.ToString(), Environment);
+            var hostPlayer = new Entity(BlueprintEntity + sender.Address.ToString(), Environment);
 
             // applying the shema's elements to the host's entity
             ApplyElementsTo(player, hostPlayer);
 
             // adding the element that handles the networking process on the host side
             hostPlayer.AddElement<NetworkProcessHostElement>();
+
+            // defining the client end point
+            hostPlayer.GetElement<NetworkProcessHostElement>().ClientEndPoint = sender;
 
             // and finally, we are adding it to our environment
             Environment.AddEntity(hostPlayer);
@@ -113,7 +87,7 @@ namespace fun.Network
             var env = new Environment();
 
             // constructing the new Entity, the client is authorized to control
-            var clientPlayer = new Entity("Player", env);
+            var clientPlayer = new Entity(BlueprintEntity, env);
 
             // applying the elements of the shema to the client's entity
             ApplyElementsTo(player, clientPlayer);
@@ -148,14 +122,6 @@ namespace fun.Network
 
             // inizializing the whole entity
             hostPlayer.Initialize();
-
-            // then we will set the new data buffer for the next package to be received
-            // we do it because it may be that our current data buffer is bigger than the defined buffer size
-            // this could be the case if we ran into the if at the begining
-            var next_data = new byte[BufferSize];
-
-            // again we are seting to wait for the next bytes to come in
-            client.GetStream().BeginRead(next_data, 0, next_data.Length, ReadClientStream, new { Client = client, Data = next_data });
         }
 
         private void ApplyElementsTo(Entity source, Entity destination)
