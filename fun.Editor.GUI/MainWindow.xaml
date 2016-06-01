@@ -3,74 +3,64 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:fun.Editor.GUI"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:local2="clr-namespace:fun.Editor.GUI"
+        xmlns:local="clr-namespace:fun.Core;assembly=fun.Core"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="684.828" Width="819.421">
-    <Grid Margin="0,80,275,-1">
-        <!-- Treeview Area -->
-        <Grid 
-            HorizontalAlignment="Left" 
-            Height="655" 
-            Margin="538,0,-276,-80" 
-            VerticalAlignment="Top" 
-            Width="274">
-            <TextBox 
-                x:Name="tb_treeview" 
-                HorizontalAlignment="Left"
-                Height="620" 
-                Margin="10,26,0,0" 
-                TextWrapping="Wrap"
-                VerticalAlignment="Top"
-                Width="254"/>
-            <Label 
-                x:Name="lb_TreeView" 
-                Content="Tree view of environment" 
-                HorizontalAlignment="Left" 
-                Margin="10,0,0,0"
-                VerticalAlignment="Top"/>
-        </Grid>
-        <!-- Environment Area -->
-        <Grid 
-            HorizontalAlignment="Left" 
-            Height="63" 
-            Margin="0,-77,-265,0" 
-            VerticalAlignment="Top" 
-            Width="801">
-            <CheckBox 
-                x:Name="cb_NewEnv" 
-                Content="New Environment" 
-                HorizontalAlignment="Left" 
-                Margin="10,10,0,0" 
-                VerticalAlignment="Top"/>
-            <CheckBox 
-                x:Name="cb_SelectOld" 
-                Content="Search old" 
-                HorizontalAlignment="Left" 
-                Margin="10,33,0,0" 
-                VerticalAlignment="Top" 
-                Width="116"/>
-            <TextBox 
-                x:Name="tb_FolderOrFile" 
-                HorizontalAlignment="Left" 
-                Height="23" 
-                Margin="149,18,0,0" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Top"
-                Width="480"
-                materialDesign:TextFieldAssist.Hint="Path to file or folder"/>
-            <Button 
-                x:Name="btn_openFolderorFile"
-                HorizontalAlignment="Left" 
-                Margin="643,12,0,0"
-                VerticalAlignment="Top" 
-                Width="78">
-                <materialDesign:PackIcon Kind="Folder"/>
-            </Button>
-        </Grid>
+        Title="MainWindow" Height="426.328" Width="1119.421">
+
+    <Grid Margin="0,0,0,3">
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
+        <GroupBox x:Name="groupBox" Header="Environment" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="77" Width="497">
+            <Grid HorizontalAlignment="Left" Height="68" Margin="0,-7,-7,0" VerticalAlignment="Top" Width="492">
+
+                <Button x:Name="btnChoose" HorizontalAlignment="Left" Margin="409,19,0,0" VerticalAlignment="Top" Width="64" Height="37" Click="btnChoose_Click">
+                    <materialDesign:PackIcon Kind="Folder"/>
+                </Button>
+                <RadioButton x:Name="rbNew" Content="New environment" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Checked="rbNew_Checked" />
+                <RadioButton x:Name="rbChange" Content="Change existing" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Checked="rbChange_Checked" />
+                <Border BorderBrush="#4C000000" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="140,19,0,0" VerticalAlignment="Top" Width="249" CornerRadius="3">
+                    <TextBox x:Name="tbFileOrFolderPath" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" Margin="9,6,0,0" BorderThickness="0" IsUndoEnabled="True" IsEnabled="False" materialDesign:TextFieldAssist.Hint="Path to file"/>
+                </Border>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupBox2" Header="Action" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Height="285" Width="497">
+            <Grid HorizontalAlignment="Left" Height="261" VerticalAlignment="Top" Width="497" Margin="0,0,-12,-49">
+                <RadioButton x:Name="rbActionOnEntity" GroupName="rbAction" Content="Action on Entity" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="rbActionOnEntity_Checked"/>
+                <RadioButton x:Name="rbActionOnElement" GroupName="rbAction" Content="Action on Element" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Checked="rbActionOnElement_Checked"/>
+                <RadioButton x:Name="rbEntityAdd" GroupName="rbEntity" Content="Add" HorizontalAlignment="Left" Margin="28,38,0,0" VerticalAlignment="Top" Checked="rbEntityAdd_Checked"/>
+                <RadioButton x:Name="rbEntityRemove" GroupName="rbEntity" Content="Remove" HorizontalAlignment="Left" Margin="28,61,0,0" VerticalAlignment="Top" Checked="rbEntityRemove_Checked"/>
+                <RadioButton x:Name="rbElementAdd" GroupName="rbElement" Content="Add" HorizontalAlignment="Left" Margin="28,143,0,0" VerticalAlignment="Top" Checked="rbElementAdd_Checked"/>
+                <RadioButton x:Name="rbElementRemove" GroupName="rbElement" Content="Remove" HorizontalAlignment="Left" Margin="28,166,0,0" VerticalAlignment="Top" Checked="rbElementRemove_Checked"/>
+                <Label x:Name="lblEntity" Content="Entity Name" HorizontalAlignment="Left" Margin="162,32,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cbxEntityName" HorizontalAlignment="Left" Margin="162,56,0,0" VerticalAlignment="Top" Width="264"/>
+                <Label x:Name="lblElementEntity" Content="Entity Name" Margin="148,140,274,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cbxElementEntity" HorizontalAlignment="Left" Margin="148,161,0,0" VerticalAlignment="Top" Width="140" SelectionChanged="cbxElementEntity_SelectionChanged"/>
+                <Label x:Name="lblElement" Content="Element Name" Margin="321,137,71,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cbxElement" HorizontalAlignment="Left" Margin="330,161,0,0" VerticalAlignment="Top" Width="140"/>
+                <TextBox x:Name="tbEntityAdd" HorizontalAlignment="Left" Height="23" Margin="162,56,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="264"/>
+                <TextBox x:Name="tbElementName" HorizontalAlignment="Left" Height="23" Margin="321,161,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="149"/>
+                <Border BorderBrush="#4C000000" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="10,214,0,0" VerticalAlignment="Top" Width="380" CornerRadius="3">
+                    <TextBox x:Name="tbCommand" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="360" Margin="9,6,0,0" BorderThickness="0"/>
+                </Border>
+                <Button x:Name="btnSave" HorizontalAlignment="Left" Margin="397,213,0,0" VerticalAlignment="Top" Width="73" Height="38" Click="btnSave_Click">
+                    <materialDesign:PackIcon Kind="ContentSaveAll"/>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupBox1" Header="Current tree" HorizontalAlignment="Left" Margin="512,10,0,0" VerticalAlignment="Top" Height="367" Width="497">
+            <Grid HorizontalAlignment="Left" Height="357" VerticalAlignment="Top" Width="487" Margin="0,0,-2,-12">
+                <Label x:Name="lblCurrentStatus" Content="Tree view of the full environment" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="194"/>
+                <TreeView x:Name="treeView" HorizontalAlignment="Left" Height="318" Margin="10,29,0,0" VerticalAlignment="Top" Width="467"/>
+            </Grid>
+        </GroupBox>
 
     </Grid>
+
 </Window>

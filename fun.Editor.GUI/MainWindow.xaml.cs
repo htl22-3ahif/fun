@@ -1,18 +1,15 @@
-﻿using System;
+﻿using fun.IO;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Environment = fun.Core.Environment;
+using System.Reflection.Emit;
+using System.Reflection;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace fun.Editor.GUI
 {
@@ -21,234 +18,566 @@ namespace fun.Editor.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Envionment environment;
+        private System.Windows.Forms.FolderBrowserDialog folderDialog;
+        private System.Windows.Forms.OpenFileDialog fileDialog;
+        private string EnvPath = "";
+        private bool ActionOnEntity = true;
 
         public MainWindow()
         {
-            //var editor = new Process();
-            //editor.StartInfo = new ProcessStartInfo("fun.Editor.exe", "ls environment.xml");
-            //var output = editor.StandardOutput;
-            //editor.Start();
-            //var entities = output.ReadToEnd().Split('\n');
-            
+
             InitializeComponent();
 
-            if(tb_FolderOrFile.Text.Split('.').Last() == "xml")
-            {
-                environment = new Envionment(tb_FolderOrFile.Text.Split('/').Last());
-                EnvironmentEntitiesAndElements();
-            }
+            Init();
         }
 
-        public void EnvironmentEntitiesAndElements()
+        public void DisplayTree(string env)
         {
-            #region Entity
-            var editor = new Process();
-            editor.StartInfo = new ProcessStartInfo("fun.Editor.exe", "ls " + tb_FolderOrFile.Text.Split('/').Last());
-            var output = editor.StandardOutput;
-            editor.Start();
-            var entities = output.ReadToEnd().Split('\n');
-            foreach (var entity in entities)
-            {
-                environment.Entities.Add(new Entity(entity));
-            }
-            #endregion
-            #region Element
-            foreach (var item in environment.Entities)
-            {
-                editor.StartInfo = new ProcessStartInfo("fun.Editor.exe", "ls " + tb_FolderOrFile.Text.Split('/').Last() + " " + item.EntityName);
-                output = editor.StandardOutput;
-                editor.Start();
-                var elements = output.ReadToEnd().Split('\n');
-                int counter = 0;
-                foreach (var element in elements)
-                {
-                    environment.Entities[counter].Elements.Add(new Elements(element));
-                    counter++;
-                }
-            }
-            #endregion
-            #region Field1
-            int entitycounter = 0;
-            foreach (var entity in environment.Entities)
-            {
-                int elementcounter = 0;
-                foreach (var element in entity.Elements)
-                {
+            TreeViewItem tvRoot = new TreeViewItem() { Header = env };
+            List<string> entities = GetEntities(env);
 
-                    editor.StartInfo = new ProcessStartInfo("fun.Editor.exe", "ls " + tb_FolderOrFile.Text.Split('/').Last() + " " + entity.EntityName + " " + element.ElementName);
-                    output = editor.StandardOutput;
-                    editor.Start();
-                    var fields = output.ReadToEnd().Split('\n');
-                    foreach (var field in fields)
-                    {
-                        environment.Entities[entitycounter].Elements[elementcounter].Fields.Add(new Field_n(field));
-                    }
-                    elementcounter++;
-                }
-                entitycounter++;
-            }
-            #endregion
-            #region More Fields
-            entitycounter = 0;
-            foreach (var entity in environment.Entities)
+            foreach(string e in entities)
             {
-                int elementcounter = 0;
-                foreach (var element in entity.Elements)
+                TreeViewItem tvEntities = new TreeViewItem() { Header = e };
+                List<string> elements = GetElements(env, e);
+
+                foreach(string elem in elements)
                 {
-                    int fieldcounter = 0;
-                    foreach (var field in element.Fields)
+                    TreeViewItem tvElements = new TreeViewItem() { Header = elem };
+                    List<string> fields = GetFields(env, e, elem);
+
+                    foreach(string f in fields)
                     {
-                        editor.StartInfo = new ProcessStartInfo("fun.Editor.exe", "ls " + tb_FolderOrFile.Text.Split('/').Last() + " " + entity.EntityName + " " + element.ElementName + " " + field.FieldName);
-                        output = editor.StandardOutput;
-                        editor.Start();
-                        var morefields = output.ReadToEnd().Split('\n');
-                        foreach (var morefield in morefields)
+                        //tvElements.Items.Add(f);
+                        TreeViewItem tvFields = new TreeViewItem() { Header = f };
+                        if (f.Contains(":"))
                         {
-                            environment.Entities[entitycounter].Elements[elementcounter].Fields[fieldcounter].Fields.Add(new Field_n(morefield));
-
+                            List<string> args = new List<string>() { f.Split(':')[0] };
+                            GetFieldsRec(env, e, elem, args, tvFields);
+                        } else
+                        {
+                            List<string> args = new List<string>() { f };
+                            GetFieldsRec(env, e, elem, args, tvFields);
                         }
-                        fieldcounter++;
+
+                        tvElements.Items.Add(tvFields);
                     }
-                    elementcounter++;
+
+                    tvEntities.Items.Add(tvElements);
                 }
-                entitycounter++;
+
+                tvRoot.Items.Add(tvEntities);
             }
-            #endregion
 
-        }
-    }
-
-    #region Environment - Fields
-    public class Envionment
-    {
-        public string EnvironmentName { get; set; }
-        public List<Entity> Entities { get; set; }
-
-        public Envionment()
-        {
-            this.EnvironmentName = "";
-            this.Entities = new List<Entity>();
+            treeView.Items.Clear();
+            treeView.Items.Add(tvRoot);
         }
 
-        public Envionment(string EnvironmentName)
+        public List<string> GetEntities(string env)
         {
-            this.EnvironmentName = EnvironmentName;
-            this.Entities = new List<Entity>();
-        }
-
-        public Envionment(string EnvironmentName, List<Entity> Entities)
-        {
-            this.EnvironmentName = EnvironmentName;
-            this.Entities = Entities;
-        }
-
-
-        public override string ToString()
-        {
-            string ReturnString = "";
-            ReturnString += EnvironmentName;
-            foreach (var item in Entities)
+            List<string> lines = new List<string>();
+            var proc = new Process
             {
-                ReturnString += "\r\n  - " + Entities;
-            }
-            return ReturnString;
-        }
-    }
-    public class Entity
-    {
-        public string EntityName { get; set; }
-        public List<Elements> Elements { get; set; }
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "ls " + env,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
 
-        public Entity()
-        {
-            this.EntityName = "";
-            this.Elements = new List<GUI.Elements>();
-        }
-        public Entity(string EntityName)
-        {
-            this.EntityName = EntityName;
-            this.Elements = new List<GUI.Elements>();
-        }
-        public Entity(string EntityName, List<Elements> Elements)
-        {
-            this.Elements = Elements;
-        }
-
-        public override string ToString()
-        {
-            string Returnstring = "";
-            Returnstring += this.EntityName;
-            foreach (var item in Elements)
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
             {
-                Returnstring += "\r\n  - " + item;
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
             }
-            return Returnstring;
-        }
-    }
-    public class Elements
-    {
-        public string ElementName { get; set; }
-        public List<Field_n> Fields { get; set; }
 
-        public Elements()
-        {
-            this.ElementName = "";
-            this.Fields = new List<Field_n>();
-        }
-        public Elements(string ElementName)
-        {
-            this.ElementName = ElementName;
-            this.Fields = new List<Field_n>();
-        }
-        public Elements(string ElementName, List<Field_n> Fields)
-        {
-            this.ElementName = ElementName;
-            this.Fields = Fields;
+            return lines;
         }
 
-        public override string ToString()
+        public List<string> GetElements(string env, string entity)
         {
-            string ReturnString = "";
-            ReturnString += ElementName;
-            foreach (var item in Fields)
+            List<string> lines = new List<string>();
+            var proc = new Process
             {
-                ReturnString += "\r\n  - " + item;
-            }
-            return ReturnString;
-        }
-    }
-    public class Field_n
-    {
-        public string FieldName { get; set; }
-        public List<Field_n> Fields { get; set; }
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "ls " + env + " " + entity,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
 
-        public Field_n()
-        {
-            this.FieldName = "";
-            this.Fields = new List<Field_n>();
-        }
-        public Field_n(string FieldName)
-        {
-            this.FieldName = FieldName;
-            this.Fields = new List<Field_n>();
-        }
-        public Field_n(string FieldName, List<Field_n> Fields)
-        {
-            this.FieldName = FieldName;
-            this.Fields = Fields;
-        }
-
-        public override string ToString()
-        {
-            string ReturnString = "";
-            ReturnString += FieldName;
-            foreach (var item in Fields)
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
             {
-                ReturnString += "\r\n  - " + item;
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
             }
-            return ReturnString;
+
+            return lines;
+        }
+
+        public List<string> GetFields(string env, string entity, string element)
+        {
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "ls " + env + " " + entity + " " + element,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+            return lines;
+        }
+
+        public void GetFieldsRec(string env, string entity, string element, List<string> args, TreeViewItem item)
+        {
+            string strArguments = "ls " + env + " " + entity + " " + element;
+            foreach(string s in args)
+            {
+                strArguments += " " + s;
+            }
+
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = strArguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+
+            if(lines.Count > 0 && !String.IsNullOrWhiteSpace(lines[0]))
+            {
+                foreach(string line in lines)
+                {
+                    TreeViewItem tvItem = new TreeViewItem() { Header = line };
+
+                    if(line.Contains(":"))
+                    {
+                        args.Add(line.Split(':')[0]);
+
+                        GetFieldsRec(env, entity, element, args, tvItem);
+
+                        args.Remove(line.Split(':')[0]);
+                    } else
+                    {
+                        tvItem.Items.Add(args[0]);
+                    }
+
+                    item.Items.Add(tvItem);
+                }
+            }
+
+        }
+
+        private void Init()
+        {
+            rbNew.IsChecked = true;
+
+            folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+
+            fileDialog = new System.Windows.Forms.OpenFileDialog();
+
+
+            fileDialog.Filter = "XML Files|*.xml";
+
+            rbActionOnEntity.IsChecked = true;
+            rbActionOnElement.IsChecked = false;
+            rbEntityAdd.IsChecked = true;
+            rbElementAdd.IsChecked = true;
+
+            ToggleActionUI(true);
+        }
+
+        private void rbNew_Checked(object sender, RoutedEventArgs e)
+        {
+            tbFileOrFolderPath.IsEnabled = true;
+            ChangeIcon(btnChoose, MaterialDesignThemes.Wpf.PackIconKind.Folder);
+        }
+
+        private void rbChange_Checked(object sender, RoutedEventArgs e)
+        {
+            tbFileOrFolderPath.IsEnabled = false;
+            ChangeIcon(btnChoose, MaterialDesignThemes.Wpf.PackIconKind.File);
+        }
+
+        private void ChangeIcon(Button button, MaterialDesignThemes.Wpf.PackIconKind icon)
+        {
+            MaterialDesignThemes.Wpf.PackIcon pi = new MaterialDesignThemes.Wpf.PackIcon();
+            pi.Kind = icon;
+            button.Content = pi;
+        }
+
+        private void UpdateEntityComboboxes()
+        {
+            IEnumerable<string> entities = GetEntities(EnvPath);
+
+            cbxEntityName.ItemsSource = entities;
+
+            cbxElementEntity.ItemsSource = entities;
+        }
+        
+
+        private void UpdateElementCombobox(string selectedEntity)
+        {
+            cbxElement.ItemsSource = GetElements(EnvPath, selectedEntity);
+        }
+
+        private void btnChoose_Click(object sender, RoutedEventArgs e)
+        {
+            string fileOrFolderPath = "";
+
+            if ((bool)rbChange.IsChecked)
+            {
+                if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    fileOrFolderPath = fileDialog.FileName;
+                    tbFileOrFolderPath.IsReadOnly = false;
+                    tbFileOrFolderPath.IsEnabled = true;
+
+                    EnvPath = fileDialog.FileName;
+
+                    tbFileOrFolderPath.Text = fileOrFolderPath;
+
+                    UpdateEntityComboboxes();
+
+                    DisplayTree(EnvPath);
+                }
+            }
+            else
+            {
+                if (String.IsNullOrWhiteSpace(tbFileOrFolderPath.Text))
+                {
+
+                    if (folderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        tbFileOrFolderPath.IsReadOnly = false;
+                        tbFileOrFolderPath.IsEnabled = false;
+                        fileOrFolderPath = folderDialog.SelectedPath;
+
+                        tbFileOrFolderPath.IsEnabled = true;
+
+                        tbFileOrFolderPath.Text = fileOrFolderPath;
+                    }
+
+                } else
+                {
+                    EnvPath = tbFileOrFolderPath.Text;
+
+                    UpdateEntityComboboxes();
+
+                    CreateEnvironment(EnvPath);
+
+                    MessageBox.Show("Ok, set to new path");
+                }
+            }
+
+            
+        }
+
+        //TODO: hint texte
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (ActionOnEntity)
+            {
+
+                if ((bool)rbEntityAdd.IsChecked)
+                {
+                    // add
+
+                    AddEntity(EnvPath, tbEntityAdd.Text);
+
+                }
+                else
+                {
+                    // remove
+
+                    RemoveEntity(EnvPath, cbxEntityName.SelectedValue.ToString());
+                }
+
+            }
+            else
+            {
+
+                if ((bool)rbElementAdd.IsChecked)
+                {
+                    AddElement(EnvPath, cbxElementEntity.SelectedValue.ToString(), tbElementName.Text);
+                }
+                else
+                {
+                    RemoveElement(EnvPath, cbxElementEntity.SelectedValue.ToString(), cbxElement.SelectedValue.ToString());
+                }
+            }
+
+            DisplayTree(EnvPath);
+
+            UpdateEntityComboboxes();
+        }
+
+        private void cbxEntityName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void cbxElementName_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void tbEntityName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void tbElementName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ToggleActionUI(bool value)
+        {
+            ActionOnEntity = !ActionOnEntity;
+
+            rbEntityAdd.IsEnabled = value;
+            rbEntityRemove.IsEnabled = value;
+
+            tbEntityAdd.IsEnabled = value;
+            cbxEntityName.IsEnabled = value;
+
+            lblEntity.IsEnabled = value;
+
+
+
+            rbElementAdd.IsEnabled = !value;
+            rbElementRemove.IsEnabled = !value;
+
+            lblElement.IsEnabled = !value;
+            lblElementEntity.IsEnabled = !value;
+
+            cbxElement.IsEnabled = !value;
+            cbxElementEntity.IsEnabled = !value;
+
+            tbElementName.IsEnabled = !value;
+        }
+
+        private void rbActionOnEntity_Checked(object sender, RoutedEventArgs e)
+        {
+            ToggleActionUI(true);
+        }
+
+        private void rbActionOnElement_Checked(object sender, RoutedEventArgs e)
+        {
+            ToggleActionUI(false);
+        }
+
+
+
+
+        private void rbEntityAdd_Checked(object sender, RoutedEventArgs e)
+        {
+            cbxEntityName.Visibility = Visibility.Hidden;
+            tbEntityAdd.Visibility = Visibility.Visible;
+        }
+
+        private void rbEntityRemove_Checked(object sender, RoutedEventArgs e)
+        {
+            cbxEntityName.Visibility = Visibility.Visible;
+            tbEntityAdd.Visibility = Visibility.Hidden;
+
+            cbxEntityName.ItemsSource = GetEntities(EnvPath);
+            cbxEntityName.SelectedIndex = 0;
+        }
+
+
+
+        private void rbElementAdd_Checked(object sender, RoutedEventArgs e)
+        {
+            cbxElement.Visibility = Visibility.Hidden;
+            tbElementName.Visibility = Visibility.Visible;
+
+            cbxElementEntity.ItemsSource = GetEntities(EnvPath);
+            cbxElementEntity.SelectedIndex = 0;
+        }
+
+        private void rbElementRemove_Checked(object sender, RoutedEventArgs e)
+        {
+            cbxElement.Visibility = Visibility.Visible;
+            tbElementName.Visibility = Visibility.Hidden;
+
+            cbxElementEntity.ItemsSource = GetEntities(EnvPath);
+            cbxElementEntity.SelectedIndex = 0;
+
+            cbxElement.ItemsSource = GetElements(EnvPath, (string)cbxElementEntity.SelectionBoxItem);
+            cbxElement.SelectedIndex = 0;
+        }
+
+        private void cbxElementEntity_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxElementEntity.SelectedValue == null) return;
+
+            UpdateElementCombobox(cbxElementEntity.SelectedValue.ToString());
+        }
+
+        public void AddEntity(string env, string entity)
+        {
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "add entity " + env + " " + entity,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+            //TODO: handle if error
+            tbCommand.Text = lines[0];
+        }
+
+        public void RemoveEntity(string env, string entity)
+        {
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "rm entity " + env + " " + entity,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+            //TODO: handle if error
+            tbCommand.Text = lines[0];
+        }
+
+        public void AddElement(string env, string entity, string element)
+        {
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "add element " + env + " " + entity + " " + element,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+            //TODO: handle if error => StandardError anschaun!
+            tbCommand.Text = lines[0];
+        }
+
+        public void RemoveElement(string env, string entity, string element)
+        {
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "rm entity " + env + " " + entity + " " + element,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+            //TODO: handle if error
+            tbCommand.Text = lines[0];
+        }
+
+        public void CreateEnvironment(string env)
+        {
+            List<string> lines = new List<string>();
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "fun.Editor.exe",
+                    Arguments = "create " + env,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                lines.Add(line);
+            }
+
+            //TODO: handle if error
+            tbCommand.Text = lines[0];
         }
     }
-    #endregion
 }
