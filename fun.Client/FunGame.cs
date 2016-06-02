@@ -29,8 +29,8 @@ namespace fun.Client
 
             components = new List<GameComponent>();
 
-            network = new NetworkComponent(this);
-            components.Add(network);
+            //network = new NetworkComponent(this);
+            //components.Add(network);
 
             input = new InputComponent(this);
             components.Add(input);

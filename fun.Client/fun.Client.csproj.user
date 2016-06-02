@@ -4,6 +4,6 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>32 18 environment.xml</StartArguments>
+    <StartArguments>600 600 environment.xml</StartArguments>
   </PropertyGroup>
 </Project>

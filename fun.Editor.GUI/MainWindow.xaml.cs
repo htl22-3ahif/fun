@@ -306,8 +306,6 @@ namespace fun.Editor.GUI
             
         }
 
-        //TODO: hint texte
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (ActionOnEntity)
@@ -316,14 +314,12 @@ namespace fun.Editor.GUI
                 if ((bool)rbEntityAdd.IsChecked)
                 {
                     // add
-
                     AddEntity(EnvPath, tbEntityAdd.Text);
 
                 }
                 else
                 {
                     // remove
-
                     RemoveEntity(EnvPath, cbxEntityName.SelectedValue.ToString());
                 }
 
@@ -466,14 +462,13 @@ namespace fun.Editor.GUI
             };
 
             proc.Start();
-            while (!proc.StandardOutput.EndOfStream)
-            {
-                string line = proc.StandardOutput.ReadLine();
-                lines.Add(line);
-            }
+            lines = proc.StandardOutput.ReadToEnd().Split('\n').ToList();
 
-            //TODO: handle if error
-            tbCommand.Text = lines[0];
+            try
+            {
+                tbCommand.Text = lines[0];
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
         }
 
         public void RemoveEntity(string env, string entity)
@@ -498,8 +493,11 @@ namespace fun.Editor.GUI
                 lines.Add(line);
             }
 
-            //TODO: handle if error
-            tbCommand.Text = lines[0];
+            try
+            {
+                tbCommand.Text = lines[0];
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
         }
 
         public void AddElement(string env, string entity, string element)
@@ -524,8 +522,11 @@ namespace fun.Editor.GUI
                 lines.Add(line);
             }
 
-            //TODO: handle if error => StandardError anschaun!
-            tbCommand.Text = lines[0];
+            try
+            {
+                tbCommand.Text = lines[0];
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
         }
 
         public void RemoveElement(string env, string entity, string element)
@@ -549,9 +550,14 @@ namespace fun.Editor.GUI
                 string line = proc.StandardOutput.ReadLine();
                 lines.Add(line);
             }
+            try
+            {
+                tbCommand.Text = lines[0];
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
+                
+                
 
-            //TODO: handle if error
-            tbCommand.Text = lines[0];
         }
 
         public void CreateEnvironment(string env)
@@ -576,8 +582,11 @@ namespace fun.Editor.GUI
                 lines.Add(line);
             }
 
-            //TODO: handle if error
-            tbCommand.Text = lines[0];
+            try
+            {
+                tbCommand.Text = lines[0];
+            }
+            catch (Exception e) { MessageBox.Show(e.Message); }
         }
     }
 }

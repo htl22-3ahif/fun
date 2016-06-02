@@ -44,10 +44,10 @@
                 <ComboBox x:Name="cbxElementEntity" HorizontalAlignment="Left" Margin="148,161,0,0" VerticalAlignment="Top" Width="140" SelectionChanged="cbxElementEntity_SelectionChanged"/>
                 <Label x:Name="lblElement" Content="Element Name" Margin="321,137,71,0" VerticalAlignment="Top"/>
                 <ComboBox x:Name="cbxElement" HorizontalAlignment="Left" Margin="330,161,0,0" VerticalAlignment="Top" Width="140"/>
-                <TextBox x:Name="tbEntityAdd" HorizontalAlignment="Left" Height="23" Margin="162,56,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="264"/>
-                <TextBox x:Name="tbElementName" HorizontalAlignment="Left" Height="23" Margin="321,161,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="149"/>
+                <TextBox x:Name="tbEntityAdd" materialDesign:TextFieldAssist.Hint="Enter Entityname" HorizontalAlignment="Left" Height="23" Margin="162,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="264"/>
+                <TextBox x:Name="tbElementName" materialDesign:TextFieldAssist.Hint="Enter elementname" HorizontalAlignment="Left" Height="23" Margin="321,161,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="149"/>
                 <Border BorderBrush="#4C000000" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="10,214,0,0" VerticalAlignment="Top" Width="380" CornerRadius="3">
-                    <TextBox x:Name="tbCommand" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="360" Margin="9,6,0,0" BorderThickness="0"/>
+                    <TextBox x:Name="tbCommand" IsEnabled = "false" materialDesign:TextFieldAssist.Hint="Output" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="360" Margin="9,6,0,0" BorderThickness="0"/>
                 </Border>
                 <Button x:Name="btnSave" HorizontalAlignment="Left" Margin="397,213,0,0" VerticalAlignment="Top" Width="73" Height="38" Click="btnSave_Click">
                     <materialDesign:PackIcon Kind="ContentSaveAll"/>
