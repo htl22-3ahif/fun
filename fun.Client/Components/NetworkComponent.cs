@@ -35,7 +35,6 @@ namespace fun.Client.Components
             string[] libaries;
             // initializing the two clients
             tcp = new TcpClient();
-            udp = new UdpClient();
 
             // connecting to a given IP end point (currently hardcoded)
             tcp.Connect(IPAddress.Parse("127.0.0.1"), 844);

@@ -1,4 +1,5 @@
 ﻿using fun.Core;
+using fun.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace fun.Network
     public sealed class NetworkProcessHostElement : Element
     {
         private UdpClient udp;
+        private TcpClient tcp;
         private double delta;
 
         //public IPEndPoint ClientEndPoint;
@@ -30,10 +32,14 @@ namespace fun.Network
         {
             delta = 0;
             udp = new UdpClient();
-            var endpoint = new IPEndPoint(IPAddress.Parse(IP), Port);
 
             // connecting to the client
-            udp.Connect(endpoint);
+            udp.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
+
+            var listener = new TcpListener(IPAddress.Any, Port);
+            tcp = listener.AcceptTcpClient();
+            listener.Stop();
+
 
             new Task(() => { while (true) HandleClientPackets(); }).Start();
         }
@@ -88,7 +94,12 @@ namespace fun.Network
                 udp.BeginSend(message, message.Length, null, null);
             }
         }
+        public override void OnEntityAdded(Entity entity)
+        {
+            var net = tcp.GetStream();
 
+            new Task(() => new EnvironmentXmlWriter().Save(net, Environment, "fun.Basics.dll", "fun.Network.dll")).Start();
+        }
         public void HandleClientPackets()
         {
             try
@@ -120,11 +131,6 @@ namespace fun.Network
                 // since he loves to throw exceptions instead of waiting for a packet
                 // idc
             }
-        }
-
-        public override void OnEntityAdded(Entity entity)
-        {
-            // notifying client to add a new entity;
         }
 
         public override void OnClose()

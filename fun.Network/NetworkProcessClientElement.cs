@@ -1,6 +1,8 @@
 ﻿using fun.Core;
+using fun.IO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -13,6 +15,7 @@ namespace fun.Network
     public sealed class NetworkProcessClientElement : Element
     {
         private UdpClient udp;
+        private TcpClient tcp;
         private double delta;
 
         public string IP;
@@ -27,9 +30,14 @@ namespace fun.Network
         public override void Initialize()
         {
             udp = new UdpClient();
-            udp.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
+            var host = new IPEndPoint(IPAddress.Parse(IP), Port);
+            udp.Connect(host);
 
-            new Task(() => { while (true) HandleClientPacket(); }).Start();
+            tcp = new TcpClient();
+            tcp.Connect(host);
+
+            new Task(() => { while (true) HandlePacketUdp(); }).Start();
+            new Task(() => { while (true) HandlePacketTcp(); }).Start();
         }
 
         public override void Update(double time)
@@ -67,7 +75,7 @@ namespace fun.Network
             udp.BeginSend(message, message.Length, null, null);
         }
 
-        private void HandleClientPacket()
+        private void HandlePacketUdp()
         {
             try
             {
@@ -100,6 +108,55 @@ namespace fun.Network
                 // TODO: change the handleing, if nothing is received
                 // since he loves to throw exceptions instead of waiting for a packet
                 // idc
+            }
+        }
+        private void HandlePacketTcp()
+        {
+            var net = tcp.GetStream();
+            var mem = new MemoryStream();
+
+            // creating a 4k chunck
+            var data = new byte[4096];
+
+            // getting the data and its length
+            var length = net.Read(data, 0, data.Length);
+
+            if (length == 0)
+                return;
+
+            // now the critical part is coming
+            try
+            {
+                // while the received bytes count is not null
+                while (length > 0)
+                {
+                    // writing the data in an own stream (memorystream)
+                    mem.Write(data, 0, length);
+
+                    // after that, again getting the data and its length
+                    length = net.Read(data, 0, data.Length);
+                }
+                // at the end, it has to happen an receive time out exception
+                // thats the very moment, where the host if finished with sending
+            }
+            catch (IOException e)
+            {
+                // if the ReceiveTimeout is reached an IOException will be raised...
+                // with an InnerException of type SocketException and ErrorCode 10060
+                var socketExept = e.InnerException as SocketException;
+                if (socketExept == null || socketExept.ErrorCode != 10060)
+                    // if it's not the "expected" exception, let's not hide the error
+                    throw e;
+            }
+
+            string[] libraries;
+            mem.Position = 0;
+            var newEnv = new EnvironmentXmlReader().Load(mem, out libraries)[0];
+
+            foreach (var newEntity in newEnv.Entities)
+            {
+                if (!Environment.Entities.Any(e => e.Name == newEntity.Name))
+                    Environment.AddEntity(newEntity);
             }
         }
     }
