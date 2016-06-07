@@ -19,7 +19,7 @@ namespace fun.Host
             while (true)
             {
                 Thread.Sleep(20);
-                environment.Update(20);
+                environment.Update(0.02);
             }
         }
     }

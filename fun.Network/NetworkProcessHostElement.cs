@@ -18,9 +18,11 @@ namespace fun.Network
         private TcpClient tcp;
         private double delta;
 
+        public int FromPort { get { return (udp.Client.LocalEndPoint as IPEndPoint).Port; } }
+
         //public IPEndPoint ClientEndPoint;
-        public string IP;
-        public int Port;
+        public string ToIP;
+        public int ToPort;
         public string[] PerceiveableEntities;
 
         public NetworkProcessHostElement(Environment environment, Entity entity)
@@ -34,14 +36,21 @@ namespace fun.Network
             udp = new UdpClient();
 
             // connecting to the client
-            udp.Connect(new IPEndPoint(IPAddress.Parse(IP), Port));
-
-            var listener = new TcpListener(IPAddress.Any, Port);
-            tcp = listener.AcceptTcpClient();
-            listener.Stop();
+            udp.Connect(new IPEndPoint(IPAddress.Parse(ToIP), ToPort));
 
 
             new Task(() => { while (true) HandleClientPackets(); }).Start();
+        }
+
+        public void AcceptClient()
+        {
+            var listener = new TcpListener(IPAddress.Any, FromPort);
+            try
+            {
+                listener.Start();
+                tcp = listener.AcceptTcpClient();
+            }
+            finally { listener.Stop(); }
         }
 
         public override void Update(double time)
@@ -57,7 +66,7 @@ namespace fun.Network
 
             delta += time;
             // if one second has not passed
-            if (delta < 1000)
+            if (delta < 1)
                 // just end here
                 return;
 
@@ -90,6 +99,8 @@ namespace fun.Network
                 // creating a really simple packet
                 var message = Encoding.UTF8.GetBytes(string.Format("Entity:{0}\nX:{1}\nY:{2}\nZ:{3}\n", ename, x, y, z));
 
+                Console.WriteLine("Sending message: " + string.Format("Entity:{0}\nX:{1}\nY:{2}\nZ:{3}\n", ename, x, y, z));
+
                 // sending the message async
                 udp.BeginSend(message, message.Length, null, null);
             }
@@ -113,6 +124,8 @@ namespace fun.Network
                 // encode the packet
                 
                 var message = Encoding.UTF8.GetString(data);
+
+                Console.WriteLine("Got a message: " + message);
 
                 var str = message.Split(';');
                 var x = float.Parse(str[0]);

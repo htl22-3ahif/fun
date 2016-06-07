@@ -44,6 +44,9 @@ namespace fun.Network
 
         private void ReadClientStream(IAsyncResult res)
         {
+            // FromIPEndPoint: The point we are sending from
+            // ToIPEndPoint: The point we are sending to
+
             // get the affected client and the received data
             var client = (TcpClient)res.AsyncState.GetType().GetProperty("Client").GetValue(res.AsyncState);
             var data = (byte[])res.AsyncState.GetType().GetProperty("Data").GetValue(res.AsyncState);
@@ -61,10 +64,10 @@ namespace fun.Network
             var player = Environment.GetEntity(BlueprintEntity);
 
             // defining the sender (client's destination)
-            var sender = client.Client.LocalEndPoint as IPEndPoint;
+            var toEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
 
             // creating the player that will stay in the host's environment
-            var hostPlayer = new Entity(BlueprintEntity + sender.Address.ToString(), Environment);
+            var hostPlayer = new Entity(BlueprintEntity + toEndPoint.Address.ToString(), Environment);
 
             // applying the shema's elements to the host's entity
             ApplyElementsTo(player, hostPlayer);
@@ -74,11 +77,8 @@ namespace fun.Network
 
             // defining the client end point
             //hostPlayer.GetElement<NetworkProcessHostElement>().ClientEndPoint = sender;
-            hostPlayer.GetElement<NetworkProcessHostElement>().IP = sender.Address.ToString();
-            hostPlayer.GetElement<NetworkProcessHostElement>().Port = sender.Port;
-
-            // and finally, we are adding it to our environment
-            Environment.AddEntity(hostPlayer);
+            hostPlayer.GetElement<NetworkProcessHostElement>().ToIP = toEndPoint.Address.ToString();
+            hostPlayer.GetElement<NetworkProcessHostElement>().ToPort = toEndPoint.Port;
 
             // after modifying the environment on the host's side
             // we now have to define the environment, which will be send to the client
@@ -92,13 +92,19 @@ namespace fun.Network
             // applying the elements of the shema to the client's entity
             ApplyElementsTo(player, clientPlayer);
 
-            var remoteEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
+            // inizializing the whole entity
+            hostPlayer.Initialize();
 
+            var fromEndPoint = new IPEndPoint(
+                (client.Client.LocalEndPoint as IPEndPoint).Address,
+                hostPlayer.GetElement<NetworkProcessHostElement>().FromPort);
+
+            
             // adding the elements that handles the networking on the client's side
             clientPlayer.AddElement<NetworkProcessClientElement>();
 
-            clientPlayer.GetElement<NetworkProcessClientElement>().IP = remoteEndPoint.Address.ToString();
-            clientPlayer.GetElement<NetworkProcessClientElement>().Port = remoteEndPoint.Port;
+            clientPlayer.GetElement<NetworkProcessClientElement>().IP = fromEndPoint.Address.ToString();
+            clientPlayer.GetElement<NetworkProcessClientElement>().Port = fromEndPoint.Port;
 
             // adding the client's entity to his environment
             env.AddEntity(clientPlayer);
@@ -125,8 +131,10 @@ namespace fun.Network
             hostPlayer.GetElement<NetworkProcessHostElement>().PerceiveableEntities =
                 env.Entities.Where(e => e.Name != clientPlayer.Name).Select(e => e.Name).ToArray();
 
-            // inizializing the whole entity
-            hostPlayer.Initialize();
+            hostPlayer.GetElement<NetworkProcessHostElement>().AcceptClient();
+
+            // and finally, we are adding it to our environment
+            Environment.AddEntity(hostPlayer);
         }
 
         private void ApplyElementsTo(Entity source, Entity destination)
