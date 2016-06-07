@@ -162,6 +162,10 @@
       <Project>{9B61BB6A-A8FC-4795-A9FA-3B3C60F28B15}</Project>
       <Name>fun.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\fun.Network\fun.Network.csproj">
+      <Project>{5c9c87cf-ebe2-4b4c-a478-b4a96e4129a4}</Project>
+      <Name>fun.Network</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\textures\lel.png">

@@ -37,10 +37,10 @@ namespace fun.Client.Components
             tcp = new TcpClient();
 
             // connecting to a given IP end point (currently hardcoded)
-            tcp.Connect(IPAddress.Parse("127.0.0.1"), 844);
+            tcp.Connect(IPAddress.Parse("10.44.31.2"), 844);
             
             // setting the receive time out
-            tcp.Client.ReceiveTimeout = 20;
+            tcp.Client.ReceiveTimeout = 200;
 
             var net = tcp.GetStream();
             var mem = new MemoryStream();
@@ -91,6 +91,7 @@ namespace fun.Client.Components
 
             // reding and creating the environment
             Environment = new EnvironmentXmlReader().Load(mem, out libaries)[0];
+            Environment.Initialize();
         }
 
         public override void Update(FrameEventArgs e)

@@ -18,6 +18,8 @@ namespace fun.Network
         private TcpClient tcp;
         private double delta;
 
+        public int FromPort { get; set; }
+
         public string IP;
         public int Port;
 
@@ -33,7 +35,9 @@ namespace fun.Network
             var host = new IPEndPoint(IPAddress.Parse(IP), Port);
             udp.Connect(host);
 
-            tcp = new TcpClient();
+            Console.WriteLine(udp.Client.LocalEndPoint.ToString() + udp.Client.RemoteEndPoint.ToString());
+
+            tcp = new TcpClient(udp.Client.LocalEndPoint as IPEndPoint);
             tcp.Connect(host);
 
             new Task(() => { while (true) HandlePacketUdp(); }).Start();
@@ -44,7 +48,7 @@ namespace fun.Network
         {
             delta += time;
             // if one second has not passed
-            if (delta < 1000)
+            if (delta < 1)
                 // just end here
                 return;
 
@@ -69,7 +73,7 @@ namespace fun.Network
             var z = position.GetType().GetField("Z").GetValue(position);
 
             // creating a really simple packet
-            var message = Encoding.UTF8.GetBytes(string.Format("X:{1}\nY:{2}\nZ:{3}\n", x, y, z));
+            var message = Encoding.UTF8.GetBytes(string.Format("X:{0}\nY:{1}\nZ:{2}\n", x, y, z));
 
             // sending the message async
             udp.BeginSend(message, message.Length, null, null);
