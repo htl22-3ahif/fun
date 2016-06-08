@@ -81,6 +81,10 @@ namespace fun.Client.Components
                     // if it's not the "expected" exception, let's not hide the error
                     throw e;
             }
+
+            // Closing tcp connection since it is not needed anymore
+            // And we are going to connect on the same port with udp and tcp in NetworkClientProcessElement
+            tcp.Close();
             
             // IMPORTANT!!! set the position to zero
             // to avoid sending only a part of the stream or at worst,
