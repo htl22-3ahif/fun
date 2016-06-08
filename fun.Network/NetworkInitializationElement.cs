@@ -44,7 +44,7 @@ namespace fun.Network
 
         private void ReadClientStream(IAsyncResult res)
         {
-            // FromIPEndPoint: The point we are sending from
+            // LocalIPEndPoint: The point we are sending from
             // ToIPEndPoint: The point we are sending to
 
             // get the affected client and the received data
@@ -64,10 +64,10 @@ namespace fun.Network
             var player = Environment.GetEntity(BlueprintEntity);
 
             // defining the sender (client's destination)
-            var toEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
+            var remoteEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
 
             // creating the player that will stay in the host's environment
-            var hostPlayer = new Entity(BlueprintEntity + toEndPoint.Address.ToString(), Environment);
+            var hostPlayer = new Entity(BlueprintEntity + remoteEndPoint.Address.ToString(), Environment);
 
             // applying the shema's elements to the host's entity
             ApplyElementsTo(player, hostPlayer);
@@ -77,8 +77,8 @@ namespace fun.Network
 
             // defining the client end point
             //hostPlayer.GetElement<NetworkProcessHostElement>().ClientEndPoint = sender;
-            hostPlayer.GetElement<NetworkProcessHostElement>().ToIP = toEndPoint.Address.ToString();
-            hostPlayer.GetElement<NetworkProcessHostElement>().ToPort = toEndPoint.Port;
+            hostPlayer.GetElement<NetworkProcessHostElement>().RemoteIP = remoteEndPoint.Address.ToString();
+            hostPlayer.GetElement<NetworkProcessHostElement>().RemotePort = remoteEndPoint.Port;
 
             // after modifying the environment on the host's side
             // we now have to define the environment, which will be send to the client
@@ -95,16 +95,18 @@ namespace fun.Network
             // inizializing the whole entity
             hostPlayer.Initialize();
 
-            var fromEndPoint = new IPEndPoint(
+            var localEndPoint = new IPEndPoint(
                 (client.Client.LocalEndPoint as IPEndPoint).Address,
-                hostPlayer.GetElement<NetworkProcessHostElement>().FromPort);
+                hostPlayer.GetElement<NetworkProcessHostElement>().LocalPort);
 
             
             // adding the elements that handles the networking on the client's side
             clientPlayer.AddElement<NetworkProcessClientElement>();
 
-            clientPlayer.GetElement<NetworkProcessClientElement>().IP = fromEndPoint.Address.ToString();
-            clientPlayer.GetElement<NetworkProcessClientElement>().Port = fromEndPoint.Port;
+            clientPlayer.GetElement<NetworkProcessClientElement>().RemoteIP = localEndPoint.Address.ToString();
+            clientPlayer.GetElement<NetworkProcessClientElement>().RemotePort = localEndPoint.Port;
+            clientPlayer.GetElement<NetworkProcessClientElement>().LocalIP = remoteEndPoint.Address.ToString();
+            clientPlayer.GetElement<NetworkProcessClientElement>().LocalPort = remoteEndPoint.Port;
 
             // adding the client's entity to his environment
             env.AddEntity(clientPlayer);

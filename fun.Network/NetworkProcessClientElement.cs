@@ -18,10 +18,10 @@ namespace fun.Network
         private TcpClient tcp;
         private double delta;
 
-        public int FromPort { get; set; }
-
-        public string IP;
-        public int Port;
+        public string RemoteIP;
+        public int RemotePort;
+        public string LocalIP;
+        public int LocalPort;
 
         public NetworkProcessClientElement(Environment environment, Entity entity)
             : base(environment, entity)
@@ -31,14 +31,14 @@ namespace fun.Network
 
         public override void Initialize()
         {
-            udp = new UdpClient();
-            var host = new IPEndPoint(IPAddress.Parse(IP), Port);
-            udp.Connect(host);
+            var remote = new IPEndPoint(IPAddress.Parse(RemoteIP), RemotePort);
+            var local = new IPEndPoint(IPAddress.Parse(LocalIP), LocalPort);
 
-            Console.WriteLine(udp.Client.LocalEndPoint.ToString() + udp.Client.RemoteEndPoint.ToString());
+            udp = new UdpClient(local);
+            udp.Connect(remote);
 
-            tcp = new TcpClient(udp.Client.LocalEndPoint as IPEndPoint);
-            tcp.Connect(host);
+            tcp = new TcpClient(local);
+            tcp.Connect(remote);
 
             new Task(() => { while (true) HandlePacketUdp(); }).Start();
             new Task(() => { while (true) HandlePacketTcp(); }).Start();

@@ -18,11 +18,11 @@ namespace fun.Network
         private TcpClient tcp;
         private double delta;
 
-        public int FromPort { get { return (udp.Client.LocalEndPoint as IPEndPoint).Port; } }
+        public int LocalPort { get { return (udp.Client.LocalEndPoint as IPEndPoint).Port; } }
 
         //public IPEndPoint ClientEndPoint;
-        public string ToIP;
-        public int ToPort;
+        public string RemoteIP;
+        public int RemotePort;
         public string[] PerceiveableEntities;
 
         public NetworkProcessHostElement(Environment environment, Entity entity)
@@ -36,7 +36,7 @@ namespace fun.Network
             udp = new UdpClient();
 
             // connecting to the client
-            udp.Connect(new IPEndPoint(IPAddress.Parse(ToIP), ToPort));
+            udp.Connect(new IPEndPoint(IPAddress.Parse(RemoteIP), RemotePort));
 
 
             new Task(() => { while (true) HandleClientPackets(); }).Start();
@@ -44,7 +44,7 @@ namespace fun.Network
 
         public void AcceptClient()
         {
-            var listener = new TcpListener(IPAddress.Any, FromPort);
+            var listener = new TcpListener(IPAddress.Any, LocalPort);
             try
             {
                 listener.Start();
